@@ -1,0 +1,18 @@
+.editor {
+  background: #1d2528;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  overflow: auto;
+}
+
+.editor * > textarea:focus {
+  outline: none;
+}
+
+.liveComponent {
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  padding: 20px;
+  margin-bottom: 30px;
+  position: relative;
+}

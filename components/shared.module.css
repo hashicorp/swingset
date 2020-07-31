@@ -1,0 +1,42 @@
+.label {
+  margin: 25px 0 15px 0;
+  text-transform: uppercase;
+  color: #aaa;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 2px;
+}
+
+.save {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #151b1d;
+  color: white;
+  padding: 7px 15px 7px 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 1px;
+  font-family: 'gilmer-web', sans-serif;
+  border-radius: 0 0 0 7px;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:before {
+    background: url('../img/share.svg');
+    width: 16px;
+    height: 16px;
+    content: '';
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 8px;
+  }
+}
