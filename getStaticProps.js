@@ -30,8 +30,8 @@ export default function createStaticProps(octavoOptions = {}) {
       }
     })
 
-    const mdxSources = docsSrcs
-      .map(({ content, frontMatter, props }) => {
+    const mdxSources = await Promise.all(
+      docsSrcs.map(({ content, frontMatter, props }) => {
         const name = frontMatter.componentName
 
         // First, we need to get the actual component source
@@ -45,17 +45,18 @@ export default function createStaticProps(octavoOptions = {}) {
           null,
           props && { componentProps: json5.parse(props) }
         ).then((res) => [name, res])
-      })
-      .then((res) => {
         // transform to an object for easier name/component mapping on the client side
-        return res.reduce((m, [name, result]) => {
-          m[name] = result
-          return m
-        }, {})
       })
+    ).then((res) => {
+      return res.reduce((m, [name, result]) => {
+        m[name] = result
+        return m
+      }, {})
+    })
 
-    // We need to return both `mdxSources` and `componentNames` so that we have both the component and it's name,
-    // which is used to render the sidebar.
+    // We need to return both `mdxSources` and `docsSources` so that we have both the component and it's name,
+    // which is used to render the sidebar. We remove the `content` from docsSrcs though since it's not needed,
+    // to prevent a lot of extra useless data from going over the wire.
     return {
       props: {
         mdxSources,
