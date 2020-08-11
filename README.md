@@ -4,7 +4,15 @@ An opinionated, drop-in component library for next.js apps.
 
 ### Installation
 
-Install via npm with `npm i octavo`. You then need to create a page in your nextjs app where octavo will live. You can "inject" octavo on to any page of your choosing. Something like `/components` might be a nice choice. When you have decided on a page, octavo can be injected as follows:
+Install via npm with `npm i octavo`, then add the plugin to your `next.config.js` as such:
+
+```js
+const withOctavo = require('octavo')
+
+module.exports = withOctavo(/* octavo options */)(/* normal nextjs config */)
+```
+
+You then need to create a page in your nextjs app where octavo will live. You can "inject" octavo on to any page of your choosing. Something like `/components` might be a nice choice. When you have decided on a page, octavo can be injected as follows:
 
 ```jsx
 import createPage from 'octavo/page'
@@ -169,26 +177,37 @@ As with other components, props can be nested here as well. However, it will not
 
 ### Options
 
-When initializing octavo, there are a few options you can pass it to customize its behavior. The example below shows how that might be done.
+When initializing octavo in `next.config.js`, there are a few options you can pass it to customize its behavior. The example below shows how that might be done. None of the options are required, they all have defaults.
 
 ```jsx
+const withOctavo = require('octavo')
+
+module.exports = withOctavo({
+  // Where your components live. "components/*" is the default.
+  componentsRoot: 'components/*',
+  // Where your generic docs pages live. No default
+  docsRoot: 'docs/*',
+  // Extra logging. Default is false
+  verbose: false,
+})(/* normal nextjs config */)
+```
+
+There are some additional options that can be passed in to the page configuration for customization, example below:
+
+```js
 import createPage from 'octavo/page'
 import createStaticProps from 'octavo/getStaticProps'
 
-const octavoConfig = {
-  // where your components live. optional, this is the default
-  componentsRoot: 'components/*',
-  // where your generic docs pages live. optional, no default
-  docsRoot: 'docs/*',
+const octavoOptions = {
   // if you have custom components you'd like to have available for use across all docs pages,
-  // the can be added here.
+  // the can be added here. No default.
   additionalComponents: { Tester: () => <p>testing 123</p> },
-  // anything that can fit into the `src` of an image tag
+  // Anything that can fit into the `src` of an image tag. Default is the octavo logo.
   customLogo: '/img/my-company-logo.svg',
 }
 
-export default createPage(octavoConfig)
-export const getStaticProps = createStaticProps(octavoConfig)
+export default createPage(octavoOptions)
+export const getStaticProps = createStaticProps(octavoOptions)
 ```
 
 ### Notes

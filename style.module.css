@@ -7,10 +7,10 @@
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+}
 
-  & * {
-    box-sizing: border-box;
-  }
+.root * {
+  box-sizing: border-box;
 }
 
 .sidebar {
@@ -26,36 +26,36 @@
   left: 0;
   display: flex;
   flex-direction: column;
+}
 
-  &:before {
-    content: ' ';
-    height: 100%;
-    position: absolute;
-    top: 0;
-    width: 15px;
-    box-shadow: inset -12px 0 12px -12px rgba(0, 0, 0, 0.8);
-    right: 0;
-  }
+.sidebar:before {
+  content: ' ';
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 15px;
+  box-shadow: inset -12px 0 12px -12px rgba(0, 0, 0, 0.8);
+  right: 0;
+}
 
-  & li {
-    cursor: pointer;
-    padding: 10px 30px 10px 25px;
-    border-left: 5px solid transparent;
+.sidebar li {
+  cursor: pointer;
+  padding: 10px 30px 10px 25px;
+  border-left: 5px solid transparent;
+}
 
-    &.active {
-      border-left: 5px solid rgba(255, 237, 114, 0.8);
-      background: rgba(255, 255, 255, 0.05);
-    }
+.sidebar li.active {
+  border-left: 5px solid rgba(255, 237, 114, 0.8);
+  background: rgba(255, 255, 255, 0.05);
+}
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
 
-  & .logo {
-    max-width: 62%;
-    margin: 20px 30px 25px 30px;
-  }
+.sidebar .logo {
+  max-width: 62%;
+  margin: 20px 30px 25px 30px;
 }
 
 .stage {
@@ -63,20 +63,20 @@
   float: left;
   width: calc(100% - 295px);
   margin-left: 270px;
+}
 
-  & > h1:first-child {
-    margin-top: 0;
-    margin-bottom: 1em;
-    line-height: 1em;
-    font-size: 2.2em;
-    color: #151b1d;
+.stage > h1:first-child {
+  margin-top: 0;
+  margin-bottom: 1em;
+  line-height: 1em;
+  font-size: 2.2em;
+  color: #151b1d;
+}
 
-    & code {
-      font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-        DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      font-weight: bold;
-      color: #e86c60;
-      font-size: 1em;
-    }
-  }
+.stage > h1:first-child code {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+  font-weight: bold;
+  color: #e86c60;
+  font-size: 1em;
 }

@@ -1,5 +1,5 @@
-import createPage from '../octavo/page'
-import createStaticProps from '../octavo/getStaticProps'
+import createPage from 'octavo/page'
+import createStaticProps from 'octavo/getStaticProps'
 
 const octavoConfig = {
   componentsRoot: 'components/*',
