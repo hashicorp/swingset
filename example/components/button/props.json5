@@ -1,0 +1,8 @@
+{
+  text: {
+    control: 'text',
+    type: 'string',
+    defaultValue: 'button text',
+    description: 'the text displayed by the button',
+  },
+}

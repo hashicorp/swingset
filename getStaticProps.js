@@ -4,7 +4,7 @@ import { existsSync } from 'fsexists'
 import json5 from 'json5'
 import renderToString from 'next-mdx-remote/render-to-string'
 import createScope from './utils/create-scope'
-import components from './.components-meta'
+import components from './__octavo_components'
 
 export default function createStaticProps(octavoOptions = {}) {
   return async function getStaticProps() {
@@ -20,7 +20,7 @@ export default function createStaticProps(octavoOptions = {}) {
       // to the mdx file. This is a nice pattern for knobs and props tables.
       const propsContent =
         existsSync(component.propsPath) &&
-        fs.readFileSync(components.propsPath, 'utf8')
+        fs.readFileSync(component.propsPath, 'utf8')
 
       return {
         frontMatter: data,

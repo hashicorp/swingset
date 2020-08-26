@@ -4,7 +4,7 @@ import Head from 'next/head'
 import hydrate from 'next-mdx-remote/hydrate'
 import createScope from './utils/create-scope'
 import { useRestoreUrlState, setUrlState } from './utils/url-state'
-import components from './.components-meta'
+import components from './__octavo_components'
 
 export default function createPage(octavoOptions = {}) {
   return function Page({ mdxSources, componentNames }) {
@@ -28,11 +28,11 @@ export default function createPage(octavoOptions = {}) {
           <title key="title">Component Library</title>
         </Head>
         <ul className={s.sidebar}>
-          {/* <img
+          <img
             className={s.logo}
             src={require('./img/octavo-dark.svg')}
             alt="octavo logo"
-          /> */}
+          />
           {componentNames.map((componentName) => {
             return (
               <li
