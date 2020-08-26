@@ -18,10 +18,9 @@ export default function createPage(octavoOptions = {}) {
     const Component = components[name].src
 
     // fully hydrated mdx document, with the components in the created scope available for use
-    const mdx = hydrate(
-      mdxSources[name],
-      createScope({ [name]: Component }, octavoOptions)
-    )
+    const mdx = hydrate(mdxSources[name], {
+      components: createScope({ [name]: Component }, octavoOptions),
+    })
 
     return (
       <div className={s.root}>
