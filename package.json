@@ -1,5 +1,5 @@
 {
-  "name": "octavo",
+  "name": "@hashicorp/octavo",
   "description": "drop-in component library and documentation pages for next.js",
   "version": "0.0.0",
   "author": "Jeff Escalante",
@@ -15,11 +15,13 @@
     "loader-utils": "^2.0.0",
     "next-images": "^1.4.1",
     "next-mdx-remote": "1.0.0",
-    "prebuild-webpack-plugin": "^1.1.1",
     "query-string": "^5.1.1",
     "react-live": "^2.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^26.4.2",
+    "release": "^6.3.0"
+  },
   "homepage": "https://github.com/jescalan/octavo#readme",
   "keywords": [
     "component",
@@ -36,12 +38,18 @@
     "react-dom": "16.x",
     "webpack": "4.x"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jescalan/octavo.git"
   },
   "scripts": {
     "example": "cd example && npm start",
-    "test": "jest"
+    "test": "jest",
+    "release:major": "release major && npm publish",
+    "release:minor": "release minor && npm publish",
+    "release:patch": "release patch && npm publish"
   }
 }
