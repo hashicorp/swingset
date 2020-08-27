@@ -56,6 +56,12 @@
 .sidebar .logo {
   max-width: 62%;
   margin: 20px 30px 25px 30px;
+  background-image: url('./img/octavo-dark.svg');
+  display: block;
+  width: 150px;
+  height: 27px;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 .stage {

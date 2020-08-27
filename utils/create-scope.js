@@ -8,6 +8,6 @@ export default function createScope(scope, octavoOptions) {
     LiveComponent: createLiveComponent(scope),
     KnobsComponent: createKnobsComponent(scope),
     PropsTable,
-    ...(octavoOptions.additionalComponents || {}),
+    ...(octavoOptions.components || {}),
   }
 }

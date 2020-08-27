@@ -28,11 +28,7 @@ export default function createPage(octavoOptions = {}) {
           <title key="title">Component Library</title>
         </Head>
         <ul className={s.sidebar}>
-          <img
-            className={s.logo}
-            src={require('./img/octavo-dark.svg')}
-            alt="octavo logo"
-          />
+          <span className={s.logo} />
           {componentNames.map((componentName) => {
             return (
               <li
