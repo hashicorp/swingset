@@ -1,7 +1,7 @@
 {
   "name": "@hashicorp/octavo",
   "description": "drop-in component library and documentation pages for next.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Jeff Escalante",
   "bugs": {
     "url": "https://github.com/jescalan/octavo/issues"
