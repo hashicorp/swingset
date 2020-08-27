@@ -2,6 +2,8 @@
 
 An opinionated, drop-in component library for next.js apps.
 
+> **NOTE**: This project is in early alpha stages, and the readme is still not accurate. It is not recommended for use currently. If you really want to use it still, reach out to the author.
+
 ### Installation
 
 Install via npm with `npm i octavo`, then add the plugin to your `next.config.js` as such:
