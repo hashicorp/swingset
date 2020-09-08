@@ -112,3 +112,8 @@
   border-color: #9bced3;
   outline: 0;
 }
+
+.textarea {
+  composes: input;
+  width: 100%;
+}

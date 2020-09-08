@@ -63,10 +63,12 @@ function renderControls(values, setValues, indentLevel = 0) {
         <textarea
           className={s.input}
           value={v.value || v.defaultValue}
-          onChange={e => {
-            valuesCopy[k].value = e.target.value
+          onChange={({ target }) => {
+            valuesCopy[k].value = target.value
             setValues(valuesCopy)
+            if (target) autosize(target)
           }}
+          ref={target => target && autosize(target)}
         />
       )
     }
@@ -137,6 +139,13 @@ function renderControls(values, setValues, indentLevel = 0) {
       </div>
     )
   })
+}
+
+function autosize(target) {
+  const { style, style: { height } } = target
+  style.height = style.minHeight = 'inherit'
+  style.minHeight = `${target.scrollHeight}px`
+  style.height = height
 }
 
 function knobsToProps(knobs) {
