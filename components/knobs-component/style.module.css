@@ -114,6 +114,7 @@
 }
 
 .textarea {
-  composes: input;
+	composes: input;
+	resize: vertical;
   width: 100%;
 }
