@@ -58,6 +58,19 @@ function renderControls(values, setValues, indentLevel = 0) {
       )
     }
 
+    if (v.control === 'textarea') {
+      control = (
+        <textarea
+          className={s.input}
+          value={v.value || v.defaultValue}
+          onChange={e => {
+            valuesCopy[k].value = e.target.value
+            setValues(valuesCopy)
+          }}
+        />
+      )
+    }
+
     if (v.control === 'select') {
       control = (
         <select
