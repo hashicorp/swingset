@@ -58,10 +58,10 @@ function renderControls(values, setValues, indentLevel = 0) {
       )
     }
 
-    if (v.control === 'textarea') {
+    if (v.control === 'html' || v.control === 'textarea') {
       control = (
         <textarea
-          className={s.input}
+          className={s[v.control]}
           value={v.value || v.defaultValue}
           onChange={({ target }) => {
             valuesCopy[k].value = target.value
@@ -69,6 +69,7 @@ function renderControls(values, setValues, indentLevel = 0) {
             if (target) autosize(target)
           }}
           ref={target => target && autosize(target)}
+          spellCheck={v.control === 'textarea'}
         />
       )
     }
