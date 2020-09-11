@@ -58,7 +58,7 @@ function renderControls(values, setValues, indentLevel = 0) {
       )
     }
 
-    if (v.control === 'html' || v.control === 'textarea') {
+    if (v.control === 'codearea' || v.control === 'textarea') {
       control = (
         <textarea
           className={s[v.control]}
