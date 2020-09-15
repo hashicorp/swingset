@@ -7,7 +7,7 @@ const permittedKeys = [
   'control',
   'options',
   'defaultValue',
-  'required'
+  'required',
 ]
 
 export default function PropsTable({ props }) {
@@ -33,7 +33,7 @@ function renderRows(props, prefix) {
     // we know which standard keys are expected -- when there are non-standard keys, this is an indication that
     // we likely have a nested prop
     const nonStandardKeys = Object.keys(props[key]).filter(
-      k => !permittedKeys.includes(k)
+      (k) => !permittedKeys.includes(k)
     )
     const hasNestedProps = !props[key].control && nonStandardKeys.length > 0
 
@@ -54,10 +54,10 @@ function renderRows(props, prefix) {
       // first let's remove the permitted keys since we already rendered these, to leave only
       // the top-level nested props
       const nestedPropsCopy = JSON.parse(JSON.stringify(props[key]))
-      permittedKeys.map(k => delete nestedPropsCopy[k])
+      permittedKeys.map((k) => delete nestedPropsCopy[k])
 
       // now we recurse with the rest of the props
-      res.push(renderRows(nestedPropsCopy, key))
+      res.push(renderRows(nestedPropsCopy, { key, value }))
     }
   }
 
@@ -69,7 +69,14 @@ function renderRow(key, value, hasNestedProps, prefix) {
     <tr key={key}>
       <td>
         <code>
-          {prefix ? <span className={s.prefix}>{prefix}.</span> : ''}
+          {prefix ? (
+            <span className={s.prefix}>
+              {prefix.key}
+              {prefix.value.type.toLowerCase() === 'array' ? '[n].' : '.'}
+            </span>
+          ) : (
+            ''
+          )}
           {key}
           {value.required ? <span className={s.required}>*</span> : ''}
           <div className={s.type}>{value.type}</div>
@@ -88,9 +95,14 @@ function renderRow(key, value, hasNestedProps, prefix) {
             ))}
           </div>
         )}
-        {hasNestedProps && (
+        {hasNestedProps && value.type.toLowerCase() === 'object' && (
           <div className={s.containsNested}>
             Contains nested props, see below:
+          </div>
+        )}
+        {hasNestedProps && value.type.toLowerCase() === 'array' && (
+          <div className={s.containsNested}>
+            Each array item is an object with the props below:
           </div>
         )}
       </td>
