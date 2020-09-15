@@ -14,7 +14,7 @@ export default function createKnobsComponent(scope) {
     const [values, setValues] = useState(knobs)
 
     // if there's url state and it applies to this element, restore it
-    useRestoreUrlState(qs => {
+    useRestoreUrlState((qs) => {
       if (qs.id == id) {
         setValues(qs.values)
         scrollToElement(id)
@@ -40,7 +40,7 @@ export default function createKnobsComponent(scope) {
 }
 
 function renderControls(values, setValues, indentLevel = 0) {
-  return Object.keys(values).map(k => {
+  return Object.keys(values).map((k) => {
     const valuesCopy = JSON.parse(JSON.stringify(values))
     const v = values[k]
     let control
@@ -50,7 +50,7 @@ function renderControls(values, setValues, indentLevel = 0) {
         <input
           className={s.input}
           value={v.value || v.defaultValue}
-          onChange={e => {
+          onChange={(e) => {
             valuesCopy[k].value = e.target.value
             setValues(valuesCopy)
           }}
@@ -63,13 +63,13 @@ function renderControls(values, setValues, indentLevel = 0) {
         <select
           className={s.select}
           value={v.value || v.defaultValue}
-          onChange={e => {
+          onChange={(e) => {
             valuesCopy[k].value = e.target.value
             setValues(valuesCopy)
           }}
         >
           <option value={null}>Select an option...</option>
-          {v.options.map(opt => (
+          {v.options.map((opt) => (
             <option key={opt} value={opt}>
               {opt}
             </option>
@@ -81,11 +81,24 @@ function renderControls(values, setValues, indentLevel = 0) {
     if (v.control === 'checkbox') {
       control = (
         <input
-          type='checkbox'
+          type="checkbox"
           className={s.checkbox}
           checked={v.value || v.defaultValue}
-          onChange={e => {
+          onChange={(e) => {
             valuesCopy[k].value = e.target.checked
+            setValues(valuesCopy)
+          }}
+        />
+      )
+    }
+
+    if (v.control === 'json') {
+      control = (
+        <textarea
+          className={s.textarea}
+          value={JSON.stringify(v.value || v.defaultValue, null, 2)}
+          onChange={(e) => {
+            valuesCopy[k].value = JSON.parse(e.target.value)
             setValues(valuesCopy)
           }}
         />
@@ -102,7 +115,7 @@ function renderControls(values, setValues, indentLevel = 0) {
         <label>
           {k}
           {v.required ? (
-            <span className={s.requiredStar} title='required'>
+            <span className={s.requiredStar} title="required">
               *
             </span>
           ) : (
@@ -114,7 +127,7 @@ function renderControls(values, setValues, indentLevel = 0) {
         {!v.control
           ? renderControls(
               v,
-              subtreeValue => {
+              (subtreeValue) => {
                 valuesCopy[k] = subtreeValue
                 setValues(valuesCopy)
               },

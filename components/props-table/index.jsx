@@ -57,7 +57,7 @@ function renderRows(props, prefix) {
       permittedKeys.map((k) => delete nestedPropsCopy[k])
 
       // now we recurse with the rest of the props
-      res.push(renderRows(nestedPropsCopy, { key, value }))
+      res.push(renderRows(nestedPropsCopy, key))
     }
   }
 
@@ -69,14 +69,7 @@ function renderRow(key, value, hasNestedProps, prefix) {
     <tr key={key}>
       <td>
         <code>
-          {prefix ? (
-            <span className={s.prefix}>
-              {prefix.key}
-              {prefix.value.type.toLowerCase() === 'array' ? '[n].' : '.'}
-            </span>
-          ) : (
-            ''
-          )}
+          {prefix ? <span className={s.prefix}>{prefix}.</span> : ''}
           {key}
           {value.required ? <span className={s.required}>*</span> : ''}
           <div className={s.type}>{value.type}</div>
@@ -95,14 +88,15 @@ function renderRow(key, value, hasNestedProps, prefix) {
             ))}
           </div>
         )}
-        {hasNestedProps && value.type.toLowerCase() === 'object' && (
-          <div className={s.containsNested}>
-            Contains nested props, see below:
+        {value.itemType && (
+          <div className={s.options}>
+            <strong>Item Type: </strong>
+            <code>{value.itemType}</code>
           </div>
         )}
-        {hasNestedProps && value.type.toLowerCase() === 'array' && (
+        {hasNestedProps && (
           <div className={s.containsNested}>
-            Each array item is an object with the props below:
+            Contains nested props, see below:
           </div>
         )}
       </td>

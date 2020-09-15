@@ -94,7 +94,8 @@
   font-weight: normal;
 }
 
-.input {
+.input,
+.textarea {
   border: 1px solid #ccc;
   border-radius: 3px;
   font-weight: 700;
@@ -104,11 +105,18 @@
   transition: border-color 0.2s ease;
 }
 
-.input:hover {
+.input:hover,
+.textarea:hover {
   border-color: #aaa;
 }
 
-.input:focus {
+.input:focus,
+.textarea:focus {
   border-color: #9bced3;
   outline: 0;
+}
+
+.textarea {
+  width: 400px;
+  min-height: 100px;
 }
