@@ -124,6 +124,7 @@ Control types currently available are:
 - `text`
 - `select` -- requires `options` to be set
 - `checkbox`
+- `json` - freeform input for any js object, not recommended
 
 TODO: screenshot here
 
@@ -170,7 +171,8 @@ The `props.json5` file does have an expected object structure, which is detailed
     required: Boolean, // is it a required prop?
     control: String, // for knobs, see <KnobsComponent> docs above
     options: []String, // if there are only a specific set of values, detail them here
-    defaultValue: String // for knobs, the starting value
+    defaultValue: String, // for knobs, the starting value
+    itemType: String // for array props, a way to freeform document what type(s) it expects its items to have
   }
 }
 ```
