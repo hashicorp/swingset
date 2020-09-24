@@ -8,6 +8,7 @@ const permittedKeys = [
   'options',
   'defaultValue',
   'required',
+  'itemType',
 ]
 
 export default function PropsTable({ props }) {
