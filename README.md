@@ -205,7 +205,7 @@ import createStaticProps from 'octavo/getStaticProps'
 const octavoOptions = {
   // if you have custom components you'd like to have available for use across all docs pages,
   // the can be added here. No default.
-  additionalComponents: { Tester: () => <p>testing 123</p> },
+  components: { Tester: () => <p>testing 123</p> },
   // Anything that can fit into the `src` of an image tag. Default is the octavo logo.
   customLogo: '/img/my-company-logo.svg',
 }
