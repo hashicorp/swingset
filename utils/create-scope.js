@@ -3,11 +3,15 @@ import createKnobsComponent from '../components/knobs-component'
 import PropsTable from '../components/props-table'
 
 export default function createScope(scope, octavoOptions) {
+  const scopeWithCustomComponents = Object.assign(
+    {},
+    scope,
+    octavoOptions.components || {}
+  )
   return {
-    ...scope,
-    LiveComponent: createLiveComponent(scope),
-    KnobsComponent: createKnobsComponent(scope),
+    ...scopeWithCustomComponents,
+    LiveComponent: createLiveComponent(scopeWithCustomComponents),
+    KnobsComponent: createKnobsComponent(scopeWithCustomComponents),
     PropsTable,
-    ...(octavoOptions.components || {}),
   }
 }
