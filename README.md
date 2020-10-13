@@ -159,25 +159,25 @@ TODO: screenshot here
 
 An additional, optional convention is to define your component's props in a separate file. You may ask yourself, "but why can't I use typescript, or jsdocs in my component, or PropTypes?!" The answer in this case is because octavo does not want to impose anything upon the way that you choose to build your components, so instead it offers an optional manner of detailing your props outside of your actual component.
 
-If you include a `props.json5` file in the folder with your component, it will be picked up, parsed, and injected into your `docs.mdx` file as `componentProps`. You can then pass it into the `<PropsTable>` and/or `<KnobsComponent>` components, either fully, or splitting out individual props or sets of props, to save yourself lots of repetition and make your docs file much more terse.
+If you include a `props.js` file in the folder with your component, it will be picked up, parsed, and injected into your `docs.mdx` file as `componentProps`. You can then pass it into the `<PropsTable>` and/or `<KnobsComponent>` components, either fully, or splitting out individual props or sets of props, to save yourself lots of repetition and make your docs file much more terse.
 
-The `props.json5` file does have an expected object structure, which is detailed below in psuedo-typescript style:
+The `props.js` file does have an expected object structure, which is detailed below in psuedo-typescript style:
 
 ```typescript
-{
+interface Properties = {
   propName: {
-    type: String, // write out the type you expect however you please
-    description: String, // a short description of your prop
-    required: Boolean, // is it a required prop?
-    control: String, // for knobs, see <KnobsComponent> docs above
-    options: []String, // if there are only a specific set of values, detail them here
-    defaultValue: String, // for knobs, the starting value
-    itemType: String // for array props, a way to freeform document what type(s) it expects its items to have
+    type: string, // write out the type you expect however you please
+    description: string, // a short description of your prop
+    required: boolean, // is it a required prop?
+    control: string, // for knobs, see <KnobsComponent> docs above
+    options: []string, // if there are only a specific set of values, detail them here
+    defaultValue: string, // for knobs, the starting value
+    properties: Properties | []Properties
   }
 }
 ```
 
-As with other components, props can be nested here as well. However, it will not work if you have `controls` specified on a parent and child prop both, because that's not possible. And feel free to use [this reference for json5 formatting](https://json5.org), I am sure you will enjoy it.
+As with other components, props can be nested here as well. However, it will not work if you have `controls` specified on a parent and child prop both, because that's not possible.
 
 ### Options
 
