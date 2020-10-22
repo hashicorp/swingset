@@ -89,12 +89,19 @@ As usual, a usage example upfront:
 <KnobsComponent
   knobs={{
     text: {
-      control: 'text',
-      defaultValue: 'http://example.com',
+      control: {
+        type: 'text',
+        value: 'http://example.com'
+      },
       required: true,
     },
-    disabled: { control: 'checkbox' },
-    theme: { control: 'select', options: ['foo', 'bar'] },
+    disabled: {
+      control: { type: 'checkbox' }
+    },
+    theme: {
+      control: { type: 'select' },
+      options: ['foo', 'bar']
+    },
   }}
 />
 ```
@@ -109,9 +116,12 @@ Nested props are supported as well, to infinite depth. For example, a nested `th
 <KnobsComponent
   knobs={{
     theme: {
-      color: { control: 'select', options: ['red', 'blue'] },
+      color: {
+        control: { type: 'select' },
+        options: ['red', 'blue']
+      },
       style: {
-        control: 'select',
+        control: { type: 'select' },
         options: ['primary', 'secondary', 'tertiary'],
       },
     },
@@ -166,18 +176,73 @@ The `props.js` file does have an expected object structure, which is detailed be
 ```typescript
 interface Properties = {
   propName: {
-    type: string, // write out the type you expect however you please
-    description: string, // a short description of your prop
-    required: boolean, // is it a required prop?
-    control: string, // for knobs, see <KnobsComponent> docs above
-    options: []string, // if there are only a specific set of values, detail them here
-    defaultValue: string, // for knobs, the starting value
-    properties: Properties | []Properties
+    type?: string, // write out the type you expect however you please
+    description?: string, // a short description of your prop
+    required?: boolean, // is it a required prop?
+    control?: {, // for knobs, see <KnobsComponent> docs above
+      type: string, // type of control
+      value?: any // starting value for the control
+    },
+    options?: []string, // if there are only a specific set of values allowed, detail them here
+    default?: string, // if there is a default value to this prop
+    testValue?: any, // value to be used as a test fixture, pairs with `fixtureFromProps`
+    properties: Properties | []Properties // if the prop is an array or object with nested items
   }
 }
 ```
 
-As with other components, props can be nested here as well. However, it will not work if you have `controls` specified on a parent and child prop both, because that's not possible.
+As with other components, props can be nested here as well. There are a few specific caveats with the `control` value in nested properties though:
+
+- 
+
+Let's lock this all in with a real example of a simple `props.js` file:
+
+```js
+module.exports = {
+  headline: {
+    type: 'string',
+    description: 'The headline displayed above the content',
+    required: true,
+    testValue: 'Test Headline',
+    control: { type: 'text' }
+  },
+  data: {
+    type: 'object',
+    description: 'data that the component will render',
+    properties: {
+      theme: {
+        type: 'string',
+        description: 'color theme of the rendered data',
+        options: ['dark', 'light'],
+        control: { type: 'text' },
+        default: 'light',
+      },
+      logos: {
+        type: 'array',
+        description: 'company logos to be displayed and show how cool your product is',
+        control: { type: 'json' },
+        properties: [{
+          type: 'string',
+          description: 'a string specifying a known company slug for which the logo will be displayed'
+        }, {
+          type: 'object',
+          description: 'if its not a known company, a custom object containing the necessary info to render',
+          properties: {
+            name: {
+              type: 'string',
+              description: 'the company name'
+            },
+            logo: {
+              type: 'string',
+              description: 'url of the company logo to be displayed'
+            }
+          }
+        }]
+      }
+    }
+  }
+}
+```
 
 ### Options
 
