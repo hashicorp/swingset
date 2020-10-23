@@ -79,6 +79,18 @@ Assuming that you're in a `docs.mdx` file with a `componentName` of `Button`, th
 
 This is a very simple component - it just expects a single child, as a string, which it renders into the code editor.
 
+If you have a need for components other than the component being documented in your example, these can be provided through a `components` prop, as such:
+
+```jsx
+<LiveComponent
+  components={{
+    SomeContent: () => <p>content yay</p>,
+  }}
+>{`<Button url='http://example.com'><SomeContent /></Button>`}</LiveComponent>
+```
+
+This is best used when you want to represent another component in your example, but the actual implementation of that component would distract from the point trying to be made in the example.
+
 TODO: screenshot here
 
 #### `<KnobsComponent>`
@@ -91,16 +103,16 @@ As usual, a usage example upfront:
     text: {
       control: {
         type: 'text',
-        value: 'http://example.com'
+        value: 'http://example.com',
       },
       required: true,
     },
     disabled: {
-      control: { type: 'checkbox' }
+      control: { type: 'checkbox' },
     },
     theme: {
       control: { type: 'select' },
-      options: ['foo', 'bar']
+      options: ['foo', 'bar'],
     },
   }}
 />
@@ -118,7 +130,7 @@ Nested props are supported as well, to infinite depth. For example, a nested `th
     theme: {
       color: {
         control: { type: 'select' },
-        options: ['red', 'blue']
+        options: ['red', 'blue'],
       },
       style: {
         control: { type: 'select' },
@@ -193,7 +205,7 @@ interface Properties = {
 
 As with other components, props can be nested here as well. There are a few specific caveats with the `control` value in nested properties though:
 
-- 
+-
 
 Let's lock this all in with a real example of a simple `props.js` file:
 
@@ -204,7 +216,7 @@ module.exports = {
     description: 'The headline displayed above the content',
     required: true,
     testValue: 'Test Headline',
-    control: { type: 'text' }
+    control: { type: 'text' },
   },
   data: {
     type: 'object',
@@ -219,28 +231,34 @@ module.exports = {
       },
       logos: {
         type: 'array',
-        description: 'company logos to be displayed and show how cool your product is',
+        description:
+          'company logos to be displayed and show how cool your product is',
         control: { type: 'json' },
-        properties: [{
-          type: 'string',
-          description: 'a string specifying a known company slug for which the logo will be displayed'
-        }, {
-          type: 'object',
-          description: 'if its not a known company, a custom object containing the necessary info to render',
-          properties: {
-            name: {
-              type: 'string',
-              description: 'the company name'
+        properties: [
+          {
+            type: 'string',
+            description:
+              'a string specifying a known company slug for which the logo will be displayed',
+          },
+          {
+            type: 'object',
+            description:
+              'if its not a known company, a custom object containing the necessary info to render',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'the company name',
+              },
+              logo: {
+                type: 'string',
+                description: 'url of the company logo to be displayed',
+              },
             },
-            logo: {
-              type: 'string',
-              description: 'url of the company logo to be displayed'
-            }
-          }
-        }]
-      }
-    }
-  }
+          },
+        ],
+      },
+    },
+  },
 }
 ```
 

@@ -4,7 +4,9 @@ componentName: 'Button'
 
 This is the docs for the button component
 
-<LiveComponent>{`<Button text='this is a button' />`}</LiveComponent>
+<LiveComponent
+  components={{ Test: () => <p>test successful</p> }}
+>{`<><Button text='this is a button' /><Test /></>`}</LiveComponent>
 
 <PropsTable props={componentProps} />
 
