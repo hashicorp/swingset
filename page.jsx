@@ -10,9 +10,16 @@ export default function createPage(octavoOptions = {}) {
   return function Page({ mdxSources, componentNames }) {
     // tracks the name of the current component
     const [name, setName] = useState(componentNames[0])
+    const [componentNotFound, setComponentNotFound] = useState(false)
 
     // if there's a component specified in the querystring, set that to current
-    useRestoreUrlState(({ component }) => component && setName(component))
+    useRestoreUrlState(({ component }) => {
+      if (component && components[component]) {
+        setName(component)
+      } else {
+        setComponentNotFound(component)
+      }
+    })
 
     // finds the actual component
     const Component = components[name].src
@@ -44,7 +51,14 @@ export default function createPage(octavoOptions = {}) {
             )
           })}
         </ul>
-        <div className={s.stage}>{mdx}</div>
+        <div className={s.stage}>
+          {componentNotFound && (
+            <p className={s.notFound}>
+              ⚠️ Component "{componentNotFound}" was not found
+            </p>
+          )}
+          {mdx}
+        </div>
       </div>
     )
   }

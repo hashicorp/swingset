@@ -65,6 +65,13 @@
   background-repeat: no-repeat;
 }
 
+.notFound {
+  background: #df7873;
+  padding: 12px 17px;
+  color: white;
+  border-radius: 5px;
+}
+
 .stage {
   padding: 20px 30px 30px;
   float: left;
