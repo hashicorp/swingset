@@ -24,6 +24,7 @@
   opacity: 0.5;
   cursor: pointer;
   transition: opacity 0.25s ease;
+  z-index: 9999;
 }
 
 .save:hover {
