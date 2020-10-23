@@ -3,6 +3,7 @@
   font-family: 'Source Code Pro', monospace;
   font-size: 14px;
   overflow: auto;
+  transition: all 0.25s ease;
 }
 
 .editor * > textarea:focus {
@@ -15,4 +16,23 @@
   padding: 20px;
   margin-bottom: 30px;
   position: relative;
+}
+
+.caret {
+  float: right;
+  margin-right: 5px;
+  transition: all 0.25s ease;
+  transform: rotate(180deg);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.collapsed {
+  display: none;
+}
+
+.caretCollapsed {
+  transform: rotate(0deg);
 }

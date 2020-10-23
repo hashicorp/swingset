@@ -91,6 +91,8 @@ If you have a need for components other than the component being documented in y
 
 This is best used when you want to represent another component in your example, but the actual implementation of that component would distract from the point trying to be made in the example.
 
+There's one more useful prop to `LiveComponent` -- `collapsed`. If this prop is set to `true`, the code editor will be collapsed by default - when clicked it will expand. This is useful for examples that contain a lot of code - you can collapse the editor by default to make it easier for users to scroll through examples, then expand the code editor only when they want to see/edit the source code. It is `true` by default.
+
 TODO: screenshot here
 
 #### `<KnobsComponent>`
