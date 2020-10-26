@@ -1,7 +1,7 @@
 {
   "name": "example",
   "version": "1.0.0",
-  "description": "an example app that uses octavo",
+  "description": "an example app that uses swingset",
   "main": "index.js",
   "scripts": {
     "start": "next dev",
@@ -13,7 +13,7 @@
     "@next/bundle-analyzer": "^9.5.2",
     "next": "^9.5.1",
     "next-transpile-modules": "^4.0.2",
-    "octavo": "file:../",
+    "swingset": "file:../",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

@@ -4,9 +4,9 @@ import { existsSync } from 'fsexists'
 import requireFromString from 'require-from-string'
 import renderToString from 'next-mdx-remote/render-to-string'
 import createScope from './utils/create-scope'
-import components from './__octavo_components'
+import components from './__swingset_components'
 
-export default function createStaticProps(octavoOptions = {}) {
+export default function createStaticProps(swingsetOptions = {}) {
   return async function getStaticProps() {
     // Go through each component, read and format the docs and props files' content
     const docsSrcs = Object.keys(components).map((name) => {
@@ -40,7 +40,7 @@ export default function createStaticProps(octavoOptions = {}) {
         // Next, we render the content, passing as the second argument a "scope" object, which contains
         // our component and some additional presentational components that are made available in the mdx file.
         return renderToString(content, {
-          components: createScope({ [name]: Component }, octavoOptions),
+          components: createScope({ [name]: Component }, swingsetOptions),
           scope: props && { componentProps: requireFromString(props) },
         }).then((res) => [name, res])
         // transform to an object for easier name/component mapping on the client side

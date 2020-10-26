@@ -1,9 +1,9 @@
-import createPage from 'octavo/page'
-import createStaticProps from 'octavo/getStaticProps'
+import createPage from 'swingset/page'
+import createStaticProps from 'swingset/getStaticProps'
 
-const octavoConfig = {
+const swingsetConfig = {
   components: { Tester: () => <p>testing 123</p> },
 }
 
-export default createPage(octavoConfig)
-export const getStaticProps = createStaticProps(octavoConfig)
+export default createPage(swingsetConfig)
+export const getStaticProps = createStaticProps(swingsetConfig)

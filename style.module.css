@@ -55,12 +55,12 @@
 }
 
 .sidebar .logo {
-  max-width: 62%;
+  max-width: 80%;
   margin: 20px 30px 25px 30px;
-  background-image: url('./img/octavo-dark.svg');
+  background-image: url('./img/swingset-dark.svg');
   display: block;
-  width: 150px;
-  height: 27px;
+  width: 197px;
+  height: 45px;
   background-size: 100%;
   background-repeat: no-repeat;
 }

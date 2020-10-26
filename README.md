@@ -1,4 +1,6 @@
-# Octavo
+# Swingset
+
+![Swingset Logo](https://p176.p0.n0.cdn.getcloudapp.com/items/Blu1Ryvg/swingset-logo.svg)
 
 An opinionated, drop-in component library for next.js apps.
 
@@ -6,19 +8,19 @@ An opinionated, drop-in component library for next.js apps.
 
 ### Installation
 
-Install via npm with `npm i octavo`, then add the plugin to your `next.config.js` as such:
+Install via npm with `npm i swingset`, then add the plugin to your `next.config.js` as such:
 
 ```js
-const withOctavo = require('octavo')
+const withSwingset = require('swingset')
 
-module.exports = withOctavo(/* octavo options */)(/* normal nextjs config */)
+module.exports = withSwingset(/* swingset options */)(/* normal nextjs config */)
 ```
 
-You then need to create a page in your nextjs app where octavo will live. You can "inject" octavo on to any page of your choosing. Something like `/components` might be a nice choice. When you have decided on a page, octavo can be injected as follows:
+You then need to create a page in your nextjs app where swingset will live. You can "inject" swingset on to any page of your choosing. Something like `/components` might be a nice choice. When you have decided on a page, swingset can be injected as follows:
 
 ```jsx
-import createPage from 'octavo/page'
-import createStaticProps from 'octavo/getStaticProps'
+import createPage from 'swingset/page'
+import createStaticProps from 'swingset/getStaticProps'
 
 export default createPage()
 export const getStaticProps = createStaticProps()
@@ -28,18 +30,18 @@ With this in place, if you go to the page you injected it on, it should work, al
 
 ### Usage
 
-Octavo points to `components/*` as its default location for components, in line with next.js convention. This is configurable if needed though, see [the options section, below](#options). It expects your components to live in folders, perhaps they contain an index where the components lives, and some other stuff like css. It doesn't matter what else is in the folder, as long as it has an index. To start writing docs for a specific component, add a `docs.mdx` file to the component's folder, and make sure that this file has a front matter block containing a key/value pair for `componentName`. Let's look at an example. Here's how your folder structure might look:
+Swingset points to `components/*` as its default location for components, in line with next.js convention. This is configurable if needed though, see [the options section, below](#options). It expects your components to live in folders, perhaps they contain an index where the components lives, and some other stuff like css. It doesn't matter what else is in the folder, as long as it has an index. To start writing docs for a specific component, add a `docs.mdx` file to the component's folder, and make sure that this file has a front matter block containing a key/value pair for `componentName`. Let's look at an example. Here's how your folder structure might look:
 
 ```
 .
 ├── pages
 │   ├── index.jsx
-│   └── components.jsx <- here's where you injected octavo
+│   └── components.jsx <- here's where you injected swingset
 └── components
     └── button
         ├── index.jsx <- this is what's returned when you import `components/button`
         ├── style.module.css
-        └── docs.mdx <- here's the docs file you created for octavo
+        └── docs.mdx <- here's the docs file you created for swingset
 ```
 
 So, you have only now added two things to your app -- a file in `pages` where you injected the component library itself, and a `docs.mdx` file in one of your components. And remember, the `docs.mdx` file needs frontmatter, or you will get an error. Here's how a minimal `docs.mdx` file might look:
@@ -60,7 +62,7 @@ Now let's actually make these docs useful. There are a few components that are m
 2. `<LiveComponent>` - a component that can be used to render a live code editor that will display and update your component
 3. `<KnobsComponent>` - a component that can be used to render a set of UI controls that will live update a rendered version of your component
 4. `<PropsTable>` - a component that will render a full or partial list of your component's props.
-5. Any of your own components you specified in the [octavo options](#options)
+5. Any of your own components you specified in the [swingset options](#options)
 
 We'll dig into how each of these work in the following sections, and give plenty of examples.
 
@@ -181,7 +183,7 @@ TODO: screenshot here
 
 ### Props
 
-An additional, optional convention is to define your component's props in a separate file. You may ask yourself, "but why can't I use typescript, or jsdocs in my component, or PropTypes?!" The answer in this case is because octavo does not want to impose anything upon the way that you choose to build your components, so instead it offers an optional manner of detailing your props outside of your actual component.
+An additional, optional convention is to define your component's props in a separate file. You may ask yourself, "but why can't I use typescript, or jsdocs in my component, or PropTypes?!" The answer in this case is because swingset does not want to impose anything upon the way that you choose to build your components, so instead it offers an optional manner of detailing your props outside of your actual component.
 
 If you include a `props.js` file in the folder with your component, it will be picked up, parsed, and injected into your `docs.mdx` file as `componentProps`. You can then pass it into the `<PropsTable>` and/or `<KnobsComponent>` components, either fully, or splitting out individual props or sets of props, to save yourself lots of repetition and make your docs file much more terse.
 
@@ -266,12 +268,12 @@ module.exports = {
 
 ### Options
 
-When initializing octavo in `next.config.js`, there are a few options you can pass it to customize its behavior. The example below shows how that might be done. None of the options are required, they all have defaults.
+When initializing swingset in `next.config.js`, there are a few options you can pass it to customize its behavior. The example below shows how that might be done. None of the options are required, they all have defaults.
 
 ```jsx
-const withOctavo = require('octavo')
+const withSwingset = require('swingset')
 
-module.exports = withOctavo({
+module.exports = withSwingset({
   // Where your components live. "components/*" is the default.
   componentsRoot: 'components/*',
   // Where your generic docs pages live. No default
@@ -284,19 +286,19 @@ module.exports = withOctavo({
 There are some additional options that can be passed in to the page configuration for customization, example below:
 
 ```js
-import createPage from 'octavo/page'
-import createStaticProps from 'octavo/getStaticProps'
+import createPage from 'swingset/page'
+import createStaticProps from 'swingset/getStaticProps'
 
-const octavoOptions = {
+const swingsetOptions = {
   // if you have custom components you'd like to have available for use across all docs pages,
   // the can be added here. No default.
   components: { Tester: () => <p>testing 123</p> },
-  // Anything that can fit into the `src` of an image tag. Default is the octavo logo.
+  // Anything that can fit into the `src` of an image tag. Default is the swingset logo.
   customLogo: '/img/my-company-logo.svg',
 }
 
-export default createPage(octavoOptions)
-export const getStaticProps = createStaticProps(octavoOptions)
+export default createPage(swingsetOptions)
+export const getStaticProps = createStaticProps(swingsetOptions)
 ```
 
 ### Notes

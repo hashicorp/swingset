@@ -4,9 +4,9 @@ import Head from 'next/head'
 import hydrate from 'next-mdx-remote/hydrate'
 import createScope from './utils/create-scope'
 import { useRestoreUrlState, setUrlState } from './utils/url-state'
-import components from './__octavo_components'
+import components from './__swingset_components'
 
-export default function createPage(octavoOptions = {}) {
+export default function createPage(swingsetOptions = {}) {
   return function Page({ mdxSources, componentNames }) {
     // tracks the name of the current component
     const [name, setName] = useState(componentNames[0])
@@ -26,7 +26,7 @@ export default function createPage(octavoOptions = {}) {
 
     // fully hydrated mdx document, with the components in the created scope available for use
     const mdx = hydrate(mdxSources[name], {
-      components: createScope({ [name]: Component }, octavoOptions),
+      components: createScope({ [name]: Component }, swingsetOptions),
     })
 
     return (

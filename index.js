@@ -12,7 +12,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
       )
 
       config.module.rules.push({
-        test: /__octavo_components/,
+        test: /__swingset_components/,
         use: [
           {
             loader: path.join(__dirname, 'components-loader.js'),

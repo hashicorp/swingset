@@ -5,7 +5,7 @@ const { existsSync } = require('fsexists')
 const matter = require('gray-matter')
 const { getOptions } = require('loader-utils')
 
-module.exports = function octavoComponentsLoader() {
+module.exports = function swingsetComponentsLoader() {
   const { pluginOptions, webpackConfig } = getOptions(this)
 
   const allComponents = globby.sync(`${pluginOptions.componentsRoot}`, {
