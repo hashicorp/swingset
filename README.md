@@ -1,4 +1,4 @@
-<img src='https://camo.githubusercontent.com/b430e1f37f9a7f596acde762779536f600992267/68747470733a2f2f703137362e70302e6e302e63646e2e676574636c6f75646170702e636f6d2f6974656d732f357a75773231796b2f7377696e677365742d6c696768742e737667' style='max-width: 60%; margin-bottom: 25px;' />
+![Swingset](https://p176.p0.n0.cdn.getcloudapp.com/items/NQu14DNO/swingset-light-github.svg)
 
 An opinionated, drop-in component library for next.js apps.
 
