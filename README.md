@@ -1,6 +1,4 @@
-# Swingset
-
-![Swingset Logo](https://p176.p0.n0.cdn.getcloudapp.com/items/Blu1Ryvg/swingset-logo.svg)
+![Swingset](https://p176.p0.n0.cdn.getcloudapp.com/items/5zuw21yk/swingset-light.svg)
 
 An opinionated, drop-in component library for next.js apps.
 
