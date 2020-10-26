@@ -16,7 +16,6 @@ export default function PropsTable({ props }) {
 }
 
 function renderRows(props, prefixes = []) {
-  // console.log(props)
   const res = []
   if (Array.isArray(props)) {
     props.map((prop) => {
