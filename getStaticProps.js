@@ -1,7 +1,7 @@
 import fs from 'fs'
 import matter from 'gray-matter'
 import { existsSync } from 'fsexists'
-import json5 from 'json5'
+import requireFromString from 'require-from-string'
 import renderToString from 'next-mdx-remote/render-to-string'
 import createScope from './utils/create-scope'
 import components from './__octavo_components'
@@ -41,7 +41,7 @@ export default function createStaticProps(octavoOptions = {}) {
         // our component and some additional presentational components that are made available in the mdx file.
         return renderToString(content, {
           components: createScope({ [name]: Component }, octavoOptions),
-          scope: props && { componentProps: json5.parse(props) },
+          scope: props && { componentProps: requireFromString(props) },
         }).then((res) => [name, res])
         // transform to an object for easier name/component mapping on the client side
       })

@@ -102,7 +102,7 @@ function generateComponentsMetadataFile(components) {
       memo += `  '${component.name}': {
     path: '${component.path}',
     docsPath: '${path.join(component.path, 'docs.mdx')}',
-    propsPath: '${path.join(component.path, 'props.json5')}',
+    propsPath: '${path.join(component.path, 'props.js')}',
     src: ${component.name}
   },
 `

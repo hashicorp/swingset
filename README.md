@@ -79,6 +79,20 @@ Assuming that you're in a `docs.mdx` file with a `componentName` of `Button`, th
 
 This is a very simple component - it just expects a single child, as a string, which it renders into the code editor.
 
+If you have a need for components other than the component being documented in your example, these can be provided through a `components` prop, as such:
+
+```jsx
+<LiveComponent
+  components={{
+    SomeContent: () => <p>content yay</p>,
+  }}
+>{`<Button url='http://example.com'><SomeContent /></Button>`}</LiveComponent>
+```
+
+This is best used when you want to represent another component in your example, but the actual implementation of that component would distract from the point trying to be made in the example.
+
+There's one more useful prop to `LiveComponent` -- `collapsed`. If this prop is set to `true`, the code editor will be collapsed by default - when clicked it will expand. This is useful for examples that contain a lot of code - you can collapse the editor by default to make it easier for users to scroll through examples, then expand the code editor only when they want to see/edit the source code. It is `true` by default.
+
 TODO: screenshot here
 
 #### `<KnobsComponent>`
@@ -89,12 +103,19 @@ As usual, a usage example upfront:
 <KnobsComponent
   knobs={{
     text: {
-      control: 'text',
-      defaultValue: 'http://example.com',
+      control: {
+        type: 'text',
+        value: 'http://example.com',
+      },
       required: true,
     },
-    disabled: { control: 'checkbox' },
-    theme: { control: 'select', options: ['foo', 'bar'] },
+    disabled: {
+      control: { type: 'checkbox' },
+    },
+    theme: {
+      control: { type: 'select' },
+      options: ['foo', 'bar'],
+    },
   }}
 />
 ```
@@ -109,9 +130,12 @@ Nested props are supported as well, to infinite depth. For example, a nested `th
 <KnobsComponent
   knobs={{
     theme: {
-      color: { control: 'select', options: ['red', 'blue'] },
+      color: {
+        control: { type: 'select' },
+        options: ['red', 'blue'],
+      },
       style: {
-        control: 'select',
+        control: { type: 'select' },
         options: ['primary', 'secondary', 'tertiary'],
       },
     },
@@ -159,25 +183,86 @@ TODO: screenshot here
 
 An additional, optional convention is to define your component's props in a separate file. You may ask yourself, "but why can't I use typescript, or jsdocs in my component, or PropTypes?!" The answer in this case is because octavo does not want to impose anything upon the way that you choose to build your components, so instead it offers an optional manner of detailing your props outside of your actual component.
 
-If you include a `props.json5` file in the folder with your component, it will be picked up, parsed, and injected into your `docs.mdx` file as `componentProps`. You can then pass it into the `<PropsTable>` and/or `<KnobsComponent>` components, either fully, or splitting out individual props or sets of props, to save yourself lots of repetition and make your docs file much more terse.
+If you include a `props.js` file in the folder with your component, it will be picked up, parsed, and injected into your `docs.mdx` file as `componentProps`. You can then pass it into the `<PropsTable>` and/or `<KnobsComponent>` components, either fully, or splitting out individual props or sets of props, to save yourself lots of repetition and make your docs file much more terse.
 
-The `props.json5` file does have an expected object structure, which is detailed below in psuedo-typescript style:
+The `props.js` file does have an expected object structure, which is detailed below in psuedo-typescript style:
 
 ```typescript
-{
+interface Properties = {
   propName: {
-    type: String, // write out the type you expect however you please
-    description: String, // a short description of your prop
-    required: Boolean, // is it a required prop?
-    control: String, // for knobs, see <KnobsComponent> docs above
-    options: []String, // if there are only a specific set of values, detail them here
-    defaultValue: String, // for knobs, the starting value
-    itemType: String // for array props, a way to freeform document what type(s) it expects its items to have
+    type?: string, // write out the type you expect however you please
+    description?: string, // a short description of your prop
+    required?: boolean, // is it a required prop?
+    control?: {, // for knobs, see <KnobsComponent> docs above
+      type: string, // type of control
+      value?: any // starting value for the control
+    },
+    options?: []string, // if there are only a specific set of values allowed, detail them here
+    default?: string, // if there is a default value to this prop
+    testValue?: any, // value to be used as a test fixture, pairs with `fixtureFromProps`
+    properties: Properties | []Properties // if the prop is an array or object with nested items
   }
 }
 ```
 
-As with other components, props can be nested here as well. However, it will not work if you have `controls` specified on a parent and child prop both, because that's not possible. And feel free to use [this reference for json5 formatting](https://json5.org), I am sure you will enjoy it.
+As with other components, props can be nested here as well. There are a few specific caveats with the `control` value in nested properties though:
+
+-
+
+Let's lock this all in with a real example of a simple `props.js` file:
+
+```js
+module.exports = {
+  headline: {
+    type: 'string',
+    description: 'The headline displayed above the content',
+    required: true,
+    testValue: 'Test Headline',
+    control: { type: 'text' },
+  },
+  data: {
+    type: 'object',
+    description: 'data that the component will render',
+    properties: {
+      theme: {
+        type: 'string',
+        description: 'color theme of the rendered data',
+        options: ['dark', 'light'],
+        control: { type: 'text' },
+        default: 'light',
+      },
+      logos: {
+        type: 'array',
+        description:
+          'company logos to be displayed and show how cool your product is',
+        control: { type: 'json' },
+        properties: [
+          {
+            type: 'string',
+            description:
+              'a string specifying a known company slug for which the logo will be displayed',
+          },
+          {
+            type: 'object',
+            description:
+              'if its not a known company, a custom object containing the necessary info to render',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'the company name',
+              },
+              logo: {
+                type: 'string',
+                description: 'url of the company logo to be displayed',
+              },
+            },
+          },
+        ],
+      },
+    },
+  },
+}
+```
 
 ### Options
 

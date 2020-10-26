@@ -1,16 +1,6 @@
 import s from './style.module.css'
 import { Fragment } from 'react'
 
-const permittedKeys = [
-  'description',
-  'type',
-  'control',
-  'options',
-  'defaultValue',
-  'required',
-  'itemType',
-]
-
 export default function PropsTable({ props }) {
   return (
     <table className={s.root}>
@@ -25,52 +15,55 @@ export default function PropsTable({ props }) {
   )
 }
 
-function renderRows(props, prefix) {
+function renderRows(props, prefixes = []) {
   const res = []
-  // let's start by looping through the props object
-  for (let key in props) {
-    const value = props[key]
-
-    // we know which standard keys are expected -- when there are non-standard keys, this is an indication that
-    // we likely have a nested prop
-    const nonStandardKeys = Object.keys(props[key]).filter(
-      (k) => !permittedKeys.includes(k)
-    )
-    const hasNestedProps = !props[key].control && nonStandardKeys.length > 0
-
-    // warn the user if they have included keys in the props object that are non-standard
-    if (props[key].control && nonStandardKeys.length > 0) {
-      console.warn(
-        `The prop object for "${key}" contains non-standard keys: ${JSON.stringify(
-          nonStandardKeys
-        )}. Allowed keys are: ${JSON.stringify(permittedKeys)}`
-      )
-    }
-
-    // render the row given the information
-    res.push(renderRow(key, value, hasNestedProps, prefix))
-
-    // if we have a row that contains nested props, we need to render more rows
-    if (hasNestedProps) {
-      // first let's remove the permitted keys since we already rendered these, to leave only
-      // the top-level nested props
-      const nestedPropsCopy = JSON.parse(JSON.stringify(props[key]))
-      permittedKeys.map((k) => delete nestedPropsCopy[k])
-
-      // now we recurse with the rest of the props
-      res.push(renderRows(nestedPropsCopy, key))
+  if (Array.isArray(props)) {
+    props.map((prop) => {
+      // render the row for the current property
+      res.push(renderRow('[x]', prop, prefixes, true))
+      // render rows for sub-properties if they exist
+      if (prop.properties)
+        res.push(renderRows(prop.properties, [...prefixes, '[x]']))
+    })
+  } else {
+    for (let key in props) {
+      const value = props[key]
+      // figure out whether the property of the current item is an array, and whether it has multiple valid types
+      const arrayPropertyOptions =
+        value.properties && value.properties.length
+          ? value.properties.length > 1
+            ? value.properties.length
+            : 'single'
+          : null
+      // render the row given the information
+      res.push(renderRow(key, value, prefixes, null, arrayPropertyOptions))
+      // render rows for sub-properties if relevant
+      if (value.properties)
+        res.push(renderRows(value.properties, [...prefixes, key]))
     }
   }
-
   return res
 }
 
-function renderRow(key, value, hasNestedProps, prefix) {
+function renderRow(key, value, prefixes, isArray, arrayOptions) {
+  // this bunch of business is to ensure that object syntax chain are separated by periods,
+  // but array syntax are not. like `foo.bar.baz` vs `foo[x].bar`
+  // if the current item is an array syntax, we slice off the trailing period below
+  const prefixSet = prefixes.reduce(
+    (m, p, i) => `${m}${prefixes[i + 1]?.charAt(0) === '[' ? p : p + '.'}`,
+    ''
+  )
   return (
     <tr key={key}>
       <td>
         <code>
-          {prefix ? <span className={s.prefix}>{prefix}.</span> : ''}
+          {prefixes.length ? (
+            <span className={s.prefix}>
+              {isArray ? prefixSet.slice(0, -1) : prefixSet}
+            </span>
+          ) : (
+            ''
+          )}
           {key}
           {value.required ? <span className={s.required}>*</span> : ''}
           <div className={s.type}>{value.type}</div>
@@ -95,12 +88,20 @@ function renderRow(key, value, hasNestedProps, prefix) {
             <code>{value.itemType}</code>
           </div>
         )}
-        {hasNestedProps && (
+        {value.properties && (
           <div className={s.containsNested}>
-            Contains nested props, see below:
+            {renderHelperText(arrayOptions)}
           </div>
         )}
       </td>
     </tr>
   )
+}
+
+function renderHelperText(arrayOptions) {
+  if (typeof arrayOptions === 'number')
+    return `Array can contain any of the ${arrayOptions} types below:`
+  if (arrayOptions === 'single')
+    return 'Array members must be of the type below:'
+  return 'Object contains nested props, see below:'
 }
