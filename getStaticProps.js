@@ -6,6 +6,7 @@ import renderToString from 'next-mdx-remote/render-to-string'
 import createScope from './utils/create-scope'
 import components from './__swingset_components'
 
+// TODO: this whole thing honestly needs a refactor
 export default function createStaticProps(swingsetOptions = {}) {
   return async function getStaticProps() {
     // Go through each component, read and format the docs and props files' content
@@ -25,13 +26,14 @@ export default function createStaticProps(swingsetOptions = {}) {
       return {
         frontMatter: data,
         props: propsContent,
+        propsPath: component.propsPath,
         // Automatically inject a primary headline containing the component's name
         content: `# \`<${data.componentName}>\` Component\n${content}`,
       }
     })
 
     const mdxSources = await Promise.all(
-      docsSrcs.map(({ content, frontMatter, props }) => {
+      docsSrcs.map(({ content, frontMatter, props, propsPath }) => {
         const name = frontMatter.componentName
 
         // First, we need to get the actual component source
@@ -41,7 +43,9 @@ export default function createStaticProps(swingsetOptions = {}) {
         // our component and some additional presentational components that are made available in the mdx file.
         return renderToString(content, {
           components: createScope({ [name]: Component }, swingsetOptions),
-          scope: props && { componentProps: requireFromString(props) },
+          scope: props && {
+            componentProps: requireFromString(props, propsPath),
+          },
         }).then((res) => [name, res])
         // transform to an object for easier name/component mapping on the client side
       })

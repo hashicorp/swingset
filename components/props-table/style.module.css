@@ -43,6 +43,7 @@
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
   color: #777;
+  font-family: monospace;
 }
 
 .root .options {
@@ -54,10 +55,6 @@
   opacity: 0.6;
 }
 
-.root .options code {
-  color: #e86c60;
-}
-
 .root .containsNested {
   font-size: 0.9em;
   font-style: italic;
@@ -66,4 +63,18 @@
 
 .root .prefix {
   color: #888;
+}
+
+.root .descriptionCol code {
+  padding: 4px 5px;
+  background: #de5b5b1f;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #a84343;
+}
+
+.root .options code {
+  color: #e86c60;
+  background: none;
+  padding: 0;
 }
