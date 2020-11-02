@@ -1,4 +1,5 @@
 import s from './style.module.css'
+import marked from 'marked'
 import { Fragment } from 'react'
 
 export default function PropsTable({ props }) {
@@ -66,11 +67,15 @@ function renderRow(key, value, prefixes, isArray, arrayOptions) {
           )}
           {key}
           {value.required ? <span className={s.required}>*</span> : ''}
-          <div className={s.type}>{value.type}</div>
         </code>
+        <div className={s.type}>{value.type}</div>
       </td>
-      <td>
-        {value.description}
+      <td className={s.descriptionCol}>
+        <span
+          dangerouslySetInnerHTML={{
+            __html: marked.parseInline(value.description || ''),
+          }}
+        />
         {value.options && (
           <div className={s.options}>
             <strong>Options: </strong>

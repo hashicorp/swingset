@@ -59,10 +59,11 @@
   margin: 20px 30px 25px 30px;
   background-image: url('./img/swingset-dark.svg');
   display: block;
-  width: 197px;
+  width: 190px;
   height: 45px;
   background-size: 100%;
   background-repeat: no-repeat;
+  flex-shrink: 0;
 }
 
 .notFound {

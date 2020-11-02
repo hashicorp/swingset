@@ -12,6 +12,7 @@
     "globby": "^11.0.1",
     "gray-matter": "^4.0.2",
     "loader-utils": "^2.0.0",
+    "marked": "^1.2.2",
     "next-mdx-remote": "1.0.0",
     "query-string": "^5.1.1",
     "react-live": "^2.2.2",
