@@ -299,6 +299,56 @@ export default createPage(swingsetOptions)
 export const getStaticProps = createStaticProps(swingsetOptions)
 ```
 
+### Test Utilities
+
+Swingset currently ships with a single test utility that can be used to extract deep-nested `testValue` data from props for use as test fixtures. Lets go through an example, starting with a sample `props.js` file:
+
+```js
+module.exports = {
+  foo: {
+    type: 'string',
+    description: '...',
+    testValue: 'value',
+  },
+  bar: {
+    type: 'object',
+    description: '...',
+    properties: {
+      baz: {
+        type: 'string',
+        testValue: 'value',
+      },
+    },
+    testValue: {},
+  },
+}
+```
+
+Now let's look at how this could be used in some tests:
+
+```js
+const props = require('./props')
+const { getTestValues } = require('swingset/testing')
+
+getTestValues(props) // => { foo: 'value', bar: { baz: 'value' } }
+```
+
+This set of props can now be used as a fixture for component tests, perhaps like this with `jest`:
+
+```js
+const props = require('./props')
+const Component = require('./')
+const { render } = require('@testing-library/react')
+const { getTestValues } = require('swingset/testing')
+
+const defaultProps = getTestValues(props)
+
+test('default props renders without error', () => {
+  const render(<Component {...defaultProps} />)
+  // ....
+})
+```
+
 ### Notes
 
 Any global styles that you specify by importing to `_app.jsx` will be reflected in your component library. Normally, this is a good thing, as your components will be showcased as they normally would within your app, but if any styles are not rendering as expected in the component library, it may be due to global overrides.
