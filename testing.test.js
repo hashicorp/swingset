@@ -49,6 +49,29 @@ test('nested values with an array containing a monotype', () => {
   expect(res.base[0]).toBe('nested-string')
 })
 
+test('no test values used at all', () => {
+  const res = getTestValues({
+    base: {
+      properties: {
+        array: {
+          properties: [
+            { type: 'object', properties: { foo: { type: 'string' } } },
+          ],
+        },
+        object: {
+          type: 'object',
+          properties: {
+            bar: {
+              type: 'string',
+            },
+          },
+        },
+      },
+    },
+  })
+  expect(res).toEqual({})
+})
+
 test('errors when a multi-type array has a test value at base and in properties', () => {
   expect(() => {
     getTestValues({
@@ -104,20 +127,18 @@ test('properties is not an array or object', () => {
 })
 
 // It may be better to inject a default empty value for undefined types, but this
-// adds a lot of code complexity, so passing on it for now - the test is here for the future though
+// adds a lot of code complexity, so passing on it for now - you cannot have nested values
+// without a defined base value
 test('sub-properties define test values but base property is undefined', () => {
-  expect(() =>
-    getTestValues({
-      base: {
-        properties: {
-          foo: {
-            type: 'string',
-            testValue: 'nested',
-          },
+  const res = getTestValues({
+    base: {
+      properties: {
+        foo: {
+          type: 'string',
+          testValue: 'nested',
         },
       },
-    })
-  ).toThrow(
-    'The property "base" has a "properties" key, which requires an array or object type, but its "testValue" is undefined, which has a type of "undefined". Make sure that the types match.'
-  )
+    },
+  })
+  expect(res).toEqual({})
 })
