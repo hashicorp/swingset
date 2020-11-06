@@ -349,6 +349,77 @@ test('default props renders without error', () => {
 })
 ```
 
+It's worth noting that for nested props, the root and children can both have `testValue`s, and they will be merged together. For example, the following `props.js` file:
+
+```js
+module.exports = {
+  foo: {
+    type: 'object',
+    properties: {
+      bar: {
+        type: 'string',
+        testValue: 'value',
+      },
+      baz: {
+        type: 'string',
+      },
+    },
+    testValue: { bar: 'root value', baz: 'root value' },
+  },
+}
+```
+
+...would produce `{ foo: { bar: 'value', baz: 'root value' } }`. If the root does not have a `testValue`, however, none of its children will be reflected in the output at all. So the following `props.js` file:
+
+```js
+module.exports = {
+  foo: {
+    type: 'object',
+    properties: {
+      bar: {
+        type: 'string',
+        testValue: 'value',
+      },
+    },
+  },
+}
+```
+
+Would produce `{}` as its output, since `foo` does not have a `testValue`. There are two options if this is not your desired output. First, supply parent values with an empty object/array default, depending on the property type, as such:
+
+```js
+module.exports = {
+  foo: {
+    type: 'object',
+    properties: {
+      bar: {
+        type: 'string',
+        testValue: 'value',
+      },
+    },
+    testValue: {},
+  },
+}
+```
+
+Second, supply your entire fixture at the root level, rather than breaking it apart and distributing it to sub-properties, as such:
+
+```js
+module.exports = {
+  foo: {
+    type: 'object',
+    properties: {
+      bar: {
+        type: 'string',
+      },
+    },
+    testValue: { bar: 'value' },
+  },
+}
+```
+
+Choose whichever option feels more clear for your use!
+
 ### Notes
 
 Any global styles that you specify by importing to `_app.jsx` will be reflected in your component library. Normally, this is a good thing, as your components will be showcased as they normally would within your app, but if any styles are not rendering as expected in the component library, it may be due to global overrides.

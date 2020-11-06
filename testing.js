@@ -14,11 +14,10 @@ function getTestValues(propsSpec) {
         // first, we will only recurse to pull `testValues` if its a monotype array
         if (prop.properties.length === 1) {
           // here we pass it in as a fake object then extract the result and add it to an array
-          memo[name] = [
-            getTestValues({
-              arrayItem: prop.properties[0],
-            }).arrayItem,
-          ]
+          const nestedTestValues = getTestValues({
+            arrayItem: prop.properties[0],
+          }).arrayItem
+          if (nestedTestValues) memo[name] = [nestedTestValues]
         } else {
           const subPropsWithTestValues = prop.properties.filter(
             (subProp) => !!subProp.testValue
@@ -36,6 +35,8 @@ function getTestValues(propsSpec) {
         // we can recurse and assign the results directly
         if (typeof memo[name] === 'object') {
           Object.assign(memo[name], getTestValues(prop.properties))
+        } else if (typeof memo[name] === 'undefined') {
+          // do nothing, there is no test value and thats ok
         } else {
           throw new Error(
             `The property "${name}" has a "properties" key, which requires an array or object type, but its "testValue" is ${JSON.stringify(
