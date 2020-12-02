@@ -36,7 +36,8 @@
     "next": "9.x",
     "react": "16.x",
     "react-dom": "16.x",
-    "webpack": "4.x"
+    "webpack": "4.x",
+    "next-transpile-modules": "^4.1.0"
   },
   "publishConfig": {
     "access": "public"
@@ -46,7 +47,7 @@
     "url": "git+https://github.com/hashicorp/swingset.git"
   },
   "scripts": {
-    "example": "cd example && npm start",
+    "example": "cd example && [ ! -d 'node_modules' ] && npm i || npm start",
     "test": "jest",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
