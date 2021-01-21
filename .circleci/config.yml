@@ -5,4 +5,4 @@ workflows:
   test:
     jobs:
       - node/test:
-          run-command: npm run test
+          run-command: test
