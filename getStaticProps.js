@@ -16,6 +16,11 @@ export default function createStaticProps(swingsetOptions = {}) {
       const { content, data } = matter(
         fs.readFileSync(component.docsPath, 'utf8')
       )
+      //  Read and parse the component's package.json, if possible
+      const pathToPackageJson = component.path + '/package.json'
+      const packageJson = existsSync(pathToPackageJson)
+        ? JSON.parse(fs.readFileSync(pathToPackageJson, 'utf8'))
+        : undefined
 
       // Check for a file called 'props.json5' - if it exists, we import it as `props`
       // to the mdx file. This is a nice pattern for knobs and props tables.
@@ -27,28 +32,34 @@ export default function createStaticProps(swingsetOptions = {}) {
         frontMatter: data,
         props: propsContent,
         propsPath: component.propsPath,
+        packageJson,
         // Automatically inject a primary headline containing the component's name
         content: `# \`<${data.componentName}>\` Component\n${content}`,
       }
     })
 
     const mdxSources = await Promise.all(
-      docsSrcs.map(({ content, frontMatter, props, propsPath }) => {
-        const name = frontMatter.componentName
+      docsSrcs.map(
+        ({ content, frontMatter, props, propsPath, packageJson }) => {
+          const name = frontMatter.componentName
 
-        // First, we need to get the actual component source
-        const Component = components[name].src
+          // First, we need to get the actual component source
+          const Component = components[name].src
 
-        // Next, we render the content, passing as the second argument a "scope" object, which contains
-        // our component and some additional presentational components that are made available in the mdx file.
-        return renderToString(content, {
-          components: createScope({ [name]: Component }, swingsetOptions),
-          scope: props && {
-            componentProps: requireFromString(props, propsPath),
-          },
-        }).then((res) => [name, res])
-        // transform to an object for easier name/component mapping on the client side
-      })
+          // Next, we render the content, passing as the second argument a "scope" object, which contains
+          // our component and some additional presentational components that are made available in the mdx file.
+          return renderToString(content, {
+            components: createScope({ [name]: Component }, swingsetOptions),
+            scope: {
+              componentProps: props
+                ? requireFromString(props, propsPath)
+                : undefined,
+              packageJson,
+            },
+          }).then((res) => [name, res])
+          // transform to an object for easier name/component mapping on the client side
+        }
+      )
     ).then((res) => {
       return res.reduce((m, [name, result]) => {
         m[name] = result
