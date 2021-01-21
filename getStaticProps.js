@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 import matter from 'gray-matter'
 import { existsSync } from 'fsexists'
 import requireFromString from 'require-from-string'
@@ -17,7 +18,7 @@ export default function createStaticProps(swingsetOptions = {}) {
         fs.readFileSync(component.docsPath, 'utf8')
       )
       //  Read and parse the component's package.json, if possible
-      const pathToPackageJson = component.path + '/package.json'
+      const pathToPackageJson = path.join(component.path, 'package.json')
       const packageJson = existsSync(pathToPackageJson)
         ? JSON.parse(fs.readFileSync(pathToPackageJson, 'utf8'))
         : undefined
