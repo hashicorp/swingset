@@ -51,6 +51,7 @@
     "test": "jest",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
-    "release:patch": "release patch && npm publish"
+    "release:patch": "release patch && npm publish",
+    "release:pre": "release pre canary && npm publish --tag=canary"
   }
 }
