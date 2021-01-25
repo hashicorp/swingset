@@ -21,7 +21,7 @@ export default function createStaticProps(swingsetOptions = {}) {
       const pathToPackageJson = path.join(component.path, 'package.json')
       const packageJson = existsSync(pathToPackageJson)
         ? JSON.parse(fs.readFileSync(pathToPackageJson, 'utf8'))
-        : undefined
+        : null
 
       // Check for a file called 'props.json5' - if it exists, we import it as `props`
       // to the mdx file. This is a nice pattern for knobs and props tables.
@@ -54,7 +54,7 @@ export default function createStaticProps(swingsetOptions = {}) {
             scope: {
               componentProps: props
                 ? requireFromString(props, propsPath)
-                : undefined,
+                : null,
               packageJson,
             },
           }).then((res) => [name, res])

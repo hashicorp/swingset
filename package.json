@@ -1,7 +1,7 @@
 {
   "name": "swingset",
   "description": "drop-in component library and documentation pages for next.js",
-  "version": "0.5.0",
+  "version": "0.5.0-canary.0",
   "author": "Jeff Escalante",
   "bugs": {
     "url": "https://github.com/hashicorp/swingset/issues"
@@ -51,6 +51,7 @@
     "test": "jest",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
-    "release:patch": "release patch && npm publish"
+    "release:patch": "release patch && npm publish",
+    "release:pre": "release pre canary && npm publish --tag=canary"
   }
 }
