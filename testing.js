@@ -31,13 +31,20 @@ function getTestValues(propsSpec) {
           }
         }
       } else if (typeof prop.properties === 'object') {
-        // if properties is an object, and the `testValue` is also an object,
-        // we can recurse and assign the results directly
-        if (typeof memo[name] === 'object') {
+        // if properties is an object, we can recurse and build a testValue for the object
+        const hasBaseValue = typeof memo[name] === 'object'
+        const hasValueSet = prop.hasOwnProperty('testValue')
+        // in most cases, we'll recurse and build the testValue
+        if (hasBaseValue || !hasValueSet) {
+          // if the base value was not set, we need to initialize it
+          if (typeof memo[name] === 'undefined') memo[name] = {}
+          // we override the base testValue with nested testValues
           Object.assign(memo[name], getTestValues(prop.properties))
-        } else if (typeof memo[name] === 'undefined') {
-          // do nothing, there is no test value and thats ok
+        } else if (hasValueSet && typeof prop.testValue === 'undefined') {
+          // in some cases, prop authors explicitly set testValue: undefined.
+          // in these cases, we should not recurse and construct a testValue
         } else {
+          // in all other cases we should throw an error
           throw new Error(
             `The property "${name}" has a "properties" key, which requires an array or object type, but its "testValue" is ${JSON.stringify(
               memo[name]
