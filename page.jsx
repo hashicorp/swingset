@@ -1,5 +1,5 @@
 import s from './style.module.css'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import hydrate from 'next-mdx-remote/hydrate'
 import createScope from './utils/create-scope'
