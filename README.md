@@ -291,8 +291,8 @@ const swingsetOptions = {
   // if you have custom components you'd like to have available for use across all docs pages,
   // the can be added here. No default.
   components: { Tester: () => <p>testing 123</p> },
-  // Anything that can fit into the `src` of an image tag. Default is the swingset logo.
-  customLogo: '/img/my-company-logo.svg',
+  // Any React element
+  logo: <MyLogo />,
 }
 
 export default createPage(swingsetOptions)
