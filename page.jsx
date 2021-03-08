@@ -75,7 +75,7 @@ export default function createPage(swingsetOptions = {}) {
             <input
               type="input"
               ref={searchInputRef}
-              onChange={(evt) => setFilterValue(evt.currentTarget.value)}
+              onChange={(e) => setFilterValue(e.currentTarget.value)}
               placeholder="Search"
               className={s.search}
             />
