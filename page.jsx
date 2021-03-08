@@ -1,5 +1,5 @@
 import s from './style.module.css'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import hydrate from 'next-mdx-remote/hydrate'
 import createScope from './utils/create-scope'
@@ -10,7 +10,10 @@ export default function createPage(swingsetOptions = {}) {
   return function Page({ mdxSources, componentNames }) {
     // tracks the name of the current component
     const [name, setName] = useState(componentNames[0])
+    const [filterValue, setFilterValue] = useState()
     const [componentNotFound, setComponentNotFound] = useState(false)
+
+    const searchInputRef = useRef()
 
     // if there's a component specified in the querystring, set that to current
     useRestoreUrlState(({ component }) => {
@@ -21,6 +24,34 @@ export default function createPage(swingsetOptions = {}) {
       }
     })
 
+    // Focus the search input when pressing the '/' key
+    useEffect(() => {
+      function onKeyDown(e) {
+        const elt = e.target || e.srcElement
+        const tagName = elt.tagName
+        if (
+          elt.isContentEditable ||
+          tagName === 'INPUT' ||
+          tagName === 'SELECT' ||
+          tagName === 'TEXTAREA'
+        ) {
+          // Already in an input
+          return
+        }
+
+        // Bind to the `/` key
+        if (e.keyCode !== 191) return
+
+        searchInputRef.current?.focus()
+        e.stopPropagation()
+        e.preventDefault()
+      }
+
+      window.addEventListener('keydown', onKeyDown)
+
+      return () => window.removeEventListener('keydown', onKeyDown)
+    }, [])
+
     // finds the actual component
     const Component = components[name].src
 
@@ -29,24 +60,48 @@ export default function createPage(swingsetOptions = {}) {
       components: createScope({ [name]: Component }, swingsetOptions),
     })
 
+    // Filter listed components based on the current filterValue
+    const filteredComponents = filterValue
+      ? componentNames.filter((comp) =>
+          comp.toLowerCase().startsWith(filterValue.toLowerCase())
+        )
+      : componentNames
+
     return (
       <div className={s.root}>
         <Head>
           <title key="title">Component Library</title>
         </Head>
         <ul className={s.sidebar}>
-          <span className={s.logo} />
-          {componentNames.map((componentName) => {
+          {swingsetOptions.logo ?? <span className={s.logo} />}
+          <div className={s.searchContainer}>
+            <input
+              type="input"
+              ref={searchInputRef}
+              onChange={(e) => setFilterValue(e.currentTarget.value)}
+              placeholder="Search"
+              className={s.search}
+            />
+            <span className={s.searchHint} aria-label="Type '/' to search">
+              /
+            </span>
+          </div>
+          {filteredComponents.map((componentName) => {
             return (
               <li
                 className={componentName === name ? s.active : ''}
                 key={componentName}
-                onClick={() => {
-                  setName(componentName)
-                  setUrlState(componentName)
-                }}
               >
-                {componentName}
+                <a
+                  href={`?component=${componentName}`}
+                  onClick={(e) => {
+                    setName(componentName)
+                    setUrlState(componentName)
+                    e.preventDefault()
+                  }}
+                >
+                  {componentName}
+                </a>
               </li>
             )
           })}
