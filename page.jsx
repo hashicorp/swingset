@@ -1,5 +1,5 @@
 import s from './style.module.css'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import hydrate from 'next-mdx-remote/hydrate'
 import createScope from './utils/create-scope'
@@ -13,6 +13,8 @@ export default function createPage(swingsetOptions = {}) {
     const [filterValue, setFilterValue] = useState()
     const [componentNotFound, setComponentNotFound] = useState(false)
 
+    const searchInputRef = useRef()
+
     // if there's a component specified in the querystring, set that to current
     useRestoreUrlState(({ component }) => {
       if (component && components[component]) {
@@ -21,6 +23,33 @@ export default function createPage(swingsetOptions = {}) {
         setComponentNotFound(component)
       }
     })
+
+    useEffect(() => {
+      function onKeyDown(e) {
+        const elt = e.target || e.srcElement
+        const tagName = elt.tagName
+        if (
+          elt.isContentEditable ||
+          tagName === 'INPUT' ||
+          tagName === 'SELECT' ||
+          tagName === 'TEXTAREA'
+        ) {
+          // Already in an input
+          return
+        }
+
+        // Bind to the `/` key
+        if (e.keyCode !== 191) return
+
+        searchInputRef.current?.focus()
+        e.stopPropagation()
+        e.preventDefault()
+      }
+
+      window.addEventListener('keydown', onKeyDown)
+
+      return () => window.removeEventListener('keydown', onKeyDown)
+    }, [])
 
     // finds the actual component
     const Component = components[name].src
@@ -42,12 +71,18 @@ export default function createPage(swingsetOptions = {}) {
         </Head>
         <ul className={s.sidebar}>
           {swingsetOptions.logo ?? <span className={s.logo} />}
-          <input
-            type="input"
-            onChange={(evt) => setFilterValue(evt.currentTarget.value)}
-            placeholder="Search"
-            className={s.search}
-          />
+          <div className={s.searchContainer}>
+            <input
+              type="input"
+              ref={searchInputRef}
+              onChange={(evt) => setFilterValue(evt.currentTarget.value)}
+              placeholder="Search"
+              className={s.search}
+            />
+            <span className={s.searchHint} aria-label="Type '/' to search">
+              /
+            </span>
+          </div>
           {filteredComponents.map((componentName) => {
             return (
               <li
