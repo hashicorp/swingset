@@ -88,12 +88,17 @@ export default function createPage(swingsetOptions = {}) {
               <li
                 className={componentName === name ? s.active : ''}
                 key={componentName}
-                onClick={() => {
-                  setName(componentName)
-                  setUrlState(componentName)
-                }}
               >
-                {componentName}
+                <a
+                  href={`?component=${componentName}`}
+                  onClick={(e) => {
+                    setName(componentName)
+                    setUrlState(componentName)
+                    e.preventDefault()
+                  }}
+                >
+                  {componentName}
+                </a>
               </li>
             )
           })}
