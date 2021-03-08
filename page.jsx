@@ -24,6 +24,7 @@ export default function createPage(swingsetOptions = {}) {
       }
     })
 
+    // Focus the search input when pressing the '/' key
     useEffect(() => {
       function onKeyDown(e) {
         const elt = e.target || e.srcElement
@@ -59,10 +60,12 @@ export default function createPage(swingsetOptions = {}) {
       components: createScope({ [name]: Component }, swingsetOptions),
     })
 
-    const filteredComponents = componentNames.filter(
-      (comp) =>
-        !filterValue || comp.toLowerCase().startsWith(filterValue.toLowerCase())
-    )
+    // Filter listed components based on the current filterValue
+    const filteredComponents = filterValue
+      ? componentNames.filter((comp) =>
+          comp.toLowerCase().startsWith(filterValue.toLowerCase())
+        )
+      : componentNames
 
     return (
       <div className={s.root}>
