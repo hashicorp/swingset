@@ -71,7 +71,7 @@ function formatComponentsWithNames(components, config) {
         )}" is missing metadata. Please add the component's name as you would like it to be imported as "componentName" to the front matter at the top of the file.`
       )
     }
-    return { name: data.componentName, path: componentDir }
+    return { name: data.componentName, path: componentDir, data }
   })
 }
 
@@ -103,7 +103,8 @@ function generateComponentsMetadataFile(components) {
     path: '${component.path}',
     docsPath: '${path.join(component.path, 'docs.mdx')}',
     propsPath: '${path.join(component.path, 'props.js')}',
-    src: ${component.name}
+    src: ${component.name},
+    data: ${JSON.stringify(component.data, null, 2)}
   },
 `
       return memo
