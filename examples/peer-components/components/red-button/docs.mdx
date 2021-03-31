@@ -1,0 +1,24 @@
+---
+componentName: 'RedButton'
+peerComponents:
+  - 'BlueButton'
+---
+
+This is the docs for the button component
+
+<LiveComponent components={{ Test: () => <p>test successful</p> }}>{`<>
+  <RedButton text='this is a bluebutton' />
+  <br />
+  <BlueButton text='and here is a blue one, provided via "peerComponents"' />
+  <Test />
+</>`}</LiveComponent>
+
+<PropsTable props={componentProps} />
+
+<Tester />
+
+## Exposed `package.json`
+
+<pre>
+  <code>{JSON.stringify(packageJson, null, 2)}</code>
+</pre>
