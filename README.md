@@ -16,12 +16,14 @@ module.exports = withSwingset(/* swingset options */)(/* normal nextjs config */
 
 You then need to create a page in your nextjs app where swingset will live. You can "inject" swingset on to any page of your choosing. Something like `/components` might be a nice choice. When you have decided on a page, swingset can be injected as follows:
 
+> **Note:** `createStaticProps` accepts `mdxOptions`, which allow you to customize how your markup is rendered. For details, see [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote/blob/main/render-to-string.d.ts#L36-L42)
+
 ```jsx
 import createPage from 'swingset/page'
 import createStaticProps from 'swingset/getStaticProps'
 
 export default createPage()
-export const getStaticProps = createStaticProps()
+export const getStaticProps = createStaticProps({ /* mdxOptions = {} */})
 ```
 
 With this in place, if you go to the page you injected it on, it should work, although it will be empty. Next, let's talk about how to get some components loaded in there.
