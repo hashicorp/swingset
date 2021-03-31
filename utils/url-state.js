@@ -21,7 +21,7 @@ export function setUrlState(component, id, values, copyToClipboard) {
     values: values && encode(JSON.stringify(values))
   })
 
-  Router.push(`/?${qs}`)
+  Router.push(`?${qs}`)
 
   if (copyToClipboard) copy(window.location.href)
 }
