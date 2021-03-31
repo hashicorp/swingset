@@ -57,6 +57,7 @@ export default function createStaticProps(swingsetOptions = {}) {
                 : null,
               packageJson,
             },
+            mdxOptions: swingsetOptions.mdxOptions || {},
           }).then((res) => [name, res])
           // transform to an object for easier name/component mapping on the client side
         }
