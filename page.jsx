@@ -53,11 +53,29 @@ export default function createPage(swingsetOptions = {}) {
     }, [])
 
     // finds the actual component
-    const Component = components[name].src
+    const component = components[name]
+    const Component = component.src
+
+    let peerComponents = {}
+    if (component.data.peerComponents) {
+      component.data.peerComponents.forEach((name) => {
+        const { src } = components[name]
+        if (!src) {
+          console.warn(
+            `${frontMatter.componentName} lists ${name} as a peerComponent but <${name} /> is not in scope`
+          )
+        } else {
+          peerComponents = Object.assign(peerComponents, {
+            [name]: src,
+          })
+        }
+      })
+    }
+
 
     // fully hydrated mdx document, with the components in the created scope available for use
     const mdx = hydrate(mdxSources[name], {
-      components: createScope({ [name]: Component }, swingsetOptions),
+      components: createScope({ [name]: Component }, swingsetOptions, peerComponents),
     })
 
     // Filter listed components based on the current filterValue

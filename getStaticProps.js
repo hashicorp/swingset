@@ -47,10 +47,24 @@ export default function createStaticProps(swingsetOptions = {}) {
           // First, we need to get the actual component source
           const Component = components[name].src
 
+          let peerComponents = {}
+          if (frontMatter.peerComponents) {
+            frontMatter.peerComponents.forEach((name) => {
+              const { src } = components[name]
+              if (!src) {
+                console.warn(`${frontMatter.componentName} lists ${name} as a peerComponent but <${name} /> is not in scope`)
+              } else {
+                peerComponents = Object.assign(peerComponents, {
+                  [name]: src,
+                })
+              }
+            })
+          }
+
           // Next, we render the content, passing as the second argument a "scope" object, which contains
           // our component and some additional presentational components that are made available in the mdx file.
           return renderToString(content, {
-            components: createScope({ [name]: Component }, swingsetOptions),
+            components: createScope({ [name]: Component }, swingsetOptions, peerComponents),
             scope: {
               componentProps: props
                 ? requireFromString(props, propsPath)

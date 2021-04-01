@@ -49,9 +49,17 @@ So, you have only now added two things to your app -- a file in `pages` where yo
 ```
 ---
 componentName: 'Button'
+peerComponents:
+  - 'ArrowIcon'
 ---
 
 Hi there, welcome to the button docs!
+
+Here's an example with an arrow:
+
+<Button cta="Click the arrow!">
+  <ArrowIcon />
+</Button>
 ```
 
 With this in place, you should see your component's name render in the sidebar and show the contents of your markdown file. Not so bad! You are of course welcome to add docs files to multiple components, we're just starting with one.
@@ -59,10 +67,13 @@ With this in place, you should see your component's name render in the sidebar a
 Now let's actually make these docs useful. There are a few components that are made available within `docs.mdx` files that will help you to showcase your components.
 
 1. Your actual component. So in the example above, you can use `<Button />` right in that mdx file, and it will render an example however you please.
-2. `<LiveComponent>` - a component that can be used to render a live code editor that will display and update your component
-3. `<KnobsComponent>` - a component that can be used to render a set of UI controls that will live update a rendered version of your component
-4. `<PropsTable>` - a component that will render a full or partial list of your component's props.
-5. Any of your own components you specified in the [swingset options](#options)
+1. Any components you list in the `peerComponents` frontmatter key. 
+    1. In the example above, `<ArrowIcon />` is added to scope. 
+    1. **Note:** `peerComponents` must also be present in Swingset (i.e., they must have a `docs.mdx` file). A warning will be emitted if any unknown components are passed here.
+1. `<LiveComponent>` - a component that can be used to render a live code editor that will display and update your component
+1. `<KnobsComponent>` - a component that can be used to render a set of UI controls that will live update a rendered version of your component
+1. `<PropsTable>` - a component that will render a full or partial list of your component's props.
+1. Any of your own components you specified in the [swingset options](#options)
 
 We'll dig into how each of these work in the following sections, and give plenty of examples.
 

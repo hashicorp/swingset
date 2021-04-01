@@ -1,0 +1,20 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "an example app that uses swingset",
+  "main": "index.js",
+  "scripts": {
+    "start": "next dev",
+    "build": "next build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@next/bundle-analyzer": "^9.5.2",
+    "next": "^9.5.1",
+    "next-transpile-modules": "^4.1.0",
+    "swingset": "file:../../",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
