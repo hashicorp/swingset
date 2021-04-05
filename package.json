@@ -47,7 +47,7 @@
     "url": "git+https://github.com/hashicorp/swingset.git"
   },
   "scripts": {
-    "example": "cd example && [ ! -d 'node_modules' ] && npm i || npm start",
+    "example": "cd examples/basic && [ ! -d 'node_modules' ] && npm i || npm start",
     "test": "jest",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
