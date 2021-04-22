@@ -33,7 +33,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "next": "9.x",
+    "next": ">=9.x",
     "react": "16.x",
     "react-dom": "16.x",
     "webpack": "4.x",
