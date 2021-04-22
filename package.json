@@ -34,10 +34,10 @@
   "main": "index.js",
   "peerDependencies": {
     "next": ">=9.x",
+    "next-transpile-modules": "^4.1.0",
     "react": "16.x",
     "react-dom": "16.x",
-    "webpack": "4.x",
-    "next-transpile-modules": "^4.1.0"
+    "webpack": "4.x"
   },
   "publishConfig": {
     "access": "public"
