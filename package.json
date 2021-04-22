@@ -35,9 +35,9 @@
   "peerDependencies": {
     "next": ">=9.x",
     "next-transpile-modules": "^4.1.0",
-    "react": "16.x",
-    "react-dom": "16.x",
-    "webpack": "4.x"
+    "react": ">=16.x",
+    "react-dom": ">=16.x",
+    "webpack": ">=4.x"
   },
   "publishConfig": {
     "access": "public"
@@ -48,10 +48,10 @@
   },
   "scripts": {
     "example": "cd examples/basic && [ ! -d 'node_modules' ] && npm i || npm start",
-    "test": "jest",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
     "release:patch": "release patch && npm publish",
-    "release:pre": "release pre canary && npm publish --tag=canary"
+    "release:pre": "release pre canary && npm publish --tag=canary",
+    "test": "jest"
   }
 }
