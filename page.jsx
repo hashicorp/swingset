@@ -1,7 +1,7 @@
 import s from './style.module.css'
 import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
-import hydrate from 'next-mdx-remote/hydrate'
+import { MDXRemote } from 'next-mdx-remote'
 import createScope from './utils/create-scope'
 import { useRestoreUrlState, setUrlState } from './utils/url-state'
 import components from './__swingset_components'
@@ -72,11 +72,17 @@ export default function createPage(swingsetOptions = {}) {
       })
     }
 
-
     // fully hydrated mdx document, with the components in the created scope available for use
-    const mdx = hydrate(mdxSources[name], {
-      components: createScope({ [name]: Component }, swingsetOptions, peerComponents),
-    })
+    const mdx = (
+      <MDXRemote
+        {...mdxSources[name]}
+        components={createScope(
+          { [name]: Component },
+          swingsetOptions,
+          peerComponents
+        )}
+      />
+    )
 
     // Filter listed components based on the current filterValue
     const filteredComponents = filterValue
