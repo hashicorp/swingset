@@ -1,7 +1,7 @@
 {
   "name": "swingset",
   "description": "drop-in component library and documentation pages for next.js",
-  "version": "0.7.3",
+  "version": "0.7.3-canary.0",
   "author": "Jeff Escalante",
   "bugs": {
     "url": "https://github.com/hashicorp/swingset/issues"
@@ -13,7 +13,7 @@
     "gray-matter": "^4.0.2",
     "loader-utils": "^2.0.0",
     "marked": "^1.2.2",
-    "next-mdx-remote": "1.0.0",
+    "next-mdx-remote": "3.0.1",
     "query-string": "^5.1.1",
     "react-live": "^2.2.2",
     "require-from-string": "^2.0.2"
