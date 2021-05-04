@@ -1,7 +1,7 @@
 {
   "name": "swingset",
   "description": "drop-in component library and documentation pages for next.js",
-  "version": "0.7.3",
+  "version": "0.7.3-canary.0",
   "author": "Jeff Escalante",
   "bugs": {
     "url": "https://github.com/hashicorp/swingset/issues"
