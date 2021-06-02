@@ -32,8 +32,6 @@ export function createStaticProps(swingsetOptions = {}) {
       }
     )
 
-    console.log(currentComponentData)
-
     // Read the docs file, separate content from frontmatter
     const { content, data } = matter(
       fs.readFileSync(currentComponentData.docsPath, 'utf8')
