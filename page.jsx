@@ -7,11 +7,11 @@ import { MDXRemote } from 'next-mdx-remote'
 import createScope from './utils/create-scope'
 import { useRestoreUrlState, setUrlState } from './utils/url-state'
 import { findComponent } from './utils/find-component'
-import components from './__swingset_components'
+import { components } from './__swingset_data'
 import { getPeerComponents } from './utils/get-peer-components'
 
 export default function createPage(swingsetOptions = {}) {
-  return function Page({ mdxSource, navData }) {
+  return function Page({ sourceType, mdxSource, navData }) {
     // tracks the name of the current component
     const router = useRouter()
     const [filterValue, setFilterValue] = useState()
@@ -57,22 +57,14 @@ export default function createPage(swingsetOptions = {}) {
     }, [])
 
     // finds the actual component
-    const component = findComponent(components, router.query)
-    const Component = component.src
-
-    const peerComponents = getPeerComponents(component, components)
-
-    // fully hydrated mdx document, with the components in the created scope available for use
-    const mdx = (
-      <MDXRemote
-        {...mdxSource}
-        components={createScope(
-          { [component.data.componentName]: Component },
-          swingsetOptions,
-          peerComponents
-        )}
-      />
-    )
+    const component =
+      sourceType === 'components'
+        ? findComponent(components, router.query)
+        : null
+    const peerComponents =
+      sourceType === 'components'
+        ? getPeerComponents(component, components)
+        : null
 
     // Filter listed components based on the current filterValue
     const filteredComponents = filterValue
@@ -101,18 +93,15 @@ export default function createPage(swingsetOptions = {}) {
             </span>
           </div>
           {filteredComponents.map((filteredComponent) => {
+            const href = `${filteredComponent.sourceType}/${filteredComponent.slug}`
+            // @TODO this only works if [[...swingset]].jsx is on the base route.
+            // we need to update to account for non-base route locations.
             return (
               <li
-                className={
-                  filteredComponent.name === component.data.componentName
-                    ? s.active
-                    : ''
-                }
+                className={router.asPath === `/${href}` ? s.active : ''}
                 key={filteredComponent.name}
               >
-                <Link
-                  href={`${filteredComponent.sourceType}/${filteredComponent.slug}`}
-                >
+                <Link href={href}>
                   <a>{filteredComponent.name}</a>
                 </Link>
               </li>
@@ -125,9 +114,74 @@ export default function createPage(swingsetOptions = {}) {
               ⚠️ Component "{componentNotFound}" was not found
             </p>
           )}
-          {mdx}
+
+          {sourceType === 'index' ? (
+            <IndexPage />
+          ) : sourceType === 'docs' ? (
+            <DocsPage mdxSource={mdxSource} />
+          ) : sourceType === 'components' ? (
+            <ComponentPage
+              mdxSource={mdxSource}
+              component={component}
+              swingsetOptions={swingsetOptions}
+              peerComponents={peerComponents}
+            />
+          ) : (
+            <NotFoundPage />
+          )}
         </div>
       </div>
     )
   }
+}
+
+function IndexPage() {
+  return (
+    <pre>
+      <code>Index page placeholder</code>
+    </pre>
+  )
+}
+
+function DocsPage({ mdxSource }) {
+  return <MDXRemote {...mdxSource} />
+}
+
+function ComponentPage({
+  mdxSource,
+  component,
+  swingsetOptions,
+  peerComponents,
+}) {
+  return (
+    <MDXRemote
+      {...mdxSource}
+      components={createScope(
+        { [component.data.componentName]: component.src },
+        swingsetOptions,
+        peerComponents
+      )}
+    />
+  )
+}
+
+/*
+
+<MDXRemote
+              {...mdxSource}
+              components={createScope(
+                { [component.data.componentName]: component.src },
+                swingsetOptions,
+                peerComponents
+              )}
+            />
+
+            */
+
+function NotFoundPage() {
+  return (
+    <pre>
+      <code>Not found page placeholder</code>
+    </pre>
+  )
 }
