@@ -11,7 +11,7 @@ import components from './__swingset_components'
 import { getPeerComponents } from './utils/get-peer-components'
 
 export default function createPage(swingsetOptions = {}) {
-  return function Page({ mdxSource, navData, initialParams }) {
+  return function Page({ mdxSource, navData }) {
     // tracks the name of the current component
     const router = useRouter()
     const [filterValue, setFilterValue] = useState()
