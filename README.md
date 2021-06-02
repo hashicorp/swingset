@@ -11,7 +11,8 @@ Install via npm with `npm i swingset`, then add the plugin to your `next.config.
 ```js
 const withSwingset = require('swingset')
 
-module.exports = withSwingset(/* swingset options */)(/* normal nextjs config */)
+module.exports =
+  withSwingset(/* swingset options */)(/* normal nextjs config */)
 ```
 
 You then need to create a page in your nextjs app where swingset will live. You can "inject" swingset on to any page of your choosing. Something like `/components` might be a nice choice. When you have decided on a page, swingset can be injected as follows:
@@ -20,10 +21,13 @@ You then need to create a page in your nextjs app where swingset will live. You 
 
 ```jsx
 import createPage from 'swingset/page'
-import createStaticProps from 'swingset/getStaticProps'
+import { createStaticProps, createStaticPath } from 'swingset/server'
 
 export default createPage()
-export const getStaticProps = createStaticProps({ /* mdxOptions = {} */})
+export const getStaticPaths = createStaticPaths()
+export const getStaticProps = createStaticProps({
+  /* mdxOptions = {} */
+})
 ```
 
 With this in place, if you go to the page you injected it on, it should work, although it will be empty. Next, let's talk about how to get some components loaded in there.
@@ -36,7 +40,7 @@ Swingset points to `components/*` as its default location for components, in lin
 .
 ├── pages
 │   ├── index.jsx
-│   └── components.jsx <- here's where you injected swingset
+│   └── [[...swingset]].jsx <- here's where you injected swingset
 └── components
     └── button
         ├── index.jsx <- this is what's returned when you import `components/button`
@@ -44,7 +48,7 @@ Swingset points to `components/*` as its default location for components, in lin
         └── docs.mdx <- here's the docs file you created for swingset
 ```
 
-So, you have only now added two things to your app -- a file in `pages` where you injected the component library itself, and a `docs.mdx` file in one of your components. And remember, the `docs.mdx` file needs frontmatter, or you will get an error. Here's how a minimal `docs.mdx` file might look:
+So, you have only now added two things to your app -- a file in `pages` called `[[...swingset]].jsx` where you injected the component library itself, and a `docs.mdx` file in one of your components. And remember, the `docs.mdx` file needs frontmatter, or you will get an error. Here's how a minimal `docs.mdx` file might look:
 
 ```
 ---
@@ -67,9 +71,9 @@ With this in place, you should see your component's name render in the sidebar a
 Now let's actually make these docs useful. There are a few components that are made available within `docs.mdx` files that will help you to showcase your components.
 
 1. Your actual component. So in the example above, you can use `<Button />` right in that mdx file, and it will render an example however you please.
-1. Any components you list in the `peerComponents` frontmatter key. 
-    1. In the example above, `<ArrowIcon />` is added to scope. 
-    1. **Note:** `peerComponents` must also be present in Swingset (i.e., they must have a `docs.mdx` file). A warning will be emitted if any unknown components are passed here.
+1. Any components you list in the `peerComponents` frontmatter key.
+   1. In the example above, `<ArrowIcon />` is added to scope.
+   1. **Note:** `peerComponents` must also be present in Swingset (i.e., they must have a `docs.mdx` file). A warning will be emitted if any unknown components are passed here.
 1. `<LiveComponent>` - a component that can be used to render a live code editor that will display and update your component
 1. `<KnobsComponent>` - a component that can be used to render a set of UI controls that will live update a rendered version of your component
 1. `<PropsTable>` - a component that will render a full or partial list of your component's props.

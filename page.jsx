@@ -1,15 +1,17 @@
 import s from './style.module.css'
 import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote'
 import createScope from './utils/create-scope'
 import { useRestoreUrlState, setUrlState } from './utils/url-state'
 import components from './__swingset_components'
 
 export default function createPage(swingsetOptions = {}) {
-  return function Page({ mdxSources, componentNames }) {
+  return function Page({ mdxSource, navData }) {
     // tracks the name of the current component
-    const [name, setName] = useState(componentNames[0])
+    const router = useRouter()
     const [filterValue, setFilterValue] = useState()
     const [componentNotFound, setComponentNotFound] = useState(false)
 
@@ -18,7 +20,7 @@ export default function createPage(swingsetOptions = {}) {
     // if there's a component specified in the querystring, set that to current
     useRestoreUrlState(({ component }) => {
       if (component && components[component]) {
-        setName(component)
+        console.log('hi! i do nothing!')
       } else {
         setComponentNotFound(component)
       }
@@ -53,7 +55,9 @@ export default function createPage(swingsetOptions = {}) {
     }, [])
 
     // finds the actual component
-    const component = components[name]
+    const component = Object.values(components).find(
+      (componentConfig) => componentConfig.slug === router.query.swingset[0]
+    )
     const Component = component.src
 
     let peerComponents = {}
@@ -75,9 +79,9 @@ export default function createPage(swingsetOptions = {}) {
     // fully hydrated mdx document, with the components in the created scope available for use
     const mdx = (
       <MDXRemote
-        {...mdxSources[name]}
+        {...mdxSource}
         components={createScope(
-          { [name]: Component },
+          { [component.data.componentName]: Component },
           swingsetOptions,
           peerComponents
         )}
@@ -86,10 +90,10 @@ export default function createPage(swingsetOptions = {}) {
 
     // Filter listed components based on the current filterValue
     const filteredComponents = filterValue
-      ? componentNames.filter((comp) =>
-          comp.toLowerCase().startsWith(filterValue.toLowerCase())
+      ? navData.filter((comp) =>
+          comp.name.toLowerCase().startsWith(filterValue.toLowerCase())
         )
-      : componentNames
+      : navData
 
     return (
       <div className={s.root}>
@@ -110,22 +114,19 @@ export default function createPage(swingsetOptions = {}) {
               /
             </span>
           </div>
-          {filteredComponents.map((componentName) => {
+          {filteredComponents.map((filteredComponent) => {
             return (
               <li
-                className={componentName === name ? s.active : ''}
-                key={componentName}
+                className={
+                  filteredComponent.name === component.data.componentName
+                    ? s.active
+                    : ''
+                }
+                key={filteredComponent.name}
               >
-                <a
-                  href={`?component=${componentName}`}
-                  onClick={(e) => {
-                    setName(componentName)
-                    setUrlState(componentName)
-                    e.preventDefault()
-                  }}
-                >
-                  {componentName}
-                </a>
+                <Link href={filteredComponent.slug}>
+                  <a>{filteredComponent.name}</a>
+                </Link>
               </li>
             )
           })}
