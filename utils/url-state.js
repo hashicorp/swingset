@@ -16,12 +16,11 @@ export function useRestoreUrlState(cb) {
 
 export function setUrlState(component, id, values, copyToClipboard) {
   const qs = queryString.stringify({
-    component,
     id,
-    values: values && encode(JSON.stringify(values))
+    values: values && encode(JSON.stringify(values)),
   })
 
-  Router.push(`?${qs}`)
+  Router.push(`${window.location.pathname}?${qs}`, undefined, { shallow: true })
 
   if (copyToClipboard) copy(window.location.href)
 }

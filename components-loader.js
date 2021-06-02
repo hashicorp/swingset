@@ -158,21 +158,5 @@ function generateMetadataFile(components, docsFiles) {
   contents += `export const components = {\n${componentsData}\n}\n`
   contents += `export const docs = ${JSON.stringify(docsData, null, 2)}\n`
 
-  //   const contents =
-  //     'export const components = {\n' +
-  //     components.reduce((memo, component) => {
-  //       memo += `  '${component.name}': {
-  //     path: '${component.path}',
-  //     docsPath: '${path.join(component.path, 'docs.mdx')}',
-  //     propsPath: '${path.join(component.path, 'props.js')}',
-  //     slug: '${component.slug}',
-  //     src: ${component.name},
-  //     data: ${JSON.stringify(component.data, null, 2)}
-  //   },
-  // `
-  //       return memo
-  //     }, '') +
-  //     `}\n`
-
   return contents
 }

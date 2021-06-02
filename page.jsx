@@ -5,28 +5,19 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote'
 import createScope from './utils/create-scope'
-import { useRestoreUrlState, setUrlState } from './utils/url-state'
-import { findComponent } from './utils/find-component'
-import { components } from './__swingset_data'
+import { findComponent, findEntity } from './utils/find-entity'
+import { components, docs } from './__swingset_data'
 import { getPeerComponents } from './utils/get-peer-components'
+import { useBaseRoute } from './utils/use-base-route'
+import Nav from './components/nav'
 
 export default function createPage(swingsetOptions = {}) {
   return function Page({ sourceType, mdxSource, navData }) {
     // tracks the name of the current component
     const router = useRouter()
+    const baseRoute = useBaseRoute()
     const [filterValue, setFilterValue] = useState()
-    const [componentNotFound, setComponentNotFound] = useState(false)
-
     const searchInputRef = useRef()
-
-    // if there's a component specified in the querystring, set that to current
-    useRestoreUrlState(({ component }) => {
-      if (component && components[component]) {
-        console.log('hi! i do nothing!')
-      } else {
-        setComponentNotFound(component)
-      }
-    })
 
     // Focus the search input when pressing the '/' key
     useEffect(() => {
@@ -56,21 +47,18 @@ export default function createPage(swingsetOptions = {}) {
       return () => window.removeEventListener('keydown', onKeyDown)
     }, [])
 
-    // finds the actual component
-    const component =
-      sourceType === 'components'
-        ? findComponent(components, router.query)
-        : null
-    const peerComponents =
-      sourceType === 'components'
-        ? getPeerComponents(component, components)
-        : null
+    // finds the actual entity
+    const entity = findEntity(router.query)
+    const peerComponents = getPeerComponents(entity, components)
 
     // Filter listed components based on the current filterValue
-    const filteredComponents = filterValue
-      ? navData.filter((comp) =>
-          comp.name.toLowerCase().startsWith(filterValue.toLowerCase())
-        )
+    const filteredNav = filterValue
+      ? navData.map((category) => ({
+          ...category,
+          routes: category.routes.filter((route) =>
+            route.name.toLowerCase().startsWith(filterValue.toLowerCase())
+          ),
+        }))
       : navData
 
     return (
@@ -79,7 +67,9 @@ export default function createPage(swingsetOptions = {}) {
           <title key="title">Component Library</title>
         </Head>
         <ul className={s.sidebar}>
-          {swingsetOptions.logo ?? <span className={s.logo} />}
+          <Link href={baseRoute || '/'}>
+            <a>{swingsetOptions.logo ?? <span className={s.logo} />}</a>
+          </Link>
           <div className={s.searchContainer}>
             <input
               type="input"
@@ -92,42 +82,22 @@ export default function createPage(swingsetOptions = {}) {
               /
             </span>
           </div>
-          {filteredComponents.map((filteredComponent) => {
-            const href = `${filteredComponent.sourceType}/${filteredComponent.slug}`
-            // @TODO this only works if [[...swingset]].jsx is on the base route.
-            // we need to update to account for non-base route locations.
-            return (
-              <li
-                className={router.asPath === `/${href}` ? s.active : ''}
-                key={filteredComponent.name}
-              >
-                <Link href={href}>
-                  <a>{filteredComponent.name}</a>
-                </Link>
-              </li>
-            )
-          })}
+          <Nav navData={filteredNav} />
         </ul>
         <div className={s.stage}>
-          {componentNotFound && (
-            <p className={s.notFound}>
-              ⚠️ Component "{componentNotFound}" was not found
-            </p>
-          )}
-
           {sourceType === 'index' ? (
-            <IndexPage />
+            swingsetOptions.index ?? <IndexPage />
           ) : sourceType === 'docs' ? (
-            <DocsPage mdxSource={mdxSource} />
+            <DocsPage mdxSource={mdxSource} peerComponents={peerComponents} />
           ) : sourceType === 'components' ? (
             <ComponentPage
               mdxSource={mdxSource}
-              component={component}
+              component={entity}
               swingsetOptions={swingsetOptions}
               peerComponents={peerComponents}
             />
           ) : (
-            <NotFoundPage />
+            <div>Houston we have a problem</div>
           )}
         </div>
       </div>
@@ -143,8 +113,8 @@ function IndexPage() {
   )
 }
 
-function DocsPage({ mdxSource }) {
-  return <MDXRemote {...mdxSource} />
+function DocsPage({ mdxSource, peerComponents }) {
+  return <MDXRemote {...mdxSource} components={peerComponents} />
 }
 
 function ComponentPage({
@@ -162,26 +132,5 @@ function ComponentPage({
         peerComponents
       )}
     />
-  )
-}
-
-/*
-
-<MDXRemote
-              {...mdxSource}
-              components={createScope(
-                { [component.data.componentName]: component.src },
-                swingsetOptions,
-                peerComponents
-              )}
-            />
-
-            */
-
-function NotFoundPage() {
-  return (
-    <pre>
-      <code>Not found page placeholder</code>
-    </pre>
   )
 }

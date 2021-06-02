@@ -4,7 +4,7 @@ import matter from 'gray-matter'
 import { existsSync } from 'fsexists'
 import requireFromString from 'require-from-string'
 import { serialize } from 'next-mdx-remote/serialize'
-import { findComponent } from './utils/find-component'
+import { findEntity } from './utils/find-entity'
 import { components, docs } from './__swingset_data'
 
 export function createStaticPaths() {
@@ -44,7 +44,17 @@ export function createStaticProps(swingsetOptions = {}) {
       slug: docsEntry.slug,
       sourceType: 'docs',
     }))
-    const navData = [...navDataComponents, ...navDataDocsPages]
+
+    const navData = [
+      {
+        name: 'Components',
+        routes: navDataComponents,
+      },
+      {
+        name: 'Docs',
+        routes: navDataDocsPages,
+      },
+    ]
 
     // the first route segment dictates how we load data
     const sourceType = !params.swingset ? 'index' : params.swingset[0]
@@ -61,7 +71,7 @@ export function createStaticProps(swingsetOptions = {}) {
 }
 
 async function getDocsMdxSource(params, swingsetOptions) {
-  const currentDocsData = findDocs(docs, params)
+  const currentDocsData = findEntity(params)
   // Read the docs file, separate content from frontmatter
   const { content, data } = matter(
     fs.readFileSync(currentDocsData.path, 'utf8')
@@ -73,15 +83,9 @@ async function getDocsMdxSource(params, swingsetOptions) {
   return mdxSource
 }
 
-function findDocs(docs, params) {
-  return Object.values(docs).find((docsEntry) => {
-    return docsEntry.slug === params.swingset[1]
-  })
-}
-
 async function getComponentMdxSource(params, swingsetOptions) {
   // get the full source and metadata for the component that's rendered on the current page
-  const currentComponentData = findComponent(components, params)
+  const currentComponentData = findEntity(params)
 
   // Read the docs file, separate content from frontmatter
   const { content, data } = matter(
