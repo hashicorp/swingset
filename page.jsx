@@ -6,7 +6,9 @@ import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote'
 import createScope from './utils/create-scope'
 import { useRestoreUrlState, setUrlState } from './utils/url-state'
+import { findComponent } from './utils/find-component'
 import components from './__swingset_components'
+import { getPeerComponents } from './utils/get-peer-components'
 
 export default function createPage(swingsetOptions = {}) {
   return function Page({ mdxSource, navData }) {
@@ -55,26 +57,10 @@ export default function createPage(swingsetOptions = {}) {
     }, [])
 
     // finds the actual component
-    const component = Object.values(components).find(
-      (componentConfig) => componentConfig.slug === router.query.swingset[0]
-    )
+    const component = findComponent(components, router.query)
     const Component = component.src
 
-    let peerComponents = {}
-    if (component.data.peerComponents) {
-      component.data.peerComponents.forEach((name) => {
-        const { src } = components[name]
-        if (!src) {
-          console.warn(
-            `${frontMatter.componentName} lists ${name} as a peerComponent but <${name} /> is not in scope`
-          )
-        } else {
-          peerComponents = Object.assign(peerComponents, {
-            [name]: src,
-          })
-        }
-      })
-    }
+    const peerComponents = getPeerComponents(component, components)
 
     // fully hydrated mdx document, with the components in the created scope available for use
     const mdx = (
@@ -124,7 +110,9 @@ export default function createPage(swingsetOptions = {}) {
                 }
                 key={filteredComponent.name}
               >
-                <Link href={filteredComponent.slug}>
+                <Link
+                  href={`${filteredComponent.sourceType}/${filteredComponent.slug}`}
+                >
                   <a>{filteredComponent.name}</a>
                 </Link>
               </li>
