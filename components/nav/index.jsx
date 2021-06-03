@@ -3,6 +3,7 @@ import Link from 'next/link'
 import classnames from 'classnames'
 import { useBaseRoute } from '../../utils/use-base-route'
 import s from './style.module.css'
+import { Fragment } from 'react'
 
 export default function Nav({ navData }) {
   const router = useRouter()
@@ -10,7 +11,7 @@ export default function Nav({ navData }) {
 
   return navData.map((category) => {
     return (
-      <>
+      <Fragment key={category.name}>
         <li className={s.categoryHeading}>
           <strong>{category.name}</strong>
         </li>
@@ -31,7 +32,7 @@ export default function Nav({ navData }) {
             </li>
           )
         })}
-      </>
+      </Fragment>
     )
   })
 }

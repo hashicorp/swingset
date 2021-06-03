@@ -106,11 +106,7 @@ export default function createPage(swingsetOptions = {}) {
 }
 
 function IndexPage() {
-  return (
-    <pre>
-      <code>Index page placeholder</code>
-    </pre>
-  )
+  return <h1>Welcome to Swingset!</h1>
 }
 
 function DocsPage({ mdxSource, peerComponents }) {
