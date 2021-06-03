@@ -313,7 +313,7 @@ const swingsetOptions = {
 }
 
 export default createPage(swingsetOptions)
-export const getStaticPaths = createStaticPaths()
+export const getStaticPaths = createStaticPaths(swingsetOptions)
 export const getStaticProps = createStaticProps(swingsetOptions)
 ```
 
