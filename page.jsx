@@ -92,44 +92,46 @@ export default function createPage(swingsetOptions = {}) {
       : componentNames
 
     return (
-      <div className={s.sidebar}>
+      <div className={s.root}>
         <Head>
           <title key="title">Component Library</title>
         </Head>
-        {swingsetOptions.logo ?? <span className={s.logo} />}
-        <div className={s.searchContainer}>
-          <input
-            type="input"
-            ref={searchInputRef}
-            onChange={(e) => setFilterValue(e.currentTarget.value)}
-            placeholder="Search"
-            className={s.search}
-          />
-          <span className={s.searchHint} aria-label="Type '/' to search">
-            /
-          </span>
-        </div>
-        <ul>
-          {filteredComponents.map((componentName) => {
-            return (
-              <li
-                className={componentName === name ? s.active : ''}
-                key={componentName}
-              >
-                <a
-                  href={`?component=${componentName}`}
-                  onClick={(e) => {
-                    setName(componentName)
-                    setUrlState(componentName)
-                    e.preventDefault()
-                  }}
+        <div className={s.sidebar}>
+          {swingsetOptions.logo ?? <span className={s.logo} />}
+          <div className={s.searchContainer}>
+            <input
+              type="input"
+              ref={searchInputRef}
+              onChange={(e) => setFilterValue(e.currentTarget.value)}
+              placeholder="Search"
+              className={s.search}
+            />
+            <span className={s.searchHint} aria-label="Type '/' to search">
+              /
+            </span>
+          </div>
+          <ul>
+            {filteredComponents.map((componentName) => {
+              return (
+                <li
+                  className={componentName === name ? s.active : ''}
+                  key={componentName}
                 >
-                  {componentName}
-                </a>
-              </li>
-            )
-          })}
-        </ul>
+                  <a
+                    href={`?component=${componentName}`}
+                    onClick={(e) => {
+                      setName(componentName)
+                      setUrlState(componentName)
+                      e.preventDefault()
+                    }}
+                  >
+                    {componentName}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
         <div className={s.stage}>
           {componentNotFound && (
             <p className={s.notFound}>
