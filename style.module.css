@@ -44,23 +44,6 @@
   padding: 0;
 }
 
-.sidebar li.active a {
-  border-left: 5px solid rgba(255, 237, 114, 0.8);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.sidebar li a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.sidebar li a {
-  border-left: 5px solid transparent;
-  padding: 10px 30px 10px 25px;
-  display: block;
-  color: white;
-  text-decoration: none;
-}
-
 .sidebar .logo {
   max-width: 80%;
   margin: 20px 30px 25px 30px;
@@ -81,6 +64,7 @@
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
   border-radius: 4px;
+  max-width: 100%;
 }
 
 .sidebar .search:focus {
