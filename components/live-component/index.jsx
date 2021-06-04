@@ -56,8 +56,8 @@ export default function createLiveComponent(scope) {
               <path
                 d="M8.05264 2L5.05264 5.00649L2.05264 2"
                 stroke="#aaa"
-                stroke-width="1.25"
-                stroke-linecap="square"
+                strokeWidth="1.25"
+                strokeLinecap="square"
               ></path>
             </svg>
           </h6>

@@ -1,28 +1,23 @@
 import s from './style.module.css'
 import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote'
 import createScope from './utils/create-scope'
-import { useRestoreUrlState, setUrlState } from './utils/url-state'
-import components from './__swingset_components'
+import { findComponent, findEntity } from './utils/find-entity'
+import { components, docs } from './__swingset_data'
+import { getPeerComponents } from './utils/get-peer-components'
+import { useBaseRoute } from './utils/use-base-route'
+import Nav from './components/nav'
 
 export default function createPage(swingsetOptions = {}) {
-  return function Page({ mdxSources, componentNames }) {
+  return function Page({ sourceType, mdxSource, navData }) {
     // tracks the name of the current component
-    const [name, setName] = useState(componentNames[0])
+    const router = useRouter()
+    const baseRoute = useBaseRoute()
     const [filterValue, setFilterValue] = useState()
-    const [componentNotFound, setComponentNotFound] = useState(false)
-
     const searchInputRef = useRef()
-
-    // if there's a component specified in the querystring, set that to current
-    useRestoreUrlState(({ component }) => {
-      if (component && components[component]) {
-        setName(component)
-      } else {
-        setComponentNotFound(component)
-      }
-    })
 
     // Focus the search input when pressing the '/' key
     useEffect(() => {
@@ -52,44 +47,19 @@ export default function createPage(swingsetOptions = {}) {
       return () => window.removeEventListener('keydown', onKeyDown)
     }, [])
 
-    // finds the actual component
-    const component = components[name]
-    const Component = component.src
-
-    let peerComponents = {}
-    if (component.data.peerComponents) {
-      component.data.peerComponents.forEach((name) => {
-        const { src } = components[name]
-        if (!src) {
-          console.warn(
-            `${frontMatter.componentName} lists ${name} as a peerComponent but <${name} /> is not in scope`
-          )
-        } else {
-          peerComponents = Object.assign(peerComponents, {
-            [name]: src,
-          })
-        }
-      })
-    }
-
-    // fully hydrated mdx document, with the components in the created scope available for use
-    const mdx = (
-      <MDXRemote
-        {...mdxSources[name]}
-        components={createScope(
-          { [name]: Component },
-          swingsetOptions,
-          peerComponents
-        )}
-      />
-    )
+    // finds the actual entity
+    const entity = findEntity(router.query)
+    const peerComponents = getPeerComponents(entity, components)
 
     // Filter listed components based on the current filterValue
-    const filteredComponents = filterValue
-      ? componentNames.filter((comp) =>
-          comp.toLowerCase().startsWith(filterValue.toLowerCase())
-        )
-      : componentNames
+    const filteredNav = filterValue
+      ? navData.map((category) => ({
+          ...category,
+          routes: category.routes.filter((route) =>
+            route.name.toLowerCase().startsWith(filterValue.toLowerCase())
+          ),
+        }))
+      : navData
 
     return (
       <div className={s.root}>
@@ -97,7 +67,9 @@ export default function createPage(swingsetOptions = {}) {
           <title key="title">Component Library</title>
         </Head>
         <ul className={s.sidebar}>
-          {swingsetOptions.logo ?? <span className={s.logo} />}
+          <Link href={baseRoute || '/'}>
+            <a>{swingsetOptions.logo ?? <span className={s.logo} />}</a>
+          </Link>
           <div className={s.searchContainer}>
             <input
               type="input"
@@ -110,35 +82,51 @@ export default function createPage(swingsetOptions = {}) {
               /
             </span>
           </div>
-          {filteredComponents.map((componentName) => {
-            return (
-              <li
-                className={componentName === name ? s.active : ''}
-                key={componentName}
-              >
-                <a
-                  href={`?component=${componentName}`}
-                  onClick={(e) => {
-                    setName(componentName)
-                    setUrlState(componentName)
-                    e.preventDefault()
-                  }}
-                >
-                  {componentName}
-                </a>
-              </li>
-            )
-          })}
+          <Nav navData={filteredNav} />
         </ul>
         <div className={s.stage}>
-          {componentNotFound && (
-            <p className={s.notFound}>
-              ⚠️ Component "{componentNotFound}" was not found
-            </p>
+          {sourceType === 'index' ? (
+            swingsetOptions.index ?? <IndexPage />
+          ) : sourceType === 'docs' ? (
+            <DocsPage mdxSource={mdxSource} peerComponents={peerComponents} />
+          ) : sourceType === 'components' ? (
+            <ComponentPage
+              mdxSource={mdxSource}
+              component={entity}
+              swingsetOptions={swingsetOptions}
+              peerComponents={peerComponents}
+            />
+          ) : (
+            <div>Houston we have a problem</div>
           )}
-          {mdx}
         </div>
       </div>
     )
   }
+}
+
+function IndexPage() {
+  return <h1>Welcome to Swingset!</h1>
+}
+
+function DocsPage({ mdxSource, peerComponents }) {
+  return <MDXRemote {...mdxSource} components={peerComponents} />
+}
+
+function ComponentPage({
+  mdxSource,
+  component,
+  swingsetOptions,
+  peerComponents,
+}) {
+  return (
+    <MDXRemote
+      {...mdxSource}
+      components={createScope(
+        { [component.data.componentName]: component.src },
+        swingsetOptions,
+        peerComponents
+      )}
+    />
+  )
 }
