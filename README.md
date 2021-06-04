@@ -314,7 +314,8 @@ const swingsetOptions = {
   // under the header automatically
   customMeta(componentData) {
     return {
-      githubSource: `https://github.com/your/repo/components/${componentData.slug}`,
+      github: `https://github.com/your/repo/components/${componentData.slug}`,
+      npm: `https://npmjs.com/package/${componentData.slug}`,
     }
   },
 }
