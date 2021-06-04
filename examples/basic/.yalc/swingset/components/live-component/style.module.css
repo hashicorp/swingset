@@ -1,0 +1,38 @@
+.editor {
+  background: #1d2528;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  overflow: auto;
+  transition: all 0.25s ease;
+}
+
+.editor * > textarea:focus {
+  outline: none;
+}
+
+.liveComponent {
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  padding: 20px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.caret {
+  float: right;
+  margin-right: 5px;
+  transition: all 0.25s ease;
+  transform: rotate(180deg);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.collapsed {
+  display: none;
+}
+
+.caretCollapsed {
+  transform: rotate(0deg);
+}

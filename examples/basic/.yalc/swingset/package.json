@@ -1,7 +1,7 @@
 {
   "name": "swingset",
   "description": "drop-in component library and documentation pages for next.js",
-  "version": "0.9.0",
+  "version": "0.8.0+41512158",
   "author": "Jeff Escalante",
   "bugs": {
     "url": "https://github.com/hashicorp/swingset/issues"
@@ -19,10 +19,6 @@
     "react-live": "^2.2.3",
     "require-from-string": "^2.0.2",
     "slugify": "^1.5.3"
-  },
-  "devDependencies": {
-    "jest": "^26.6.1",
-    "release": "^6.3.0"
   },
   "homepage": "https://github.com/hashicorp/swingset#readme",
   "keywords": [
@@ -55,5 +51,6 @@
     "release:patch": "release patch && npm publish .",
     "release:pre": "release pre canary && npm publish --tag=canary",
     "test": "jest"
-  }
+  },
+  "yalcSig": "41512158ed3d0ea882cacd365253b446"
 }

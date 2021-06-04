@@ -1,0 +1,89 @@
+.root {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  border-collapse: collapse;
+  border: 1px solid #dee2e6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.625;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+.root th,
+.root td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+}
+
+.root thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  text-align: left;
+}
+
+.root tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
+.root tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.root thead th {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #454d55;
+}
+
+.root .required {
+  color: #c41515;
+}
+
+.root .type {
+  font-size: 0.8em;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+  color: #777;
+  font-family: monospace;
+}
+
+.root .options {
+  font-size: 0.9em;
+  margin-top: 0.5em;
+}
+
+.root .options strong {
+  opacity: 0.6;
+}
+
+.root .containsNested {
+  font-size: 0.9em;
+  font-style: italic;
+  color: #888;
+}
+
+.root .prefix {
+  color: #888;
+}
+
+.root .descriptionCol code {
+  padding: 4px 5px;
+  background: #de5b5b1f;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #a84343;
+}
+
+.root .options code {
+  color: #e86c60;
+  background: none;
+  padding: 0;
+}
