@@ -92,24 +92,24 @@ export default function createPage(swingsetOptions = {}) {
       : componentNames
 
     return (
-      <div className={s.root}>
+      <div className={s.sidebar}>
         <Head>
           <title key="title">Component Library</title>
         </Head>
-        <ul className={s.sidebar}>
-          {swingsetOptions.logo ?? <span className={s.logo} />}
-          <div className={s.searchContainer}>
-            <input
-              type="input"
-              ref={searchInputRef}
-              onChange={(e) => setFilterValue(e.currentTarget.value)}
-              placeholder="Search"
-              className={s.search}
-            />
-            <span className={s.searchHint} aria-label="Type '/' to search">
-              /
-            </span>
-          </div>
+        {swingsetOptions.logo ?? <span className={s.logo} />}
+        <div className={s.searchContainer}>
+          <input
+            type="input"
+            ref={searchInputRef}
+            onChange={(e) => setFilterValue(e.currentTarget.value)}
+            placeholder="Search"
+            className={s.search}
+          />
+          <span className={s.searchHint} aria-label="Type '/' to search">
+            /
+          </span>
+        </div>
+        <ul>
           {filteredComponents.map((componentName) => {
             return (
               <li
