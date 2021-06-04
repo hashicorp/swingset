@@ -92,13 +92,19 @@
 .stage {
   padding: 20px 30px 30px;
   float: left;
-  width: calc(100% - 295px);
+  width: calc(100% - 350px);
   margin-left: 270px;
 }
 
-.stage > h1:first-child {
+.stage > :global(.__swingset-headline) {
+  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
+}
+
+.stage > :global(.__swingset-headline) h1:first-child {
   margin-top: 0;
-  margin-bottom: 1em;
+  margin-bottom: 0;
   line-height: 1em;
   font-size: 2.2em;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -111,10 +117,44 @@
   color: #151b1d;
 }
 
-.stage > h1:first-child code {
+.stage > :global(.__swingset-headline) h1:first-child code {
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
   font-weight: bold;
   color: #e86c60;
   font-size: 1em;
+}
+
+.stage :global(.__swingset-meta) {
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+
+.stage :global(.__swingset-meta) > a {
+  margin-right: 20px;
+  opacity: 0.7;
+  transition: opacity 0.25s ease;
+}
+
+.stage :global(.__swingset-meta) > a:hover {
+  opacity: 1;
+}
+
+.stage :global(.__swingset-meta) > a:last-child {
+  margin-right: 0;
+}
+
+.stage :global(.__swingset-meta) :global(.__swingset-meta-github) {
+  background-image: url('./img/github-icon.svg');
+  width: 25px;
+  height: 23px;
+  background-size: 100%;
+}
+
+.stage :global(.__swingset-meta) :global(.__swingset-meta-npm) {
+  background-image: url('./img/npm-icon.svg');
+  width: 48px;
+  height: 19px;
+  background-size: 100%;
 }

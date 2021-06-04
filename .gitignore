@@ -2,3 +2,5 @@
 node_modules
 .components-meta.js
 .next
+.yalc
+yalc.lock

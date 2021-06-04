@@ -310,6 +310,13 @@ const swingsetOptions = {
   components: { Tester: () => <p>testing 123</p> },
   // Any React element
   logo: <MyLogo />,
+  // if a link is returned from this function, it will display a link to the source code
+  // under the header automatically
+  customMeta(componentData) {
+    return {
+      githubSource: `https://github.com/your/repo/components/${componentData.slug}`,
+    }
+  },
 }
 
 export default createPage(swingsetOptions)
