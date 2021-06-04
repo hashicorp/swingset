@@ -35,6 +35,7 @@
   width: 15px;
   box-shadow: inset -12px 0 12px -12px rgba(0, 0, 0, 0.8);
   right: 0;
+  pointer-events: none;
 }
 
 .sidebar li.active a {
