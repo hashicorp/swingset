@@ -104,7 +104,26 @@ async function getComponentMdxSource(params, swingsetOptions) {
     fs.readFileSync(currentComponentData.propsPath, 'utf8')
 
   // Inject a primary headline with the component's name above the content
-  const contentWithHeadline = `# \`<${data.componentName}>\` Component\n${content}`
+  let contentWithHeadline = `<div className='__swingset-headline'>
+  <h1><code>&lt;${data.componentName}&gt;</code> Component</h1>`
+
+  // If custom metadata is called for, add it below the headline
+  if (swingsetOptions.customMeta) {
+    const customMeta = swingsetOptions.customMeta(currentComponentData)
+    contentWithHeadline += '\n<div className="__swingset-meta">'
+
+    if (customMeta.github) {
+      contentWithHeadline += `<a className='__swingset-meta-github' target='_blank' rel='noopener' href='${customMeta.github}' title='View Source on GitHub'></a>`
+    }
+
+    if (customMeta.npm) {
+      contentWithHeadline += `<a className='__swingset-meta-npm' target='_blank' rel='noopener' href='${customMeta.npm}' title='View NPM Package'></a>`
+    }
+
+    contentWithHeadline += '\n</div>'
+  }
+
+  contentWithHeadline += `</div>\n${content}`
 
   // Serialize the content using mdx-remote
   const mdxSource = await serialize(contentWithHeadline, {
