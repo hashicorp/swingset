@@ -11,3 +11,5 @@ export default function Button({ text, testObject }) {
 export function ButtonSecondary({ text }) {
   return <button className={s.root}>{text}, secondary</button>
 }
+
+export const foo = 'bar'
