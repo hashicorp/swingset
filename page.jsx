@@ -133,6 +133,7 @@ function ComponentPage({
         swingsetOptions,
         peerComponents
       )}
+      scope={{ ...mdxSource.scope, ...namedExports }}
     />
   )
 }
