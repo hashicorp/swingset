@@ -1,7 +1,7 @@
 {
   "name": "swingset",
   "description": "drop-in component library and documentation pages for next.js",
-  "version": "0.8.0+41512158",
+  "version": "0.9.0+e50892b1",
   "author": "Jeff Escalante",
   "bugs": {
     "url": "https://github.com/hashicorp/swingset/issues"
@@ -52,5 +52,5 @@
     "release:pre": "release pre canary && npm publish --tag=canary",
     "test": "jest"
   },
-  "yalcSig": "41512158ed3d0ea882cacd365253b446"
+  "yalcSig": "e50892b105a14336fbfe0c6346891829"
 }

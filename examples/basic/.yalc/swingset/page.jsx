@@ -66,7 +66,7 @@ export default function createPage(swingsetOptions = {}) {
         <Head>
           <title key="title">Component Library</title>
         </Head>
-        <ul className={s.sidebar}>
+        <div className={s.sidebar}>
           <Link href={baseRoute || '/'}>
             <a>{swingsetOptions.logo ?? <span className={s.logo} />}</a>
           </Link>
@@ -82,8 +82,10 @@ export default function createPage(swingsetOptions = {}) {
               /
             </span>
           </div>
-          <Nav navData={filteredNav} />
-        </ul>
+          <ul>
+            <Nav navData={filteredNav} />
+          </ul>
+        </div>
         <div className={s.stage}>
           {sourceType === 'index' ? (
             swingsetOptions.index ?? <IndexPage />
@@ -119,14 +121,19 @@ function ComponentPage({
   swingsetOptions,
   peerComponents,
 }) {
+  const { default: defaultExport, ...namedExports } = component.exports
   return (
     <MDXRemote
       {...mdxSource}
       components={createScope(
-        { [component.data.componentName]: component.src },
+        {
+          [component.data.componentName]: defaultExport,
+          ...namedExports,
+        },
         swingsetOptions,
         peerComponents
       )}
+      scope={{ ...mdxSource.scope, ...namedExports }}
     />
   )
 }

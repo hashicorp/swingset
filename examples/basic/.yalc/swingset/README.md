@@ -71,6 +71,7 @@ With this in place, you should see your component's name render in the sidebar a
 Now let's actually make these docs useful. There are a few components that are made available within `docs.mdx` files that will help you to showcase your components.
 
 1. Your actual component. So in the example above, you can use `<Button />` right in that mdx file, and it will render an example however you please.
+1. Any named exports
 1. Any components you list in the `peerComponents` frontmatter key.
    1. In the example above, `<ArrowIcon />` is added to scope.
    1. **Note:** `peerComponents` must also be present in Swingset (i.e., they must have a `docs.mdx` file). A warning will be emitted if any unknown components are passed here.
@@ -310,10 +311,18 @@ const swingsetOptions = {
   components: { Tester: () => <p>testing 123</p> },
   // Any React element
   logo: <MyLogo />,
+  // if a link is returned from this function, it will display a link to the source code
+  // under the header automatically
+  customMeta(componentData) {
+    return {
+      github: `https://github.com/your/repo/components/${componentData.slug}`,
+      npm: `https://npmjs.com/package/${componentData.slug}`,
+    }
+  },
 }
 
 export default createPage(swingsetOptions)
-export const getStaticPaths = createStaticPaths()
+export const getStaticPaths = createStaticPaths(swingsetOptions)
 export const getStaticProps = createStaticProps(swingsetOptions)
 ```
 
@@ -441,3 +450,17 @@ Choose whichever option feels more clear for your use!
 ### Notes
 
 Any global styles that you specify by importing to `_app.jsx` will be reflected in your component library. Normally, this is a good thing, as your components will be showcased as they normally would within your app, but if any styles are not rendering as expected in the component library, it may be due to global overrides.
+
+### Local Development
+
+This is a complicated library to test due to the way it operates - it must be hosted inside a nextjs app, so the minimum viable integration test fixture is a full blown next app. There are also a variety of issues with the way that dependencies are installed and flattened that make it even more difficult to integrate locally.
+
+As such, the easiest way to work on this library itself is using the wonderful tool [`yalc`](https://github.com/wclr/yalc), which is like `npm link`, except it actually works the same as a normal `npm install` instead of breaking in most situations. Here are the steps to getting set up with a local dev environment that will allow you to iterate quickly.
+
+- Install yalc with `npm i yalc -g`
+- From the project root, run `yalc publish`
+- Go into your fixture directory, for example, `cd examples/base`, then run `yalc add swingset`
+- From the fixture directory, run `npm start` to run the app
+- In another terminal tab, run `yalc push` from the project root whenever you have made changes to the core library and want to see them update in your app.
+
+We'd love to get a watcher set up that will run `yalc push` for you automatically on changes to source files, if anyone wants to contribute this it would be lovely 💖
