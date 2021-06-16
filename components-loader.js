@@ -121,7 +121,7 @@ function formatComponentsWithNames(components, config) {
 //     docsPath: '/absolute/path/to/component/docs.mdx',
 //     propsPath: '/absolute/path/to/component/props.js',
 //     slug: 'componentname',
-//     src: ComponentName,
+//     exports: ComponentNameExports,
 //     data: { componentName: 'ComponentName' }
 //   },
 //   ...
@@ -129,7 +129,7 @@ function formatComponentsWithNames(components, config) {
 // ```
 function generateMetadataFile(components, docsFiles) {
   const imports = components.reduce((memo, component) => {
-    memo += `import ${component.name} from '${component.path}'\n`
+    memo += `import * as ${component.name}Exports from '${component.path}'\n`
     return memo
   }, '')
 
@@ -141,7 +141,7 @@ function generateMetadataFile(components, docsFiles) {
       docsPath: '${path.join(component.path, 'docs.mdx')}',
       propsPath: '${path.join(component.path, 'props.js')}',
       slug: '${component.slug}',
-      src: ${component.name},
+      exports: ${component.name}Exports,
       data: ${JSON.stringify(component.data, null, 2)}
     },
   `

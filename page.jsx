@@ -121,14 +121,19 @@ function ComponentPage({
   swingsetOptions,
   peerComponents,
 }) {
+  const { default: defaultExport, ...namedExports } = component.exports
   return (
     <MDXRemote
       {...mdxSource}
       components={createScope(
-        { [component.data.componentName]: component.src },
+        {
+          [component.data.componentName]: defaultExport,
+          ...namedExports,
+        },
         swingsetOptions,
         peerComponents
       )}
+      scope={{ ...mdxSource.scope, ...namedExports }}
     />
   )
 }

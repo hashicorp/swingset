@@ -71,6 +71,7 @@ With this in place, you should see your component's name render in the sidebar a
 Now let's actually make these docs useful. There are a few components that are made available within `docs.mdx` files that will help you to showcase your components.
 
 1. Your actual component. So in the example above, you can use `<Button />` right in that mdx file, and it will render an example however you please.
+1. Any components exposed as named exports from your component index file.
 1. Any components you list in the `peerComponents` frontmatter key.
    1. In the example above, `<ArrowIcon />` is added to scope.
    1. **Note:** `peerComponents` must also be present in Swingset (i.e., they must have a `docs.mdx` file). A warning will be emitted if any unknown components are passed here.
