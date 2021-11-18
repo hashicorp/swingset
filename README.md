@@ -21,7 +21,7 @@ You then need to create a page in your nextjs app where swingset will live. You 
 
 ```jsx
 import createPage from 'swingset/page'
-import { createStaticProps, createStaticPath } from 'swingset/server'
+import { createStaticProps, createStaticPaths } from 'swingset/server'
 
 export default createPage()
 export const getStaticPaths = createStaticPaths()
