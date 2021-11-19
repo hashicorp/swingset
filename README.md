@@ -303,7 +303,7 @@ There are some additional options that can be passed in to the page configuratio
 
 ```js
 import createPage from 'swingset/page'
-import { createStaticProps } from 'swingset/server'
+import { createStaticProps, createStaticPaths } from 'swingset/server'
 
 const swingsetOptions = {
   // if you have custom components you'd like to have available for use across all docs pages,
