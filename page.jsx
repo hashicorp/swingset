@@ -56,7 +56,7 @@ export default function createPage(swingsetOptions = {}) {
       ? navData.map((category) => ({
           ...category,
           routes: category.routes.filter((route) =>
-            route.name.toLowerCase().startsWith(filterValue.toLowerCase())
+            route.name.toLowerCase().includes(filterValue.toLowerCase())
           ),
         }))
       : navData
