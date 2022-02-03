@@ -11,12 +11,12 @@ module.exports =
           pluginOptions.componentsRoot
             ? pluginOptions.componentsRoot
             : 'components/*'
-        )
+        ).replace(/\\/g, '/')
         // normalize docsRoot path
         pluginOptions.docsRoot = path.resolve(
           config.context,
           pluginOptions.docsRoot ? pluginOptions.docsRoot : 'docs/*'
-        )
+        ).replace(/\\/g, '/')
         //
         config.module.rules.push({
           test: /__swingset_data/,
