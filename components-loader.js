@@ -55,7 +55,7 @@ function removeComponentsWithoutDocs(components, pluginOptions, config) {
 // Add the component folder as a dependency so webpack knows when to reload
 function addWebpackDependencies(components) {
   components.map((componentDir) => {
-    this.addContextDependency(componentDir)
+    this.addContextDependency(path.resolve(componentDir))
   })
 }
 
@@ -138,8 +138,8 @@ function generateMetadataFile(components, docsFiles) {
     // src: Button, <<< Button NOT in quotes
     acc += `  '${component.name}': {
       path: '${component.path}',
-      docsPath: '${path.join(component.path, 'docs.mdx')}',
-      propsPath: '${path.join(component.path, 'props.js')}',
+      docsPath: '${path.join(component.path, 'docs.mdx').replace(/\\/g, '/')}',
+      propsPath: '${path.join(component.path, 'props.js').replace(/\\/g, '/')}',
       slug: '${component.slug}',
       exports: ${component.name}Exports,
       data: ${JSON.stringify(component.data, null, 2)}
