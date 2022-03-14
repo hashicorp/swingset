@@ -56,7 +56,7 @@ export default function createPage(swingsetOptions = {}) {
       ? navData.map((category) => ({
           ...category,
           routes: category.routes.filter((route) =>
-            route.name.toLowerCase().startsWith(filterValue.toLowerCase())
+            route.name.toLowerCase().includes(filterValue.toLowerCase())
           ),
         }))
       : navData
@@ -90,7 +90,11 @@ export default function createPage(swingsetOptions = {}) {
           {sourceType === 'index' ? (
             swingsetOptions.index ?? <IndexPage />
           ) : sourceType === 'docs' ? (
-            <DocsPage mdxSource={mdxSource} peerComponents={peerComponents} />
+            <DocsPage
+              mdxSource={mdxSource}
+              peerComponents={peerComponents}
+              swingsetOptions={swingsetOptions}
+            />
           ) : sourceType === 'components' ? (
             <ComponentPage
               mdxSource={mdxSource}
@@ -111,8 +115,13 @@ function IndexPage() {
   return <h1>Welcome to Swingset!</h1>
 }
 
-function DocsPage({ mdxSource, peerComponents }) {
-  return <MDXRemote {...mdxSource} components={peerComponents} />
+function DocsPage({ mdxSource, peerComponents, swingsetOptions }) {
+  return (
+    <MDXRemote
+      {...mdxSource}
+      components={createScope({}, swingsetOptions, peerComponents)}
+    />
+  )
 }
 
 function ComponentPage({

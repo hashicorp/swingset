@@ -123,7 +123,7 @@ async function getComponentMdxSource(params, swingsetOptions) {
     contentWithHeadline += '\n</div>'
   }
 
-  contentWithHeadline += `</div>\n${content}`
+  contentWithHeadline += `\n</div>\n${content}`
 
   // Serialize the content using mdx-remote
   const mdxSource = await serialize(contentWithHeadline, {

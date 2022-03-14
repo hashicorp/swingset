@@ -21,7 +21,7 @@ You then need to create a page in your nextjs app where swingset will live. You 
 
 ```jsx
 import createPage from 'swingset/page'
-import { createStaticProps, createStaticPath } from 'swingset/server'
+import { createStaticProps, createStaticPaths } from 'swingset/server'
 
 export default createPage()
 export const getStaticPaths = createStaticPaths()
@@ -71,7 +71,7 @@ With this in place, you should see your component's name render in the sidebar a
 Now let's actually make these docs useful. There are a few components that are made available within `docs.mdx` files that will help you to showcase your components.
 
 1. Your actual component. So in the example above, you can use `<Button />` right in that mdx file, and it will render an example however you please.
-1. Any named exports
+1. Any components exposed as named exports from your component index file.
 1. Any components you list in the `peerComponents` frontmatter key.
    1. In the example above, `<ArrowIcon />` is added to scope.
    1. **Note:** `peerComponents` must also be present in Swingset (i.e., they must have a `docs.mdx` file). A warning will be emitted if any unknown components are passed here.
@@ -303,7 +303,7 @@ There are some additional options that can be passed in to the page configuratio
 
 ```js
 import createPage from 'swingset/page'
-import { createStaticProps } from 'swingset/server'
+import { createStaticProps, createStaticPaths } from 'swingset/server'
 
 const swingsetOptions = {
   // if you have custom components you'd like to have available for use across all docs pages,
@@ -459,7 +459,7 @@ As such, the easiest way to work on this library itself is using the wonderful t
 
 - Install yalc with `npm i yalc -g`
 - From the project root, run `yalc publish`
-- Go into your fixture directory, for example, `cd examples/base`, then run `yalc add swingset`
+- Go into your fixture directory, for example, `cd examples/basic`, then run `yalc add swingset`
 - From the fixture directory, run `npm start` to run the app
 - In another terminal tab, run `yalc push` from the project root whenever you have made changes to the core library and want to see them update in your app.
 
