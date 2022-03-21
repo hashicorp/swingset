@@ -6,12 +6,14 @@ peerComponents:
 
 This is the docs for the button component
 
-<LiveComponent components={{ Test: () => <p>test successful</p> }}>{`<>
+<LiveComponent components={{ Test: () => <p>test successful</p> }}>
+  {`<>
   <RedButton text='this is a bluebutton' />
   <br />
   <BlueButton text='and here is a blue one, provided via "peerComponents"' />
   <Test />
-</>`}</LiveComponent>
+</>`}
+</LiveComponent>
 
 <PropsTable props={componentProps} />
 

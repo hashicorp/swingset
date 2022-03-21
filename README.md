@@ -459,7 +459,7 @@ As such, the easiest way to work on this library itself is using the wonderful t
 
 - Install yalc with `npm i yalc -g`
 - From the project root, run `yalc publish`
-- Go into your fixture directory, for example, `cd examples/base`, then run `yalc add swingset`
+- Go into your fixture directory, for example, `cd examples/basic`, then run `yalc add swingset`
 - From the fixture directory, run `npm start` to run the app
 - In another terminal tab, run `yalc push` from the project root whenever you have made changes to the core library and want to see them update in your app.
 

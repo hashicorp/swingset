@@ -1,7 +1,7 @@
 {
   "name": "swingset",
   "description": "drop-in component library and documentation pages for next.js",
-  "version": "0.9.0+e50892b1",
+  "version": "0.11.0",
   "author": "Jeff Escalante",
   "bugs": {
     "url": "https://github.com/hashicorp/swingset/issues"
@@ -14,11 +14,11 @@
     "gray-matter": "^4.0.3",
     "loader-utils": "^2.0.0",
     "marked": "^1.2.2",
-    "next-mdx-remote": "3.0.2",
+    "next-mdx-remote": "^4.0.0",
     "query-string": "^5.1.1",
-    "react-live": "^2.2.3",
+    "react-live": "^3.0.0",
     "require-from-string": "^2.0.2",
-    "slugify": "^1.5.3"
+    "slugify": "^1.6.0"
   },
   "homepage": "https://github.com/hashicorp/swingset#readme",
   "keywords": [
@@ -31,11 +31,8 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "next": ">=9.x",
-    "next-transpile-modules": "^4.1.0",
-    "react": ">=16.x",
-    "react-dom": ">=16.x",
-    "webpack": ">=4.x"
+    "react": ">=16.x <=17.x",
+    "react-dom": ">=16.x <=17.x"
   },
   "publishConfig": {
     "access": "public"
@@ -52,5 +49,5 @@
     "release:pre": "release pre canary && npm publish --tag=canary",
     "test": "jest"
   },
-  "yalcSig": "e50892b105a14336fbfe0c6346891829"
+  "yalcSig": "c29a80d362da5451819481741d4a623b"
 }

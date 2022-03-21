@@ -4,11 +4,13 @@ componentName: 'Button'
 
 This is the docs for the button component
 
-<LiveComponent components={{ Test: () => <p>test successful</p> }}>{`<>
+<LiveComponent components={{ Test: () => <p>test successful</p> }}>
+  {`<>
   <Button text='this is a button' />
   <ButtonSecondary text={\`\${foo}\`} />
   <Test />
-</>`}</LiveComponent>
+</>`}
+</LiveComponent>
 
 <PropsTable props={componentProps} />
 
