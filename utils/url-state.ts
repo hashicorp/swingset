@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { ReactElement, useEffect } from 'react'
 import queryString from 'query-string'
 import Router from 'next/router'
 import { encode, decode } from './base64'
 import copy from 'copy-text-to-clipboard'
 
-export function useRestoreUrlState(cb) {
+export function useRestoreUrlState(cb: (arg: any) => void) {
   useEffect(() => {
     if (window.location.search) {
       const qs = queryString.parse(window.location.search)
@@ -14,7 +14,12 @@ export function useRestoreUrlState(cb) {
   }, [])
 }
 
-export function setUrlState(component, id, values, copyToClipboard) {
+export function setUrlState(
+  component: any,
+  id: string,
+  values: any,
+  copyToClipboard: boolean
+) {
   const qs = queryString.stringify({
     id,
     values: values && encode(JSON.stringify(values)),

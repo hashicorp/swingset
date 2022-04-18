@@ -16,62 +16,65 @@ module.exports = function swingsetComponentsLoader() {
 
   const usedComponents = removeComponentsWithoutDocs(
     allComponents,
-    pluginOptions,
-    webpackConfig
+    pluginOptions
   )
 
   addWebpackDependencies.call(this, usedComponents)
-  const componentsWithNames = formatComponentsWithNames(
-    usedComponents,
-    webpackConfig
-  )
+  const componentsWithNames = formatComponentsWithNames(usedComponents)
 
   // Resolve docs glob
   const allDocs = globby.sync(`${pluginOptions.docsRoot}`)
   const docsWithNames = formatDocsFilesWithNames(allDocs)
+
   return generateMetadataFile(componentsWithNames, docsWithNames)
 }
 
-// Go through each component and remove any components folders that don't have
-// a "docs.mdx" file, since we don't need to display them. If a component exists
-// without a docs page, and verbose mode is active, log a warning.
-function removeComponentsWithoutDocs(components, pluginOptions, config) {
+/**
+ * Go through each component and remove any components folders that don't have
+ * a "docs.mdx" file, since we don't need to display them. If a component exists
+ * without a docs page, and verbose mode is active, log a warning.
+ * @param {string[]} components
+ * @param {import('./types').PluginOptions} pluginOptions
+ * @returns {string[]}
+ */
+function removeComponentsWithoutDocs(components, pluginOptions) {
   return components.reduce((memo, componentDir) => {
     if (existsSync(path.join(componentDir, 'docs.mdx'))) {
       memo.push(componentDir)
     } else {
       pluginOptions.verbose &&
         console.warn(
-          `The component "${componentDir.replace(
-            config.context,
-            ''
-          )}" does not have a "docs.mdx" file and therefore will not be documented.`
+          `The component "${componentDir}" does not have a "docs.mdx" file and therefore will not be documented.`
         )
     }
     return memo
   }, [])
 }
 
-// Add the component folder as a dependency so webpack knows when to reload
+/**
+ * Add the component folder as a dependency so webpack knows when to reload
+ * @param {string[]} components
+ */
 function addWebpackDependencies(components) {
   components.map((componentDir) => {
     this.addContextDependency(componentDir)
   })
 }
 
-// Read the docs file name from the docs file, return the name and path.
-// If the docs file doesn't have a name, throw a clear error.
-// The format ends up like this: [{ name: 'Test', path: '/path/to/component' }]
-function formatDocsFilesWithNames(docs, config) {
+/**
+ * Read the docs file name from the docs file, return the name and path.
+ * If the docs file doesn't have a name, throw a clear error.
+ * The format ends up like this: [{ name: 'Test', path: '/path/to/component' }]
+ * @param {string[]} docs
+ * @returns {import('./types').FormattedFileEntry[]}
+ */
+function formatDocsFilesWithNames(docs) {
   return docs.map((docsFile) => {
     const fileContent = fs.readFileSync(docsFile, 'utf8')
     const { data } = matter(fileContent)
     if (!data.name) {
       throw new Error(
-        `The docs file at "${path.replace(
-          config.context,
-          ''
-        )}" is missing metadata. Please add a human-readable name to display in the sidebar as "name" to the front matter at the top of the file.`
+        `The docs file at "${docsFile}" is missing metadata. Please add a human-readable name to display in the sidebar as "name" to the front matter at the top of the file.`
       )
     }
     return {
@@ -83,10 +86,14 @@ function formatDocsFilesWithNames(docs, config) {
   })
 }
 
-// Read the component name from the docs file, return the name and path.
-// If the docs file doesn't have a name, throw a clear error.
-// The format ends up like this: [{ name: 'Test', path: '/path/to/component' }]
-function formatComponentsWithNames(components, config) {
+/**
+ * Read the component name from the docs file, return the name and path.
+ * If the docs file doesn't have a name, throw a clear error.
+ * The format ends up like this: [{ name: 'Test', path: '/path/to/component' }]
+ * @param {string[]} components
+ * @returns {import('./types').FormattedFileEntry[]}
+ */
+function formatComponentsWithNames(components) {
   return components.map((componentDir) => {
     const docsFileContent = fs.readFileSync(
       path.join(componentDir, 'docs.mdx'),
@@ -95,10 +102,7 @@ function formatComponentsWithNames(components, config) {
     const { data } = matter(docsFileContent)
     if (!data.componentName) {
       throw new Error(
-        `The docs file at "${path.replace(
-          config.context,
-          ''
-        )}" is missing metadata. Please add the component's name as you would like it to be imported as "componentName" to the front matter at the top of the file.`
+        `The docs file at "${componentDir}" is missing metadata. Please add the component's name as you would like it to be imported as "componentName" to the front matter at the top of the file.`
       )
     }
     return {
@@ -110,23 +114,28 @@ function formatComponentsWithNames(components, config) {
   })
 }
 
-// Write out the component metadata to a file, which is formatted as such:
-//
-// ```
-// import ComponentName from '/absolute/path/to/component'
-//
-// export default {
-//   ComponentName: {
-//     path: '/absolute/path/to/component',
-//     docsPath: '/absolute/path/to/component/docs.mdx',
-//     propsPath: '/absolute/path/to/component/props.js',
-//     slug: 'componentname',
-//     exports: ComponentNameExports,
-//     data: { componentName: 'ComponentName' }
-//   },
-//   ...
-// }
-// ```
+/**
+ * 
+  Write out the component metadata to a file, which is formatted as such:
+  ```
+  import ComponentName from '/absolute/path/to/component'
+
+  export default {
+    ComponentName: {
+      path: '/absolute/path/to/component',
+      docsPath: '/absolute/path/to/component/docs.mdx',
+      propsPath: '/absolute/path/to/component/props.js',
+      slug: 'componentname',
+      exports: ComponentNameExports,
+      data: { componentName: 'ComponentName' }
+    },
+    ...
+  }
+  ```
+ * @param {import('./types').FormattedFileEntry[]} components 
+ * @param {import('./types').FormattedFileEntry[]} docsFiles 
+ * @returns 
+ */
 function generateMetadataFile(components, docsFiles) {
   const imports = components.reduce((memo, component) => {
     memo += `import * as ${component.name}Exports from '${component.path}'\n`

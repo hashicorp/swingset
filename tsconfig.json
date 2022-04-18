@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "esnext",
+    "lib": ["es6", "dom"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationDir": "./dist",
+    "outDir": "./dist"
+  },
+  "exclude": ["__tests__", "node_modules", "examples"],
+  "include": ["types.d.ts", "**/*.ts", "**/*.tsx"]
+}

@@ -6,5 +6,5 @@ const swingsetConfig = {
 }
 
 export default createPage(swingsetConfig)
-export const getStaticPaths = createStaticPaths(swingsetConfig)
+export const getStaticPaths = createStaticPaths()
 export const getStaticProps = createStaticProps(swingsetConfig)

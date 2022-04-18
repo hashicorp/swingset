@@ -1,5 +1,10 @@
-export function getPeerComponents(entity, components) {
-  const peerComponents = {}
+import { ComponentData, FormattedFileEntry } from '../types'
+
+export function getPeerComponents(
+  entity: ComponentData | FormattedFileEntry,
+  components: Record<string, { exports: { default: JSX.Element } }>
+) {
+  const peerComponents: Record<string, JSX.Element> = {}
 
   if (!entity?.data?.peerComponents) return peerComponents
 

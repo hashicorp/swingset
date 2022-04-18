@@ -5,6 +5,8 @@ const swingsetConfig = {
   components: { Tester: () => <p>testing 123</p> },
 }
 
-export default createPage(swingsetConfig)
-export const getStaticPaths = createStaticPaths(swingsetConfig)
+const Page = createPage(swingsetConfig)
+
+export default Page
+export const getStaticPaths = createStaticPaths()
 export const getStaticProps = createStaticProps(swingsetConfig)

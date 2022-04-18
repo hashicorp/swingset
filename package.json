@@ -21,7 +21,10 @@
     "slugify": "^1.6.0"
   },
   "devDependencies": {
+    "@types/query-string": "^5.1.0",
+    "@types/require-from-string": "^1.2.1",
     "jest": "^27.0.6",
+    "next": "^12.1.0",
     "release": "^6.3.0"
   },
   "homepage": "https://github.com/hashicorp/swingset#readme",
@@ -47,6 +50,7 @@
   },
   "scripts": {
     "example": "cd examples/basic && [ ! -d 'node_modules' ] && npm i || npm start",
+    "build": "rm -rf ./dist && rollup -c rollup.config.js",
     "release:major": "release major && npm publish .",
     "release:minor": "release minor && npm publish .",
     "release:patch": "release patch && npm publish .",

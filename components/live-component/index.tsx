@@ -1,14 +1,24 @@
 import sg from '../shared.module.css'
 import s from './style.module.css'
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import theme from '../../utils/editor-theme'
 import createId from '../../utils/create-id'
 import { useRestoreUrlState, setUrlState } from '../../utils/url-state'
 import scrollToElement from '../../utils/scroll-to-element'
 
-export default function createLiveComponent(scope) {
-  return function LiveComponent({ children, components, collapsed = false }) {
+export default function createLiveComponent(
+  scope: Record<string, ReactElement>
+) {
+  return function LiveComponent({
+    children,
+    components,
+    collapsed = false,
+  }: {
+    children: string
+    components: Record<string, ReactElement>
+    collapsed: boolean
+  }) {
     const id = createId(children)
     const componentName = Object.keys(scope)[0]
     const [code, setCode] = useState(children)

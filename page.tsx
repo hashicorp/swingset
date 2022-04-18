@@ -3,43 +3,46 @@ import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { MDXRemote } from 'next-mdx-remote'
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import createScope from './utils/create-scope'
-import { findComponent, findEntity } from './utils/find-entity'
-import { components, docs } from './__swingset_data'
+import { findEntity } from './utils/find-entity'
+import { components } from './__swingset_data'
 import { getPeerComponents } from './utils/get-peer-components'
 import { useBaseRoute } from './utils/use-base-route'
 import Nav from './components/nav'
+import { ComponentData, PageProps, SwingsetOptions } from './types'
 
-export default function createPage(swingsetOptions = {}) {
-  return function Page({ sourceType, mdxSource, navData }) {
+export default function createPage(swingsetOptions: SwingsetOptions = {}) {
+  return function Page({ sourceType, mdxSource, navData }: PageProps) {
     // tracks the name of the current component
     const router = useRouter()
     const baseRoute = useBaseRoute()
-    const [filterValue, setFilterValue] = useState()
-    const searchInputRef = useRef()
+    const [filterValue, setFilterValue] = useState<string | undefined>()
+    const searchInputRef = useRef<HTMLInputElement>(null)
 
     // Focus the search input when pressing the '/' key
     useEffect(() => {
-      function onKeyDown(e) {
+      function onKeyDown(e: KeyboardEvent) {
         const elt = e.target || e.srcElement
-        const tagName = elt.tagName
-        if (
-          elt.isContentEditable ||
-          tagName === 'INPUT' ||
-          tagName === 'SELECT' ||
-          tagName === 'TEXTAREA'
-        ) {
-          // Already in an input
-          return
+
+        if (elt instanceof Element) {
+          const tagName = elt.tagName
+          if (
+            'isContentEditable' in elt ||
+            tagName === 'INPUT' ||
+            tagName === 'SELECT' ||
+            tagName === 'TEXTAREA'
+          ) {
+            // Already in an input
+            return
+          }
+
+          if (e.key !== '/') return
+
+          searchInputRef.current?.focus()
+          e.stopPropagation()
+          e.preventDefault()
         }
-
-        // Bind to the `/` key
-        if (e.keyCode !== 191) return
-
-        searchInputRef.current?.focus()
-        e.stopPropagation()
-        e.preventDefault()
       }
 
       window.addEventListener('keydown', onKeyDown)
@@ -49,6 +52,7 @@ export default function createPage(swingsetOptions = {}) {
 
     // finds the actual entity
     const entity = findEntity(router.query)
+
     const peerComponents = getPeerComponents(entity, components)
 
     // Filter listed components based on the current filterValue
@@ -98,7 +102,7 @@ export default function createPage(swingsetOptions = {}) {
           ) : sourceType === 'components' ? (
             <ComponentPage
               mdxSource={mdxSource}
-              component={entity}
+              component={entity as ComponentData}
               swingsetOptions={swingsetOptions}
               peerComponents={peerComponents}
             />
@@ -115,7 +119,15 @@ function IndexPage() {
   return <h1>Welcome to Swingset!</h1>
 }
 
-function DocsPage({ mdxSource, peerComponents, swingsetOptions }) {
+function DocsPage({
+  mdxSource,
+  peerComponents,
+  swingsetOptions,
+}: {
+  mdxSource: MDXRemoteSerializeResult
+  peerComponents: Record<string, JSX.Element>
+  swingsetOptions: SwingsetOptions
+}) {
   return (
     <MDXRemote
       {...mdxSource}
@@ -129,8 +141,18 @@ function ComponentPage({
   component,
   swingsetOptions,
   peerComponents,
+}: {
+  mdxSource: MDXRemoteSerializeResult
+  component: ComponentData
+  swingsetOptions: SwingsetOptions
+  peerComponents: Record<string, JSX.Element>
 }) {
   const { default: defaultExport, ...namedExports } = component.exports
+
+  if (!component.data.componentName) {
+    throw new Error('Missing component name')
+  }
+
   return (
     <MDXRemote
       {...mdxSource}

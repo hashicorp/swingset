@@ -1,11 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+// @ts-ignore
 import { existsSync } from 'fsexists'
 import requireFromString from 'require-from-string'
 import { serialize } from 'next-mdx-remote/serialize'
 import { findEntity } from './utils/find-entity'
 import { components, docs } from './__swingset_data'
+import type { ComponentData, PageProps, SwingsetOptions } from './types'
+import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
+import { GetStaticProps, GetStaticPropsContext } from 'next'
 
 export function createStaticPaths() {
   return function getStaticPaths() {
@@ -30,7 +34,7 @@ export function createStaticPaths() {
 }
 
 export function createStaticProps(swingsetOptions = {}) {
-  return async function getStaticProps({ params }) {
+  return async function getStaticProps({ params }: GetStaticPropsContext) {
     // get the name/slug for every component in order to render the nav
     const navDataComponents = Object.values(components).map(
       (componentConfig) => ({
@@ -57,20 +61,23 @@ export function createStaticProps(swingsetOptions = {}) {
     ]
 
     // the first route segment dictates how we load data
-    const sourceType = !params.swingset ? 'index' : params.swingset[0]
+    const sourceType = !params!.swingset ? 'index' : params!.swingset[0]
 
     const mdxSource =
       sourceType === 'components'
-        ? await getComponentMdxSource(params, swingsetOptions)
+        ? await getComponentMdxSource(params!, swingsetOptions)
         : sourceType == 'docs'
-        ? await getDocsMdxSource(params, swingsetOptions)
+        ? await getDocsMdxSource(params!, swingsetOptions)
         : null
 
-    return { props: { sourceType, navData, mdxSource } }
+    return { props: { sourceType, navData, mdxSource } as PageProps }
   }
 }
 
-async function getDocsMdxSource(params, swingsetOptions) {
+async function getDocsMdxSource(
+  params: NextParsedUrlQuery,
+  swingsetOptions: SwingsetOptions
+) {
   const currentDocsData = findEntity(params)
   // Read the docs file, separate content from frontmatter
   const { content, data } = matter(
@@ -83,9 +90,12 @@ async function getDocsMdxSource(params, swingsetOptions) {
   return mdxSource
 }
 
-async function getComponentMdxSource(params, swingsetOptions) {
+async function getComponentMdxSource(
+  params: NextParsedUrlQuery,
+  swingsetOptions: SwingsetOptions
+) {
   // get the full source and metadata for the component that's rendered on the current page
-  const currentComponentData = findEntity(params)
+  const currentComponentData = findEntity(params) as ComponentData
 
   // Read the docs file, separate content from frontmatter
   const { content, data } = matter(

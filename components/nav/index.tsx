@@ -5,7 +5,14 @@ import { useBaseRoute } from '../../utils/use-base-route'
 import s from './style.module.css'
 import { Fragment } from 'react'
 
-export default function Nav({ navData }) {
+export default function Nav({
+  navData,
+}: {
+  navData: {
+    name: string
+    routes: { sourceType: string; slug: string; name: string }[]
+  }[]
+}) {
   const router = useRouter()
   const baseRoute = useBaseRoute()
 

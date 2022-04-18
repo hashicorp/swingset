@@ -1,15 +1,26 @@
 import sg from '../shared.module.css'
 import s from './style.module.css'
-import { useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { useRestoreUrlState, setUrlState } from '../../utils/url-state'
 import createId from '../../utils/create-id'
 import scrollToElement from '../../utils/scroll-to-element'
 
-export default function createKnobsComponent(scope) {
+type Knobs = { [key: string]: Knob | Knobs }
+
+type Knob = {
+  control: {
+    type: 'text' | 'checkbox' | 'select'
+    options: string[]
+  }
+}
+
+export default function createKnobsComponent(
+  scope: Record<string, React.ElementType>
+) {
   const name = Object.keys(scope)[0]
   const Component = Object.values(scope)[0]
 
-  return function KnobsComponent({ knobs }) {
+  return function KnobsComponent({ knobs }: { knobs: Knobs }) {
     const id = createId(knobs)
     const [values, setValues] = useState(knobs)
 
@@ -39,7 +50,11 @@ export default function createKnobsComponent(scope) {
   }
 }
 
-function renderControls(values, setValues, indentLevel = 0) {
+function renderControls(
+  values: Knobs,
+  setValues: (arg: Knobs) => void,
+  indentLevel = 0
+) {
   return Object.keys(values).map((k) => {
     const valuesCopy = JSON.parse(JSON.stringify(values))
     const v = values[k]
@@ -68,7 +83,7 @@ function renderControls(values, setValues, indentLevel = 0) {
             setValues(valuesCopy)
           }}
         >
-          <option value={null}>Select an option...</option>
+          <option>Select an option...</option>
           {v.options.map((opt) => (
             <option key={opt} value={opt}>
               {opt}
