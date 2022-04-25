@@ -25,7 +25,8 @@
     "@types/require-from-string": "^1.2.1",
     "jest": "^27.0.6",
     "next": "^12.1.0",
-    "release": "^6.3.0"
+    "release": "^6.3.0",
+    "typescript": "^4.6.3"
   },
   "homepage": "https://github.com/hashicorp/swingset#readme",
   "keywords": [
@@ -51,6 +52,7 @@
   "scripts": {
     "example": "cd examples/basic && [ ! -d 'node_modules' ] && npm i || npm start",
     "build": "rm -rf ./dist && rollup -c rollup.config.js",
+    "typecheck": "tsc --noEmit",
     "release:major": "release major && npm publish .",
     "release:minor": "release minor && npm publish .",
     "release:patch": "release patch && npm publish .",

@@ -7,7 +7,7 @@ import requireFromString from 'require-from-string'
 import { serialize } from 'next-mdx-remote/serialize'
 import { findEntity } from './utils/find-entity'
 import { components, docs } from './__swingset_data'
-import type { ComponentData, PageProps, SwingsetOptions } from './types'
+import type { ComponentData, SwingsetPageProps, SwingsetOptions } from './types'
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
 
@@ -70,7 +70,7 @@ export function createStaticProps(swingsetOptions = {}) {
         ? await getDocsMdxSource(params!, swingsetOptions)
         : null
 
-    return { props: { sourceType, navData, mdxSource } as PageProps }
+    return { props: { sourceType, navData, mdxSource } as SwingsetPageProps }
   }
 }
 

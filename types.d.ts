@@ -25,7 +25,7 @@ export type ComponentData = {
   propsPath: string
   slug: string
   exports: any
-  data: { peerComponents?: string[]; componentName?: string; name?: string }
+  data: FileData
 }
 
 type SourceType = 'docs' | 'components' | 'index'
@@ -41,17 +41,38 @@ export type SwingsetData = {
   docs: Record<string, ComponentData>
 }
 
+interface FileData {
+  peerComponents?: string[]
+  componentName?: string
+  name?: string
+}
+
 export type FormattedFileEntry = {
   name: string
   slug: string
   path: string
-  data: { peerComponents?: string[]; componentName?: string; name?: string }
+  data: FileData
 }
 
-export interface PageProps {
+export interface SwingsetPageProps {
   mdxSource: MDXRemoteSerializeResult
   sourceType: SourceType
   navData: [
     { name: 'Components'; routes: Route[]; name: 'Docs'; routes: Route[] }
   ]
+}
+
+export interface Knobs {
+  [key: string]: Knob | Knobs
+}
+
+export interface Knob {
+  control: {
+    type: 'text' | 'checkbox' | 'select' | 'json'
+    value?: string
+    checked?: boolean
+    defaultValue?: string
+  }
+  required?: boolean
+  options: string[]
 }

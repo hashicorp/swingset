@@ -1,5 +1,5 @@
 import s from './style.module.css'
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -10,10 +10,10 @@ import { components } from './__swingset_data'
 import { getPeerComponents } from './utils/get-peer-components'
 import { useBaseRoute } from './utils/use-base-route'
 import Nav from './components/nav'
-import { ComponentData, PageProps, SwingsetOptions } from './types'
+import { ComponentData, SwingsetPageProps, SwingsetOptions } from './types'
 
 export default function createPage(swingsetOptions: SwingsetOptions = {}) {
-  return function Page({ sourceType, mdxSource, navData }: PageProps) {
+  return function Page({ sourceType, mdxSource, navData }: SwingsetPageProps) {
     // tracks the name of the current component
     const router = useRouter()
     const baseRoute = useBaseRoute()
@@ -125,7 +125,7 @@ function DocsPage({
   swingsetOptions,
 }: {
   mdxSource: MDXRemoteSerializeResult
-  peerComponents: Record<string, JSX.Element>
+  peerComponents: Record<string, React.ElementType>
   swingsetOptions: SwingsetOptions
 }) {
   return (
@@ -145,7 +145,7 @@ function ComponentPage({
   mdxSource: MDXRemoteSerializeResult
   component: ComponentData
   swingsetOptions: SwingsetOptions
-  peerComponents: Record<string, JSX.Element>
+  peerComponents: Record<string, React.ElementType>
 }) {
   const { default: defaultExport, ...namedExports } = component.exports
 

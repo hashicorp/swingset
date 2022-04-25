@@ -1,18 +1,10 @@
 import sg from '../shared.module.css'
 import s from './style.module.css'
-import React, { ReactElement, useState } from 'react'
+import React, { useState } from 'react'
 import { useRestoreUrlState, setUrlState } from '../../utils/url-state'
 import createId from '../../utils/create-id'
 import scrollToElement from '../../utils/scroll-to-element'
-
-type Knobs = { [key: string]: Knob | Knobs }
-
-type Knob = {
-  control: {
-    type: 'text' | 'checkbox' | 'select'
-    options: string[]
-  }
-}
+import { Knob, Knobs } from '../../types'
 
 export default function createKnobsComponent(
   scope: Record<string, React.ElementType>
@@ -50,6 +42,10 @@ export default function createKnobsComponent(
   }
 }
 
+function isKnob(v: any): v is Knob {
+  return typeof v === 'object' && v.control
+}
+
 function renderControls(
   values: Knobs,
   setValues: (arg: Knobs) => void,
@@ -60,64 +56,70 @@ function renderControls(
     const v = values[k]
     let control
 
-    if (v.control === 'text') {
-      control = (
-        <input
-          className={s.input}
-          value={v.value || v.defaultValue}
-          onChange={(e) => {
-            valuesCopy[k].value = e.target.value
-            setValues(valuesCopy)
-          }}
-        />
-      )
-    }
+    if (isKnob(v)) {
+      if (v.control.type === 'text') {
+        control = (
+          <input
+            className={s.input}
+            value={v.control.value || v.control.defaultValue}
+            onChange={(e) => {
+              valuesCopy[k].value = e.target.value
+              setValues(valuesCopy)
+            }}
+          />
+        )
+      }
 
-    if (v.control === 'select') {
-      control = (
-        <select
-          className={s.select}
-          value={v.value || v.defaultValue}
-          onChange={(e) => {
-            valuesCopy[k].value = e.target.value
-            setValues(valuesCopy)
-          }}
-        >
-          <option>Select an option...</option>
-          {v.options.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
-      )
-    }
+      if (v.control.type === 'select') {
+        control = (
+          <select
+            className={s.select}
+            value={v.control.value || v.control.defaultValue}
+            onChange={(e) => {
+              valuesCopy[k].value = e.target.value
+              setValues(valuesCopy)
+            }}
+          >
+            <option>Select an option...</option>
+            {v.options.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+        )
+      }
 
-    if (v.control === 'checkbox') {
-      control = (
-        <input
-          type="checkbox"
-          className={s.checkbox}
-          checked={v.value || v.defaultValue}
-          onChange={(e) => {
-            valuesCopy[k].value = e.target.checked
-            setValues(valuesCopy)
-          }}
-        />
-      )
-    }
+      if (v.control.type === 'checkbox') {
+        control = (
+          <input
+            type="checkbox"
+            className={s.checkbox}
+            checked={v.control.checked}
+            onChange={(e) => {
+              valuesCopy[k].value = e.target.checked
+              setValues(valuesCopy)
+            }}
+          />
+        )
+      }
 
-    if (v.control === 'json') {
-      control = (
-        <textarea
-          className={s.textarea}
-          value={JSON.stringify(v.value || v.defaultValue, null, 2)}
-          onChange={(e) => {
-            valuesCopy[k].value = JSON.parse(e.target.value)
-            setValues(valuesCopy)
-          }}
-        />
-      )
+      if (v.control.type === 'json') {
+        control = (
+          <textarea
+            className={s.textarea}
+            value={JSON.stringify(
+              v.control.value || v.control.defaultValue,
+              null,
+              2
+            )}
+            onChange={(e) => {
+              valuesCopy[k].value = JSON.parse(e.target.value)
+              setValues(valuesCopy)
+            }}
+          />
+        )
+      }
     }
 
     return (
@@ -129,7 +131,7 @@ function renderControls(
       >
         <label>
           {k}
-          {v.required ? (
+          {isKnob(v) && v.required ? (
             <span className={s.requiredStar} title="required">
               *
             </span>
@@ -139,7 +141,7 @@ function renderControls(
           :
         </label>
         {/* if there's no control, we're nesting, otherwise render the control */}
-        {!v.control
+        {!isKnob(v)
           ? renderControls(
               v,
               (subtreeValue) => {
@@ -154,17 +156,17 @@ function renderControls(
   })
 }
 
-function knobsToProps(knobs) {
-  const props = {}
+function knobsToProps(knobs: Knobs) {
+  const props: Record<string, any> = {}
   for (let k in knobs) {
-    props[k] = knobs[k].value || knobs[k].defaultValue
-    if (
-      typeof props[k] === 'undefined' &&
-      Object.keys(knobs[k]).length > 0 &&
-      typeof knobs[k] !== 'string'
-    ) {
-      props[k] = knobsToProps(knobs[k])
+    const knob = knobs[k]
+
+    if (isKnob(knob)) {
+      props[k] = (knob.control.value || knob.control.defaultValue) ?? ''
+    } else {
+      props[k] = knobsToProps(knob)
     }
   }
+
   return props
 }

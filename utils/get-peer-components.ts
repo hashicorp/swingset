@@ -1,10 +1,11 @@
+import React from 'react'
 import { ComponentData, FormattedFileEntry } from '../types'
 
 export function getPeerComponents(
   entity: ComponentData | FormattedFileEntry,
-  components: Record<string, { exports: { default: JSX.Element } }>
+  components: Record<string, { exports: { default: React.ElementType } }>
 ) {
-  const peerComponents: Record<string, JSX.Element> = {}
+  const peerComponents: Record<string, React.ElementType> = {}
 
   if (!entity?.data?.peerComponents) return peerComponents
 
