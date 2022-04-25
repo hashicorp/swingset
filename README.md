@@ -10,10 +10,14 @@ Install via npm with `npm i swingset`, then add the plugin to your `next.config.
 
 ```js
 const withSwingset = require('swingset')
+const withTM = require('next-transpile-modules')
 
 module.exports =
-  withSwingset(/* swingset options */)(/* normal nextjs config */)
+module.exports =
+  withTM(['swingset'])(withSwingset(/* swingset options */)(/* normal nextjs config */)
 ```
+
+> **Note:** Swingset is not transpiled, and requires you to use it with `next-transpile-modules`.
 
 You then need to create a page in your nextjs app where swingset will live. You can "inject" swingset on to any page of your choosing. Something like `/components` might be a nice choice. When you have decided on a page, swingset can be injected as follows:
 
