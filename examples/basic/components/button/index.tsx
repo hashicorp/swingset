@@ -9,7 +9,6 @@ export default function Button({
   testObject: Record<string, any>
   theme: any
 }) {
-  console.log(theme)
   return (
     <button className={s.root}>
       {text}, {JSON.stringify(testObject)}

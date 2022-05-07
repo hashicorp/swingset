@@ -44,12 +44,12 @@
   "scripts": {
     "example": "cd examples/basic && [ ! -d 'node_modules' ] && npm i || npm start",
     "build": "rm -rf ./dist && rollup -c rollup.config.js",
-    "typecheck": "tsc",
+    "typecheck": "tsc --noEmit",
     "release:major": "release major && npm publish .",
     "release:minor": "release minor && npm publish .",
     "release:patch": "release patch && npm publish .",
     "release:pre": "release pre canary && npm publish --tag=canary",
     "test": "jest"
   },
-  "yalcSig": "459487b7c0092d3d1317a8408a7e05d9"
+  "yalcSig": "c101a2b9576a7409c4699f8ce8d7e362"
 }
