@@ -1,9 +1,22 @@
 const path = require('path')
 
-module.exports =
-  (pluginOptions = {}) =>
-  (nextConfig = {}) => {
+/**
+ *
+ * @param {import('./types').PluginOptions} pluginOptions
+ * @returns
+ */
+function withSwingset(pluginOptions = {}) {
+  /**
+   * @param {import('next/types').NextConfig} nextConfig
+   */
+  return function nextOverrides(nextConfig = {}) {
     return Object.assign({}, nextConfig, {
+      /**
+       *
+       * @param {*} config
+       * @param {import('next/dist/server/config-shared').WebpackConfigContext} options
+       * @returns
+       */
       webpack(config, options) {
         // normalize componentsRoot path
         pluginOptions.componentsRoot = path.resolve(
@@ -37,3 +50,6 @@ module.exports =
       },
     })
   }
+}
+
+module.exports = withSwingset
