@@ -13,7 +13,6 @@ const withSwingset = require('swingset')
 const withTM = require('next-transpile-modules')
 
 module.exports =
-module.exports =
   withTM(['swingset'])(withSwingset(/* swingset options */)(/* normal nextjs config */)
 ```
 
