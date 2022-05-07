@@ -5,19 +5,17 @@ import { useBaseRoute } from '../../utils/use-base-route'
 import s from './style.module.css'
 import { Fragment } from 'react'
 
-export default function Nav({
-  navData,
-}: {
-  navData: {
-    name: string
-    routes: { sourceType: string; slug: string; name: string }[]
-  }[]
-}) {
+type NavItem = {
+  name: string
+  routes: { sourceType: string; slug: string; name: string }[]
+}
+
+export default function Nav({ navData }: { navData: NavItem[] }) {
   const router = useRouter()
   const baseRoute = useBaseRoute()
 
   return (
-    <>
+    <ul className={s.root}>
       {navData.map((category) => {
         return (
           <Fragment key={category.name}>
@@ -44,6 +42,6 @@ export default function Nav({
           </Fragment>
         )
       })}
-    </>
+    </ul>
   )
 }

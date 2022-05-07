@@ -44,6 +44,7 @@ export type SwingsetData = {
 interface FileData {
   peerComponents?: string[]
   componentName?: string
+  componentCategory?: string
   name?: string
 }
 
@@ -75,4 +76,11 @@ export interface Knob {
   }
   required?: boolean
   options: string[]
+}
+
+export type NavItem = {
+  name: string
+  category?: string | null
+  slug: string
+  sourceType: string
 }
