@@ -1,5 +1,6 @@
 import sg from '../shared.module.css'
 import s from './style.module.css'
+import classnames from 'classnames'
 import React, { useState } from 'react'
 import { useRestoreUrlState, setUrlState } from '../../utils/url-state'
 import createId from '../../utils/create-id'
@@ -51,6 +52,8 @@ function renderControls(
   setValues: (arg: Knobs) => void,
   indentLevel = 0
 ) {
+  const [fieldErrors, setFieldErrors] = useState<Record<string, boolean>>({})
+
   return Object.keys(values).map((k) => {
     const valuesCopy = JSON.parse(JSON.stringify(values))
     const v = values[k]
@@ -63,7 +66,7 @@ function renderControls(
             className={s.input}
             value={v.control.value || v.control.defaultValue}
             onChange={(e) => {
-              valuesCopy[k].value = e.target.value
+              valuesCopy[k].control.value = e.target.value
               setValues(valuesCopy)
             }}
           />
@@ -76,7 +79,7 @@ function renderControls(
             className={s.select}
             value={v.control.value || v.control.defaultValue}
             onChange={(e) => {
-              valuesCopy[k].value = e.target.value
+              valuesCopy[k].control.value = e.target.value
               setValues(valuesCopy)
             }}
           >
@@ -97,7 +100,7 @@ function renderControls(
             className={s.checkbox}
             checked={v.control.checked}
             onChange={(e) => {
-              valuesCopy[k].value = e.target.checked
+              valuesCopy[k].control.value = e.target.checked
               setValues(valuesCopy)
             }}
           />
@@ -106,18 +109,31 @@ function renderControls(
 
       if (v.control.type === 'json') {
         control = (
-          <textarea
-            className={s.textarea}
-            value={JSON.stringify(
-              v.control.value || v.control.defaultValue,
-              null,
-              2
-            )}
-            onChange={(e) => {
-              valuesCopy[k].value = JSON.parse(e.target.value)
-              setValues(valuesCopy)
-            }}
-          />
+          <div className={classnames({ [s.error]: fieldErrors[k] })}>
+            <textarea
+              className={s.textarea}
+              value={
+                fieldErrors[k]
+                  ? v.control.value
+                  : JSON.stringify(
+                      v.control.value || v.control.defaultValue,
+                      null,
+                      2
+                    )
+              }
+              onChange={(e) => {
+                try {
+                  valuesCopy[k].control.value = JSON.parse(e.target.value)
+                  setFieldErrors((prev) => ({ ...prev, [k]: false }))
+                } catch (err) {
+                  valuesCopy[k].control.value = e.target.value
+                  setFieldErrors((prev) => ({ ...prev, [k]: true }))
+                }
+                setValues(valuesCopy)
+              }}
+            />
+            <p>{fieldErrors[k] && 'Error parsing JSON'}</p>
+          </div>
         )
       }
     }

@@ -120,3 +120,8 @@
   width: 400px;
   min-height: 100px;
 }
+
+.error {
+  border: 1px solid #b20b0b;
+  color: #b20b0b;
+}
