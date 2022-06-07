@@ -19,7 +19,8 @@ module.exports = function swingsetComponentsLoader() {
     pluginOptions
   )
 
-  addWebpackDependencies.call(this, usedComponents)
+  // add components directory as a webpack dependency
+  this.addContextDependency(pluginOptions.componentsRoot.split('*')[0])
   const componentsWithNames = formatComponentsWithNames(usedComponents)
 
   // Resolve docs glob
@@ -49,16 +50,6 @@ function removeComponentsWithoutDocs(components, pluginOptions) {
     }
     return memo
   }, [])
-}
-
-/**
- * Add the component folder as a dependency so webpack knows when to reload
- * @param {string[]} components
- */
-function addWebpackDependencies(components) {
-  components.map((componentDir) => {
-    this.addContextDependency(componentDir)
-  })
 }
 
 /**
