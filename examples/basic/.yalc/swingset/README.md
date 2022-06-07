@@ -42,20 +42,21 @@ Swingset points to `components/*` as its default location for components, in lin
 ```
 .
 ├── pages
-│   ├── index.jsx
-│   └── [[...swingset]].jsx <- here's where you injected swingset
+│   ├── index.tsx
+│   └── [[...swingset]].tsx <- here's where you injected swingset
 └── components
     └── button
-        ├── index.jsx <- this is what's returned when you import `components/button`
+        ├── index.tsx <- this is what's returned when you import `components/button`
         ├── style.module.css
         └── docs.mdx <- here's the docs file you created for swingset
 ```
 
-So, you have only now added two things to your app -- a file in `pages` called `[[...swingset]].jsx` where you injected the component library itself, and a `docs.mdx` file in one of your components. And remember, the `docs.mdx` file needs frontmatter, or you will get an error. Here's how a minimal `docs.mdx` file might look:
+So, you have only now added two things to your app -- a file in `pages` called `[[...swingset]].tsx` where you injected the component library itself, and a `docs.mdx` file in one of your components. And remember, the `docs.mdx` file needs frontmatter, or you will get an error. Here's how a minimal `docs.mdx` file might look:
 
 ```
 ---
 componentName: 'Button'
+componentCategory: 'UI Elements'
 peerComponents:
   - 'ArrowIcon'
 ---
@@ -68,6 +69,8 @@ Here's an example with an arrow:
   <ArrowIcon />
 </Button>
 ```
+
+If `componentCategory` is not specified, components will fallback to a catch-all "Components" category.
 
 With this in place, you should see your component's name render in the sidebar and show the contents of your markdown file. Not so bad! You are of course welcome to add docs files to multiple components, we're just starting with one.
 
@@ -452,7 +455,7 @@ Choose whichever option feels more clear for your use!
 
 ### Notes
 
-Any global styles that you specify by importing to `_app.jsx` will be reflected in your component library. Normally, this is a good thing, as your components will be showcased as they normally would within your app, but if any styles are not rendering as expected in the component library, it may be due to global overrides.
+Any global styles that you specify by importing to `_app.tsx` will be reflected in your component library. Normally, this is a good thing, as your components will be showcased as they normally would within your app, but if any styles are not rendering as expected in the component library, it may be due to global overrides.
 
 ### Local Development
 

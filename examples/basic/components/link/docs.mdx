@@ -1,0 +1,21 @@
+---
+componentName: 'Link'
+componentCategory: 'Interactive Elements'
+---
+
+This is the docs for the Link component
+
+<LiveComponent>
+  {`<Link href="https://hashicorp.com" text='this is a link' />`}
+</LiveComponent>
+
+<PropsTable
+  props={{
+    text: { type: 'string', description: 'link text', required: true },
+    href: {
+      type: 'string',
+      description: 'link href',
+      required: true,
+    },
+  }}
+/>

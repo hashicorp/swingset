@@ -7,9 +7,14 @@ import requireFromString from 'require-from-string'
 import { serialize } from 'next-mdx-remote/serialize'
 import { findEntity } from './utils/find-entity'
 import { components, docs } from './__swingset_data'
-import type { ComponentData, SwingsetPageProps, SwingsetOptions } from './types'
+import type {
+  ComponentData,
+  SwingsetPageProps,
+  SwingsetOptions,
+  NavItem,
+} from './types'
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
-import { GetStaticProps, GetStaticPropsContext } from 'next'
+import { GetStaticPropsContext } from 'next'
 
 export function createStaticPaths() {
   return function getStaticPaths() {
@@ -38,7 +43,8 @@ export function createStaticProps(swingsetOptions = {}) {
     // get the name/slug for every component in order to render the nav
     const navDataComponents = Object.values(components).map(
       (componentConfig) => ({
-        name: componentConfig.data.componentName,
+        name: componentConfig.data.componentName!,
+        category: componentConfig.data.componentCategory ?? null,
         slug: componentConfig.slug,
         sourceType: 'components',
       })
@@ -49,16 +55,35 @@ export function createStaticProps(swingsetOptions = {}) {
       sourceType: 'docs',
     }))
 
-    const navData = [
-      {
-        name: 'Components',
-        routes: navDataComponents,
-      },
-      {
-        name: 'Docs',
-        routes: navDataDocsPages,
-      },
-    ]
+    const fallbackComponents: NavItem[] = []
+    const navItems: Record<string, NavItem[]> = {}
+
+    navDataComponents.forEach((component) => {
+      // if no category is defined for the component, or the category name is a reserved word, add it to the fallback category
+      if (
+        !component.category ||
+        component.category === 'Components' ||
+        component.category === 'Docs'
+      ) {
+        fallbackComponents.push(component)
+      } else {
+        // otherwise, create a new category based on the componentCategory value
+        navItems[component.category] = navItems[component.category]
+          ? [...navItems[component.category], component]
+          : [component]
+      }
+    })
+
+    if (fallbackComponents.length) {
+      navItems.Components = fallbackComponents
+    }
+
+    navItems.Docs = navDataDocsPages
+
+    const navData = Object.entries(navItems).map(([category, items]) => ({
+      name: category,
+      routes: items,
+    }))
 
     // the first route segment dictates how we load data
     const sourceType = !params!.swingset ? 'index' : params!.swingset[0]

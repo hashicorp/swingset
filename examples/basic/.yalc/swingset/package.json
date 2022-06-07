@@ -51,5 +51,5 @@
     "release:pre": "release pre canary && npm publish --tag=canary",
     "test": "jest"
   },
-  "yalcSig": "7603fcbfe036b31864af4a870a75ea6e"
+  "yalcSig": "03326a7844176c93c35381ec19e0a9b4"
 }

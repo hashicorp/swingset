@@ -86,9 +86,7 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
               /
             </span>
           </div>
-          <ul>
-            <Nav navData={filteredNav} />
-          </ul>
+          <Nav navData={filteredNav} />
         </div>
         <div className={s.stage}>
           {sourceType === 'index' ? (
