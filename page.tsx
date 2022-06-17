@@ -25,10 +25,10 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
       function onKeyDown(e: KeyboardEvent) {
         const elt = e.target || e.srcElement
 
-        if (elt instanceof Element) {
+        if (elt instanceof HTMLElement) {
           const tagName = elt.tagName
           if (
-            'isContentEditable' in elt ||
+            ('isContentEditable' in elt && elt.isContentEditable) ||
             tagName === 'INPUT' ||
             tagName === 'SELECT' ||
             tagName === 'TEXTAREA'
