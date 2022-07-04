@@ -15,6 +15,11 @@ import type {
 } from './types'
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import { GetStaticPropsContext } from 'next'
+import { isInterfaceProp, parseFiles, PropType } from '@structured-types/api'
+import {
+  populateComponentPropsFromDefaultValues,
+  populateComponentPropsFromInterface,
+} from './utils/props'
 
 export function createStaticPaths() {
   return function getStaticPaths() {
@@ -160,11 +165,41 @@ async function getComponentMdxSource(
 
   contentWithHeadline += `\n</div>\n${content}`
 
+  const propsFromTs = currentComponentData.propsPath.includes('.ts')
+
+  let componentProps: Record<string, PropType> = {}
+  if (propsFromTs) {
+    // generate an AST from the Props.ts file
+    let ast = parseFiles([currentComponentData.propsPath])
+    // @ts-ignore
+    const rootProperties = ast.default.properties
+
+    // Go through every prop and attempt to add type annotation
+    populateComponentPropsFromDefaultValues(componentProps, rootProperties)
+
+    if (ast['Props']) {
+      if (!isInterfaceProp(ast['Props'])) {
+        throw new Error('Props must be an interface')
+      }
+
+      if (ast['Props'].properties?.length) {
+        // Map Props interface to the componentProps AST
+        populateComponentPropsFromInterface(
+          componentProps,
+          ast['Props'].properties
+        )
+      }
+    }
+
+    if (componentProps['default']) delete componentProps['default']
+  }
+
   // Serialize the content using mdx-remote
   const mdxSource = await serialize(contentWithHeadline, {
     scope: {
-      // TODO: process props using marked here?
-      componentProps: propsContent
+      componentProps: propsFromTs
+        ? componentProps
+        : propsContent
         ? requireFromString(propsContent, currentComponentData.propsPath)
         : null,
       packageJson,

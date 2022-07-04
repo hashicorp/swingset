@@ -1,6 +1,11 @@
 import s from './style.module.css'
 
-export default function Link({ text, href }: { text: string; href: string }) {
+export interface Props {
+  text: string
+  href: string
+}
+
+export default function Link({ text, href }: Props) {
   return (
     <a className={s.root} href={href}>
       {text}
