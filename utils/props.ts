@@ -45,11 +45,14 @@ function getValues(prop: ObjectProp | ArrayProp): Record<string, any> | null {
   }
 
   return prop.properties?.reduce((acc, property) => {
-    if (!property.name) return acc
-
-    if (isObjectProp(property)) {
-      acc[property.name] = getTypeFromProperties(property)
-      return acc
+    if (!property.name) {
+      return {
+        ...prop,
+        properties: prop.properties?.map((property) => ({
+          type: getTypeFromKind(property.kind),
+          required: !property.optional,
+        })),
+      }
     }
 
     if (isArrayProp(property) && property.value) {
@@ -58,13 +61,18 @@ function getValues(prop: ObjectProp | ArrayProp): Record<string, any> | null {
       )
 
       return acc
+    } else if ('properties' in property) {
+      acc[property.name] = getTypeFromProperties(property)
+      return acc
     }
 
     if (!hasValue(property)) return acc
 
     return {
       ...acc,
-      [property.name]: property.value,
+      [property.name]: property.value ?? null,
+      description: property.description ?? null,
+      required: !property.optional,
       type: property.type
         ? property.type
         : property.name === 'defaultValue'
@@ -75,45 +83,31 @@ function getValues(prop: ObjectProp | ArrayProp): Record<string, any> | null {
 }
 
 export function populateComponentPropsFromInterface(
-  object: Record<string, PropType>,
+  componentProps: Record<string, any>,
   props: PropType[]
 ) {
-  for (let property in object) {
-    const iface = props.find((prop) => prop.name === property)
+  props.forEach((prop) => {
+    if (!prop.name) return
 
-    if (iface) {
-      object[property].type = getTypeFromKind(iface?.kind)
-      if (!iface.optional) {
-        // @ts-ignore
-        object[property].required = true
-      }
-
-      // @ts-ignore
-      if (object[property].properties && 'properties' in iface) {
-        populateComponentPropsFromInterface(
-          // @ts-ignore
-          object[property].properties!,
-          // @ts-ignore
-          iface.properties ?? []
-        )
-      }
+    if (
+      (isObjectProp(prop) || isArrayProp(prop)) &&
+      prop.properties?.some((p) => p.name === 'properties')
+    ) {
+      componentProps[prop.name] = getTypeFromProperties(prop)
+      populateComponentPropsFromInterface(
+        componentProps[prop.name],
+        prop.properties
+      )
     } else {
-      const propsWithNestedProperties: ObjectProp[] | ArrayProp[] =
-        props.filter((p) => 'properties' in p)
-
-      if (propsWithNestedProperties.length) {
-        for (let i = 0; i < propsWithNestedProperties.length; i++) {
-          populateComponentPropsFromInterface(
-            // @ts-ignore
-            object[property].properties!,
-            propsWithNestedProperties[i].properties ?? []
-          )
-        }
-      } else {
-        object[property].type = getTypeFromKind(props[0].kind)
+      const values = getValues(prop)
+      componentProps[prop.name] = {
+        properties: values ? values : null,
+        description: prop.description ?? null,
+        required: !prop.optional,
+        type: getTypeFromKind(prop.kind),
       }
     }
-  }
+  })
 }
 
 export function populateComponentPropsFromDefaultValues(

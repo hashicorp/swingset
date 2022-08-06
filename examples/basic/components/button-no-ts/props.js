@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   text: {
     control: 'text',
     defaultValue: 'button text',
@@ -37,13 +37,4 @@ export default {
       },
     ],
   },
-}
-
-export interface Props {
-  testObj2: string[]
-  testObject: {
-    foo: {
-      bar: string
-    }
-  }
 }

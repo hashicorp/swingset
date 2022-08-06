@@ -174,21 +174,20 @@ async function getComponentMdxSource(
     // @ts-ignore
     const rootProperties = ast.default.properties
 
-    // Go through every prop and attempt to add type annotation
-    populateComponentPropsFromDefaultValues(componentProps, rootProperties)
+    const interfaceProp = Object.values(ast).find((node) =>
+      isInterfaceProp(node as any)
+    )
 
-    if (ast['Props']) {
-      if (!isInterfaceProp(ast['Props'])) {
-        throw new Error('Props must be an interface')
-      }
-
-      if (ast['Props'].properties?.length) {
-        // Map Props interface to the componentProps AST
-        populateComponentPropsFromInterface(
-          componentProps,
-          ast['Props'].properties
-        )
-      }
+    if (interfaceProp) {
+      // Map Props interface to the componentProps AST
+      populateComponentPropsFromInterface(
+        componentProps,
+        // @ts-ignore
+        interfaceProp.properties
+      )
+    } else {
+      // Go through every prop and attempt to add type annotation
+      populateComponentPropsFromDefaultValues(componentProps, rootProperties)
     }
 
     if (componentProps['default']) delete componentProps['default']

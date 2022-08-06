@@ -1,7 +1,9 @@
 import s from './style.module.css'
 
 export interface Props {
+  /** link text */
   text: string
+  /** link URL */
   href: string
 }
 
