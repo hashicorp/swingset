@@ -13,6 +13,7 @@ import reactPlugin from '@structured-types/react-plugin'
 type StructuredProp = PropType & {
   isObjectLike: boolean
   typeValue?: string | null
+  value?: any
   properties?: StructuredProp[]
 }
 
@@ -68,18 +69,26 @@ export function getStructuredPropsFromProperties(properties: PropType[]) {
  * Generates a human-readable value for the type, for use in our prop table component
  */
 function generateTypeValue(prop: StructuredProp) {
-  if (prop.type === 'Union') {
-    return prop?.properties?.map((p) => p.type).join(' | ')
+  if (prop.type === 'Union' || prop.kind === PropKind.Union) {
+    return prop?.properties?.map((p) => p.typeValue ?? p.type).join(' | ')
   }
 
   // Generate a readable type value for arrays, e.g. for string: `string[]`
-  if (isArrayProp(prop) && prop.properties) {
+  if (
+    isArrayProp(prop) &&
+    prop.properties &&
+    !prop.properties[0].isObjectLike
+  ) {
     return `(${prop?.properties?.[0]?.typeValue ?? prop.properties[0].type})[]`
   }
 
   // Generate a readable type value for tuples, e.g. [string, number]
   if (prop.type === 'Tuple' && prop.properties) {
     return `[${prop.properties.map((p) => p.type).join(', ')}]`
+  }
+
+  if (prop.type === 'String' && prop.value) {
+    return prop.value
   }
 
   return null

@@ -20,12 +20,22 @@ export default function PropsTableTypescript({ props }) {
 function renderRows(props, prefixes = []) {
   const res = []
   if (Array.isArray(props)) {
-    props.map((prop) => {
+    props.forEach((prop) => {
+      const isComplexArray = prop.type === 'Array' && !prop.typeValue
+      const rowName = isComplexArray ? `${prop.name}[x]` : prop.name
+
       // render the row given the information
-      res.push(renderRow(prop.name, prop, prefixes))
+      if (prop.name) {
+        res.push(renderRow(rowName, prop, prefixes))
+      }
+
       // render rows for sub-properties if relevant
-      if (prop.properties && prop.isObjectLike)
-        res.push(renderRows(prop.properties, [...prefixes, prop.name]))
+      const shouldRenderProperties =
+        prop.properties && (prop.isObjectLike || isComplexArray)
+      if (shouldRenderProperties) {
+        const nestedPrefixes = [...prefixes, rowName].filter(Boolean)
+        res.push(renderRows(prop.properties, nestedPrefixes))
+      }
     })
   }
   return res

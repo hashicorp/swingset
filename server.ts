@@ -161,22 +161,22 @@ async function getComponentMdxSource(
 
   contentWithHeadline += `\n</div>\n${content}`
 
-  const isTSSource = currentComponentData.propsPath.includes('.ts')
+  const isTSSource = currentComponentData.componentFilePath.includes('.ts')
 
   let componentProps: any[] = []
-  if (isTSSource) {
+  if (isTSSource && !propsContent) {
     componentProps = getStructuredPropsFromComponentFile(
-      currentComponentData.propsPath
+      currentComponentData.componentFilePath
     )
   }
 
   // Serialize the content using mdx-remote
   const mdxSource = await serialize(contentWithHeadline, {
     scope: {
-      componentProps: isTSSource
-        ? componentProps
-        : propsContent
+      componentProps: propsContent
         ? requireFromString(propsContent, currentComponentData.propsPath)
+        : isTSSource
+        ? componentProps
         : null,
       packageJson,
     },

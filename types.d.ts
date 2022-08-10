@@ -21,6 +21,7 @@ export interface SwingsetOptions {
 
 export type ComponentData = {
   path: string
+  componentFilePath: string
   docsPath: string
   propsPath: string
   slug: string

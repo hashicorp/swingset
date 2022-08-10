@@ -1,16 +1,15 @@
 import path from 'path'
-import { parseFiles } from '@structured-types/api'
-import { getStructuredPropsFromAST } from '../props'
-import reactPlugin from '@structured-types/react-plugin'
+import { getStructuredPropsFromComponentFile } from '../props'
 
-const fixture = parseFiles(
-  [path.join(__dirname, '__fixtures__', 'component.tsx')],
-  { plugins: [reactPlugin] }
-)
+const getStructuredPropsFromFixture = (filename: string) =>
+  getStructuredPropsFromComponentFile(
+    path.join(__dirname, '__fixtures__', filename)
+  )
 
 describe('getStructuredPropsFromAST', () => {
   test('generates structure usable by the prop table component', () => {
-    expect(getStructuredPropsFromAST(fixture)).toMatchInlineSnapshot(`
+    expect(getStructuredPropsFromFixture('component.tsx'))
+      .toMatchInlineSnapshot(`
 Array [
   Object {
     "description": "nested is a NestedObject",
@@ -96,6 +95,175 @@ Array [
     ],
     "type": "Tuple",
     "typeValue": "[String, Number]",
+  },
+]
+`)
+  })
+
+  test('generates structure from inline type declarations', () => {
+    expect(getStructuredPropsFromFixture('inline-component.tsx'))
+      .toMatchInlineSnapshot(`
+Array [
+  Object {
+    "description": "Optional className to add to the root element.",
+    "isObjectLike": false,
+    "kind": 1,
+    "name": "className",
+    "optional": true,
+    "type": "String",
+    "typeValue": null,
+  },
+  Object {
+    "description": "The type of message being displayed, which mainly affects coloration. Defaults to \\"info\\".",
+    "isObjectLike": false,
+    "kind": 4,
+    "name": "type",
+    "optional": true,
+    "properties": Array [
+      Object {
+        "isObjectLike": false,
+        "kind": 1,
+        "type": "String",
+        "typeValue": "info",
+        "value": "info",
+      },
+      Object {
+        "isObjectLike": false,
+        "kind": 1,
+        "type": "String",
+        "typeValue": "success",
+        "value": "success",
+      },
+      Object {
+        "isObjectLike": false,
+        "kind": 1,
+        "type": "String",
+        "typeValue": "warning",
+        "value": "warning",
+      },
+      Object {
+        "isObjectLike": false,
+        "kind": 1,
+        "type": "String",
+        "typeValue": "danger",
+        "value": "danger",
+      },
+    ],
+    "type": "Union",
+    "typeValue": "info | success | warning | danger",
+    "value": "info",
+  },
+]
+`)
+  })
+
+  test('generates structure for arrays with complex objects', () => {
+    expect(getStructuredPropsFromFixture('array-object.tsx'))
+      .toMatchInlineSnapshot(`
+Array [
+  Object {
+    "isObjectLike": false,
+    "kind": 16,
+    "name": "links",
+    "parent": Object {
+      "name": "Props",
+    },
+    "properties": Array [
+      Object {
+        "isObjectLike": true,
+        "kind": 15,
+        "properties": Array [
+          Object {
+            "isObjectLike": false,
+            "kind": 1,
+            "name": "text",
+            "type": "String",
+            "typeValue": null,
+          },
+          Object {
+            "isObjectLike": false,
+            "kind": 1,
+            "name": "url",
+            "type": "String",
+            "typeValue": null,
+          },
+        ],
+        "type": "Object",
+        "typeValue": null,
+      },
+    ],
+    "type": "Array",
+    "typeValue": null,
+  },
+]
+`)
+  })
+
+  test('generates structure for referenced union types', () => {
+    expect(getStructuredPropsFromFixture('union-type.tsx'))
+      .toMatchInlineSnapshot(`
+Array [
+  Object {
+    "isObjectLike": false,
+    "kind": 4,
+    "name": "product",
+    "parent": Object {
+      "name": "Props",
+    },
+    "properties": Array [
+      Object {
+        "isObjectLike": false,
+        "kind": 1,
+        "type": "String",
+        "typeValue": "boundary",
+        "value": "boundary",
+      },
+      Object {
+        "isObjectLike": false,
+        "kind": 1,
+        "type": "String",
+        "typeValue": "waypoint",
+        "value": "waypoint",
+      },
+      Object {
+        "isObjectLike": false,
+        "kind": 1,
+        "type": "String",
+        "typeValue": "nomad",
+        "value": "nomad",
+      },
+    ],
+    "type": "Products",
+    "typeValue": "boundary | waypoint | nomad",
+  },
+]
+`)
+  })
+
+  test.only('generates props for components with additional properties', () => {
+    expect(
+getStructuredPropsFromFixture('with-property.tsx')).
+toMatchInlineSnapshot(`
+Array [
+  Object {
+    "isObjectLike": false,
+    "kind": 1,
+    "name": "text",
+    "parent": Object {
+      "name": "Props",
+    },
+    "type": "String",
+    "typeValue": null,
+  },
+  Object {
+    "isObjectLike": false,
+    "kind": 1,
+    "name": "url",
+    "parent": Object {
+      "name": "Props",
+    },
+    "type": "String",
+    "typeValue": null,
   },
 ]
 `)
