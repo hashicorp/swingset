@@ -1,5 +1,5 @@
 module.exports = {
-  testPathIgnorePatterns: ['<rootDir>/examples'],
+  testPathIgnorePatterns: ['<rootDir>/examples', '/__fixtures__/'],
   moduleNameMapper: {
     '\\.module.css$': 'identity-obj-proxy',
   },
