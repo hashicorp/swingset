@@ -15,11 +15,7 @@ import type {
 } from './types'
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import { GetStaticPropsContext } from 'next'
-import { isInterfaceProp, parseFiles, PropType } from '@structured-types/api'
-import {
-  populateComponentPropsFromDefaultValues,
-  populateComponentPropsFromInterface,
-} from './utils/props'
+import { getStructuredPropsFromComponentFile } from './utils/props'
 
 export function createStaticPaths() {
   return function getStaticPaths() {
@@ -165,38 +161,19 @@ async function getComponentMdxSource(
 
   contentWithHeadline += `\n</div>\n${content}`
 
-  const propsFromTs = currentComponentData.propsPath.includes('.ts')
+  const isTSSource = currentComponentData.propsPath.includes('.ts')
 
-  let componentProps: Record<string, PropType> = {}
-  if (propsFromTs) {
-    // generate an AST from the Props.ts file
-    let ast = parseFiles([currentComponentData.propsPath])
-    // @ts-ignore
-    const rootProperties = ast.default.properties
-
-    const interfaceProp = Object.values(ast).find((node) =>
-      isInterfaceProp(node as any)
+  let componentProps: any[] = []
+  if (isTSSource) {
+    componentProps = getStructuredPropsFromComponentFile(
+      currentComponentData.propsPath
     )
-
-    if (interfaceProp) {
-      // Map Props interface to the componentProps AST
-      populateComponentPropsFromInterface(
-        componentProps,
-        // @ts-ignore
-        interfaceProp.properties
-      )
-    } else {
-      // Go through every prop and attempt to add type annotation
-      populateComponentPropsFromDefaultValues(componentProps, rootProperties)
-    }
-
-    if (componentProps['default']) delete componentProps['default']
   }
 
   // Serialize the content using mdx-remote
   const mdxSource = await serialize(contentWithHeadline, {
     scope: {
-      componentProps: propsFromTs
+      componentProps: isTSSource
         ? componentProps
         : propsContent
         ? requireFromString(propsContent, currentComponentData.propsPath)

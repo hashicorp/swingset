@@ -134,12 +134,18 @@ function generateMetadataFile(components, docsFiles) {
   }, '')
 
   const componentsData = components.reduce((acc, component) => {
+    const isTsComponent = fs.existsSync(path.join(component.path, 'index.tsx'))
+
     // We can't just stringify here, because we need eg
     // src: Button, <<< Button NOT in quotes
     acc += `  '${component.name}': {
       path: '${component.path}',
       docsPath: '${path.join(component.path, 'docs.mdx')}',
-      propsPath: '${path.join(component.path, 'props.js')}',
+      propsPath: '${
+        isTsComponent
+          ? path.join(component.path, 'index.tsx')
+          : path.join(component.path, 'props.js')
+      }',
       slug: '${component.slug}',
       exports: ${component.name}Exports,
       data: ${JSON.stringify(component.data, null, 2)}

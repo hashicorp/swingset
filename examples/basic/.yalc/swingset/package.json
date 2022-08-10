@@ -7,6 +7,8 @@
     "url": "https://github.com/hashicorp/swingset/issues"
   },
   "dependencies": {
+    "@structured-types/api": "^3.46.11",
+    "@structured-types/react-plugin": "^3.46.12",
     "classnames": "^2.3.1",
     "copy-text-to-clipboard": "^2.2.0",
     "fsexists": "^1.0.1",
@@ -51,5 +53,5 @@
     "release:pre": "release pre canary && npm publish --tag=canary",
     "test": "jest"
   },
-  "yalcSig": "bf65767774a59436f5409505dbb4641c"
+  "yalcSig": "9a7c69939d96eb3e7c5eba1cb250d9eb"
 }

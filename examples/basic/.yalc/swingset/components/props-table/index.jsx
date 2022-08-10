@@ -1,8 +1,13 @@
 import s from './style.module.css'
 import marked from 'marked'
 import { Fragment } from 'react'
+import PropsTableTypescript from './typescript-table'
 
 export default function PropsTable({ props }) {
+  if (Array.isArray(props)) {
+    return <PropsTableTypescript props={props} />
+  }
+
   return (
     <table className={s.root}>
       <thead>
