@@ -104,6 +104,7 @@
 }
 
 .stage {
+  position: relative;
   padding: 20px 30px 30px;
   margin-left: 270px;
   transition: margin-left .5s;
@@ -113,10 +114,21 @@
   }
 }
 
+.fullscreenBttn {
+  display: flex;
+  border: 1px solid #999999;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+}
+
 .stage > :global(.__swingset-headline) {
   margin-bottom: 35px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .stage > :global(.__swingset-headline) h1:first-child {
