@@ -129,7 +129,7 @@ const FullscreenIcon = () => {
 
 const CloseFullscreenIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M3.4 22 2 20.6 8.6 14H4v-2h8v8h-2v-4.6ZM12 12V4h2v4.6L20.6 2 22 3.4 15.4 10H20v2Z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M8 19v-3H5v-2h5v5Zm6 0v-5h5v2h-3v3Zm-9-9V8h3V5h2v5Zm9 0V5h2v3h3v2Z"/></svg>
   )
 }
 
