@@ -11,6 +11,7 @@ import { getPeerComponents } from './utils/get-peer-components'
 import { useBaseRoute } from './utils/use-base-route'
 import Nav from './components/nav'
 import { ComponentData, SwingsetPageProps, SwingsetOptions } from './types'
+import classNames from 'classnames'
 
 export default function createPage(swingsetOptions: SwingsetOptions = {}) {
   return function Page({ sourceType, mdxSource, navData }: SwingsetPageProps) {
@@ -74,7 +75,7 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
         <Head>
           <title key="title">Component Library</title>
         </Head>
-        <div className={s.sidebar}>
+        <div className={classNames(s.sidebar, { [s.isFullscreen]: isFullscreen})}>
           <Link href={baseRoute || '/'}>
             <a>{swingsetOptions.logo ?? <span className={s.logo} />}</a>
           </Link>
@@ -92,7 +93,7 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
           </div>
           <Nav navData={filteredNav} />
         </div>
-        <div className={s.stage}>
+        <div className={classNames(s.stage, { [s.isFullscreen]: isFullscreen})}>
           <div className={s.fullscreenBttn} onClick={handleFullscreenBttnClick}>
             { isFullscreen ? (<CloseFullscreenIcon />) :  (<FullscreenIcon />)}
           </div>
