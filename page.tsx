@@ -12,6 +12,7 @@ import { useBaseRoute } from './utils/use-base-route'
 import Nav from './components/nav'
 import { ComponentData, SwingsetPageProps, SwingsetOptions } from './types'
 import classNames from 'classnames'
+import VisuallyHidden from '@reach/visually-hidden'
 
 export default function createPage(swingsetOptions: SwingsetOptions = {}) {
   return function Page({ sourceType, mdxSource, navData }: SwingsetPageProps) {
@@ -100,9 +101,9 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
           <Nav navData={filteredNav} />
         </div>
         <div className={classNames(s.stage, { [s.isFullscreen]: isFullscreen})}>
-          <button className={s.fullscreenBttn} aria-labelledby="buttonLabel" onClick={handleFullscreenBttnClick}>
+          <button className={s.fullscreenBttn} onClick={handleFullscreenBttnClick}>
             { isFullscreen ? (<CloseFullscreenIcon />) : (<FullscreenIcon />)}
-            <span id="buttonLabel" hidden>{ isFullscreen ? 'Close fullscreen' : 'Enter fullscreen'}</span>    
+            <VisuallyHidden>{ isFullscreen ? 'Close fullscreen' : 'Enter fullscreen'}</VisuallyHidden>    
           </button>
           {sourceType === 'index' ? (
             swingsetOptions.index ?? <IndexPage />
