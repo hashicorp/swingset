@@ -107,7 +107,7 @@
   position: relative;
   padding: 20px 30px 30px;
   margin-left: 270px;
-  transition: margin-left .5s;
+  transition: margin-left .2s;
 
   &.isFullscreen {
     margin-left: 0;
@@ -115,6 +115,9 @@
 }
 
 .fullscreenBttn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
   display: flex;
   border: 1px solid #999999;
   border-radius: 4px;
