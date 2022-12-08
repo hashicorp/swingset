@@ -23,12 +23,16 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
     const searchInputRef = useRef<HTMLInputElement>(null)
     const [isFullscreen, setIsFullscreen] = useState(false)
     const handleFullscreenBttnClick = () => {
-      setIsFullscreen(!isFullscreen);
+      router.replace({
+        query: { ...router.query, isFullscreen: !isFullscreen }
+      })
     }
 
     useEffect(() => {
-      if (router.query.isFullscreen === 'true') {
+      if (router.query.isFullscreen && router.query.isFullscreen === 'true') {
         setIsFullscreen(true)
+      } else {
+        setIsFullscreen(false)
       }
     }, [router.query.isFullscreen])
 
