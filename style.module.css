@@ -125,6 +125,8 @@
   height: 32px;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  backround-color: transparent;
 }
 
 .stage > :global(.__swingset-headline) {
