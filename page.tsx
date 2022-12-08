@@ -124,13 +124,13 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
 
 const FullscreenIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19v-5h2v3h3v2Zm0-9V5h5v2H7v3Zm9 9v-2h3v-3h2v5Zm3-9V7h-3V5h5v5Z"></path></svg>
+    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19v-5h2v3h3v2Zm0-9V5h5v2H7v3Zm9 9v-2h3v-3h2v5Zm3-9V7h-3V5h5v5Z"></path></svg>
   )
 }
 
 const CloseFullscreenIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M8 19v-3H5v-2h5v5Zm6 0v-5h5v2h-3v3Zm-9-9V8h3V5h2v5Zm9 0V5h2v3h3v2Z"/></svg>
+    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M8 19v-3H5v-2h5v5Zm6 0v-5h5v2h-3v3Zm-9-9V8h3V5h2v5Zm9 0V5h2v3h3v2Z"/></svg>
   )
 }
 
