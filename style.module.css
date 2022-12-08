@@ -21,6 +21,12 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  transform: translateX(0);
+  transition: transform .2s;
+
+  &.isFullscreen {
+    transform: translateX(-250px);
+  }
 }
 
 .sidebar > * {
@@ -99,9 +105,12 @@
 
 .stage {
   padding: 20px 30px 30px;
-  float: left;
-  width: calc(100% - 350px);
   margin-left: 270px;
+  transition: margin-left .5s;
+
+  &.isFullscreen {
+    margin-left: 0;
+  }
 }
 
 .stage > :global(.__swingset-headline) {
