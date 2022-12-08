@@ -11,6 +11,7 @@ import { getPeerComponents } from './utils/get-peer-components'
 import { useBaseRoute } from './utils/use-base-route'
 import Nav from './components/nav'
 import { ComponentData, SwingsetPageProps, SwingsetOptions } from './types'
+import classNames from 'classnames'
 
 export default function createPage(swingsetOptions: SwingsetOptions = {}) {
   return function Page({ sourceType, mdxSource, navData }: SwingsetPageProps) {
@@ -19,6 +20,10 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
     const baseRoute = useBaseRoute()
     const [filterValue, setFilterValue] = useState<string | undefined>()
     const searchInputRef = useRef<HTMLInputElement>(null)
+    const [isFullscreen, setIsFullscreen] = useState(false)
+    const handleFullscreenBttnClick = () => {
+      setIsFullscreen(!isFullscreen);
+    }
 
     // Focus the search input when pressing the '/' key
     useEffect(() => {
@@ -70,7 +75,7 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
         <Head>
           <title key="title">Component Library</title>
         </Head>
-        <div className={s.sidebar}>
+        <div className={classNames(s.sidebar, { [s.isFullscreen]: isFullscreen})}>
           <Link href={baseRoute || '/'}>
             <a>{swingsetOptions.logo ?? <span className={s.logo} />}</a>
           </Link>
@@ -88,7 +93,11 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
           </div>
           <Nav navData={filteredNav} />
         </div>
-        <div className={s.stage}>
+        <div className={classNames(s.stage, { [s.isFullscreen]: isFullscreen})}>
+          <button className={s.fullscreenBttn} aria-labelledby="buttonLabel" onClick={handleFullscreenBttnClick}>
+            { isFullscreen ? (<CloseFullscreenIcon />) : (<FullscreenIcon />)}
+            <span id="buttonLabel" hidden>{ isFullscreen ? 'Close fullscreen' : 'Enter fullscreen'}</span>    
+          </button>
           {sourceType === 'index' ? (
             swingsetOptions.index ?? <IndexPage />
           ) : sourceType === 'docs' ? (
@@ -111,6 +120,18 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
       </div>
     )
   }
+}
+
+const FullscreenIcon = () => {
+  return (
+    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19v-5h2v3h3v2Zm0-9V5h5v2H7v3Zm9 9v-2h3v-3h2v5Zm3-9V7h-3V5h5v5Z"></path></svg>
+  )
+}
+
+const CloseFullscreenIcon = () => {
+  return (
+    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M8 19v-3H5v-2h5v5Zm6 0v-5h5v2h-3v3Zm-9-9V8h3V5h2v5Zm9 0V5h2v3h3v2Z"/></svg>
+  )
 }
 
 function IndexPage() {
