@@ -94,9 +94,10 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
           <Nav navData={filteredNav} />
         </div>
         <div className={classNames(s.stage, { [s.isFullscreen]: isFullscreen})}>
-          <div className={s.fullscreenBttn} onClick={handleFullscreenBttnClick}>
-            { isFullscreen ? (<CloseFullscreenIcon />) :  (<FullscreenIcon />)}
-          </div>
+          <button className={s.fullscreenBttn} aria-labelledby="buttonLabel" onClick={handleFullscreenBttnClick}>
+            { isFullscreen ? (<CloseFullscreenIcon />) : (<FullscreenIcon />)}
+            <span id="buttonLabel" hidden>{ isFullscreen ? 'Close fullscreen' : 'Enter fullscreen'}</span>    
+          </button>
           {sourceType === 'index' ? (
             swingsetOptions.index ?? <IndexPage />
           ) : sourceType === 'docs' ? (
