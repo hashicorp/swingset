@@ -26,7 +26,7 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
     }
 
     useEffect(() => {
-      if (router.query.isFullscreen) {
+      if (router.query.isFullscreen === 'true') {
         setIsFullscreen(true)
       }
     }, [router.query.isFullscreen])
