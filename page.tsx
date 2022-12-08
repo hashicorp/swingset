@@ -25,6 +25,12 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
       setIsFullscreen(!isFullscreen);
     }
 
+    useEffect(() => {
+      if (router.query.isFullscreen) {
+        setIsFullscreen(true)
+      }
+    }, [router.query.isFullscreen])
+
     // Focus the search input when pressing the '/' key
     useEffect(() => {
       function onKeyDown(e: KeyboardEvent) {
