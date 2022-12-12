@@ -14,7 +14,7 @@
     "gray-matter": "^4.0.3",
     "loader-utils": "^2.0.0",
     "marked": "^1.2.2",
-    "next-mdx-remote": "^4.0.0",
+    "next-mdx-remote": "^4.2.0",
     "query-string": "^5.1.1",
     "react-live": "^3.0.0",
     "require-from-string": "^2.0.2",
