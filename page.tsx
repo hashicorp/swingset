@@ -21,20 +21,12 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
     const baseRoute = useBaseRoute()
     const [filterValue, setFilterValue] = useState<string | undefined>()
     const searchInputRef = useRef<HTMLInputElement>(null)
-    const [isFullscreen, setIsFullscreen] = useState(false)
+    const isFullscreen = router?.query?.isFullscreen && router?.query?.isFullscreen === 'true'
     const handleFullscreenBttnClick = () => {
       router.replace({
         query: { ...router.query, isFullscreen: !isFullscreen }
       })
     }
-
-    useEffect(() => {
-      if (router.query.isFullscreen && router.query.isFullscreen === 'true') {
-        setIsFullscreen(true)
-      } else {
-        setIsFullscreen(false)
-      }
-    }, [router.query.isFullscreen])
 
     // Focus the search input when pressing the '/' key
     useEffect(() => {
