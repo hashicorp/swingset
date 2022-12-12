@@ -12,7 +12,7 @@ import { useBaseRoute } from './utils/use-base-route'
 import Nav from './components/nav'
 import { ComponentData, SwingsetPageProps, SwingsetOptions } from './types'
 import classNames from 'classnames'
-import VisuallyHidden from '@reach/visually-hidden'
+import { VisuallyHidden } from '@reach/visually-hidden'
 
 export default function createPage(swingsetOptions: SwingsetOptions = {}) {
   return function Page({ sourceType, mdxSource, navData }: SwingsetPageProps) {
