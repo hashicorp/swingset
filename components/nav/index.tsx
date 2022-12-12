@@ -26,7 +26,7 @@ export default function Nav({ navData }: { navData: NavItem[] }) {
               const href = `${baseRoute}/${route.sourceType}/${route.slug}`
               return (
                 <li key={route.name}>
-                  <Link href={href}>
+                  <Link href={href} legacyBehavior>
                     <a
                       className={classnames(
                         s.navItem,
