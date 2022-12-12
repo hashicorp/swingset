@@ -5,7 +5,7 @@ import { components, docs } from '../__swingset_data'
 export function findEntity(
   params: NextParsedUrlQuery
 ): ComponentData | FormattedFileEntry {
-  const [sourceType, slug] = params.swingset ?? []
+  const [sourceType, slug] = (params.swingset ?? []) as string[]
 
   const entities =
     sourceType === 'components' ? components : sourceType === 'docs' ? docs : {}

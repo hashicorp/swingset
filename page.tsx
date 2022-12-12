@@ -71,7 +71,7 @@ export default function createPage(swingsetOptions: SwingsetOptions = {}) {
           <title key="title">Component Library</title>
         </Head>
         <div className={s.sidebar}>
-          <Link href={baseRoute || '/'}>
+          <Link href={baseRoute || '/'} legacyBehavior>
             <a>{swingsetOptions.logo ?? <span className={s.logo} />}</a>
           </Link>
           <div className={s.searchContainer}>
