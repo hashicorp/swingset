@@ -15,7 +15,7 @@
     "loader-utils": "^2.0.0",
     "marked": "^1.2.2",
     "next-mdx-remote": "^4.2.0",
-    "query-string": "^5.1.1",
+    "query-string": "^7.1.1",
     "react-live": "^3.0.0",
     "require-from-string": "^2.0.2",
     "slugify": "^1.6.0"
@@ -23,7 +23,6 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.7",
     "@changesets/cli": "^2.25.2",
-    "@types/query-string": "^5.1.0",
     "@types/require-from-string": "^1.2.1",
     "jest": "^27.0.6",
     "next": "^13.0.6",
