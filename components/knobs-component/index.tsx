@@ -27,10 +27,7 @@ export default function createKnobsComponent(
 
     return (
       <div className={s.knobs} id={id}>
-        <div
-          className={sg.save}
-          onClick={() => setUrlState(name, id, values, true)}
-        >
+        <div className={sg.save} onClick={() => setUrlState(id, values, true)}>
           Share
         </div>
         <Component {...knobsToProps(values)} />
