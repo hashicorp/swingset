@@ -1,5 +1,11 @@
 # swingset
 
+## 0.17.0
+
+### Minor Changes
+
+- [#47](https://github.com/hashicorp/swingset/pull/47) [`13d1aca`](https://github.com/hashicorp/swingset/commit/13d1aca561a22852b83dbc5c8448d7c554772869) Thanks [@dstaley](https://github.com/dstaley)! - Ignore node_modules folders when resolving components glob
+
 ## 0.16.0
 
 ### Minor Changes
