@@ -10,9 +10,13 @@ module.exports = function swingsetComponentsLoader() {
   const { pluginOptions, webpackConfig } = getOptions(this)
 
   // Resolve components glob
-  const allComponents = globby.sync(`${pluginOptions.componentsRoot}`, {
-    onlyFiles: false,
-  })
+  const allComponents = globby
+    .sync(`${pluginOptions.componentsRoot}`, {
+      onlyFiles: false,
+    })
+    .filter((folderPath) => {
+      return !folderPath.includes('node_modules')
+    })
 
   const usedComponents = removeComponentsWithoutDocs(
     allComponents,
