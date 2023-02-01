@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 export function encode(str: string) {
   return typeof window === 'undefined'
     ? Buffer.from(str).toString('base64')

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 export default function simpleHash(str: string) {
   let hash = 0
   if (str.length == 0) return hash

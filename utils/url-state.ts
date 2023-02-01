@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { useEffect } from 'react'
 import queryString from 'query-string'
 import Router from 'next/router'

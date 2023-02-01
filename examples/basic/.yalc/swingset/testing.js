@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 function getTestValues(propsSpec) {
   return Object.keys(propsSpec).reduce((memo, name) => {
     const prop = propsSpec[name]
