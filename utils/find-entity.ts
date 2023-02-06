@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import { ComponentData, FormattedFileEntry } from '../types'
 import { components, docs } from '../__swingset_data'
