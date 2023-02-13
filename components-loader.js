@@ -29,7 +29,9 @@ module.exports = function swingsetComponentsLoader() {
   )
 
   // add components directory as a webpack dependency
-  this.addContextDependency(pluginOptions.componentsRoot.split('*')[0])
+  this.addContextDependency(
+    path.resolve(pluginOptions.componentsRoot.split('*')[0])
+  )
   const componentsWithNames = formatComponentsWithNames(usedComponents)
 
   // Resolve docs glob
@@ -138,7 +140,9 @@ function formatComponentsWithNames(components) {
  */
 function generateMetadataFile(components, docsFiles) {
   const imports = components.reduce((memo, component) => {
-    memo += `import * as ${component.name}Exports from '${component.path}'\n`
+    memo += `import * as ${
+      component.name
+    }Exports from '${component.path.replace(/\\/g, '/')}'\n`
     return memo
   }, '')
 
@@ -146,9 +150,9 @@ function generateMetadataFile(components, docsFiles) {
     // We can't just stringify here, because we need eg
     // src: Button, <<< Button NOT in quotes
     acc += `  '${component.name}': {
-      path: '${component.path}',
-      docsPath: '${path.join(component.path, 'docs.mdx')}',
-      propsPath: '${path.join(component.path, 'props.js')}',
+      path: '${component.path.replace(/\\/g, '/')}',
+      docsPath: '${path.join(component.path, 'docs.mdx').replace(/\\/g, '/')}',
+      propsPath: '${path.join(component.path, 'props.js').replace(/\\/g, '/')}',
       slug: '${component.slug}',
       exports: ${component.name}Exports,
       data: ${JSON.stringify(component.data, null, 2)}

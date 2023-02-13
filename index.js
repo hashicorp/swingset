@@ -24,17 +24,21 @@ function withSwingset(pluginOptions = {}) {
        */
       webpack(config, options) {
         // normalize componentsRoot path
-        pluginOptions.componentsRoot = path.resolve(
-          config.context,
-          pluginOptions.componentsRoot
-            ? pluginOptions.componentsRoot
-            : 'components/*'
-        )
+        pluginOptions.componentsRoot = path
+          .resolve(
+            config.context,
+            pluginOptions.componentsRoot
+              ? pluginOptions.componentsRoot
+              : 'components/*'
+          )
+          .replace(/\\/g, '/')
         // normalize docsRoot path
-        pluginOptions.docsRoot = path.resolve(
-          config.context,
-          pluginOptions.docsRoot ? pluginOptions.docsRoot : 'docs/*'
-        )
+        pluginOptions.docsRoot = path
+          .resolve(
+            config.context,
+            pluginOptions.docsRoot ? pluginOptions.docsRoot : 'docs/*'
+          )
+          .replace(/\\/g, '/')
         //
         config.module.rules.push({
           test: /__swingset_data/,
