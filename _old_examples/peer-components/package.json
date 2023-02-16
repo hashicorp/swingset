@@ -1,0 +1,23 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "an example app that uses swingset",
+  "main": "index.js",
+  "scripts": {
+    "start": "next dev",
+    "build": "next build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@next/bundle-analyzer": "^12.1.0",
+    "next": "^12.1.0",
+    "next-transpile-modules": "^9.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "swingset": "file:.yalc/swingset"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}

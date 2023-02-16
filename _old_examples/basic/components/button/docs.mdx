@@ -1,0 +1,24 @@
+---
+componentName: 'Button'
+componentCategory: 'Interactive Elements'
+---
+
+This is the docs for the button component
+
+<LiveComponent components={{ Test: () => <p>test successful</p> }}>
+  {`<>
+  <Button text='this is a button' />
+  <ButtonSecondary text={\`\${foo}\`} />
+  <Test />
+</>`}
+</LiveComponent>
+
+<PropsTable props={componentProps} />
+
+<Tester />
+
+## Exposed `package.json`
+
+<pre>
+  <code>{JSON.stringify(packageJson, null, 2)}</code>
+</pre>

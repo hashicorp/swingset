@@ -1,24 +1,9 @@
----
-componentName: 'Button'
-componentCategory: 'Interactive Elements'
----
+import { Button } from '.'
 
-This is the docs for the button component
+export const Simple = () => (<Button>Click me</Button>)
 
-<LiveComponent components={{ Test: () => <p>test successful</p> }}>
-  {`<>
-  <Button text='this is a button' />
-  <ButtonSecondary text={\`\${foo}\`} />
-  <Test />
-</>`}
-</LiveComponent>
+# Button
 
-<PropsTable props={componentProps} />
+## Simplee
 
-<Tester />
-
-## Exposed `package.json`
-
-<pre>
-  <code>{JSON.stringify(packageJson, null, 2)}</code>
-</pre>
+<Simple />

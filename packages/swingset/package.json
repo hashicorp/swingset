@@ -1,0 +1,31 @@
+{
+  "name": "swingset",
+  "version": "0.17.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^2.3.0",
+    "github-slugger": "^2.0.0",
+    "globby": "^13.1.3",
+    "next-mdx-remote": "^4.3.0",
+    "vfile": "^5.3.7",
+    "vfile-matter": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-env": "^1.18.0",
+    "vitest": "^0.28.5"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./loader": "./loader.cjs",
+    "./__component-data": "./__component-data.js"
+  }
+}
