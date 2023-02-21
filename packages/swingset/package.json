@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "tsup",
+    "build:styles": "postcss src/default-theme/css/styles.css -o style.css --verbose",
     "dev": "tsup --watch",
+    "dev:styles": "TAILWIND_MODE=watch postcss src/default-theme/css/styles.css -o style.css --verbose --watch",
     "test": "vitest run"
   },
   "dependencies": {
@@ -18,7 +20,19 @@
   "devDependencies": {
     "@types/webpack": "^5.28.0",
     "@types/webpack-env": "^1.18.0",
+    "autoprefixer": "^10.4.13",
+    "next": "^13.1.6",
+    "postcss": "^8.4.21",
+    "postcss-cli": "^10.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.2.7",
     "vitest": "^0.28.5"
+  },
+  "peerDependencies": {
+    "next": "13.x",
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
   },
   "exports": {
     ".": {
@@ -26,6 +40,18 @@
       "types": "./dist/index.d.ts"
     },
     "./loader": "./loader.cjs",
-    "./__component-data": "./__component-data.js"
+    "./meta": {
+      "import": "./dist/meta.js",
+      "types": "./dist/meta.d.ts'"
+    },
+    "./theme": {
+      "import": "./dist/theme.js",
+      "types": "./dist/theme.d.ts"
+    },
+    "./default-theme": {
+      "import": "./dist/default-theme/index.js",
+      "types": "./dist/default-theme/index.d.ts"
+    },
+    "./style.css": "./style.css"
   }
 }

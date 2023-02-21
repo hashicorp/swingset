@@ -4,11 +4,14 @@ import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
 
 import type { LoaderContext } from 'webpack'
-import { resolveComponentDocs } from './resolve-component-meta'
+import { resolveComponentMeta } from './resolve-component-meta'
 
 interface LoaderOptions {
-  isMetaImport: string
+  isMetaImport: boolean
+  isContentImport: boolean
+  isThemeImport: boolean
   componentRootPattern: string
+  theme: string
 }
 
 function getCompileOptions(options?: CompileOptions): CompileOptions {
@@ -32,14 +35,21 @@ async function compileMDX(source: string, options?: CompileOptions) {
 export async function loader(
   context: LoaderContext<LoaderOptions>,
   source: string
-): Promise<string> {
-  const { isMetaImport, componentRootPattern } = context.getOptions()
+): Promise<string | undefined> {
+  const {
+    isMetaImport,
+    isContentImport,
+    isThemeImport,
+    componentRootPattern,
+    theme,
+  } = context.getOptions()
 
   context.cacheable(true)
 
   if (isMetaImport) {
+    console.log({ isMetaImport })
     context.addContextDependency(path.join(process.cwd(), componentRootPattern))
-    const componentMeta = await resolveComponentDocs({ componentRootPattern })
+    const componentMeta = await resolveComponentMeta({ componentRootPattern })
     const result = `export default {
       ${componentMeta
         .map(
@@ -59,19 +69,27 @@ export async function loader(
     return result
   }
 
-  const { result, frontmatter } = await compileMDX(source, {
-    jsx: true,
-    format: 'detect',
-  })
+  if (isContentImport) {
+    const { result, frontmatter } = await compileMDX(source, {
+      jsx: true,
+      format: 'detect',
+    })
 
-  const mdxModule = String(result)
-  const stringifiedFrontmatter = JSON.stringify(frontmatter) || '{}'
+    const mdxModule = String(result)
+    const stringifiedFrontmatter = JSON.stringify(frontmatter) || '{}'
 
-  const mod = `${mdxModule}
+    const mod = `${mdxModule}
   
 export const frontmatter = ${stringifiedFrontmatter};
   `
 
-  console.log('[swingset/loader]', mod)
-  return mod
+    return mod
+  }
+
+  if (isThemeImport) {
+    return `import Theme, { Page } from '${theme}';
+
+export default Theme;
+export { Page };`
+  }
 }

@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply ss-text-3xl;
+  }
+
+  h2 {
+    @apply ss-text-2xl;
+  }
+
+  h3 {
+    @apply ss-text-xl;
+  }
+
+  h4 {
+    @aplpy ss-text-lg;
+  }
+}

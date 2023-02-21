@@ -11,6 +11,8 @@ export default defineConfig([
     format: 'esm',
     dts: true,
     bundle: true,
+    splitting: false,
+    external: ['swingset'],
     target: 'es2020',
   },
 ])

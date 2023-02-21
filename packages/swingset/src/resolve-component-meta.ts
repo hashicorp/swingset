@@ -23,7 +23,7 @@ export function getFileFrontmatter(source: string) {
   return vfile.data.matter as Record<string, unknown>
 }
 
-export async function resolveComponentDocs({
+export async function resolveComponentMeta({
   componentRootPattern,
 }: ResolveComponentDocsOptions) {
   const result: ComponentMeta[] = []

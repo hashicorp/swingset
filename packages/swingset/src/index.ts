@@ -21,12 +21,15 @@ export default function swingset(swingsetConfig: SwingsetConfig) {
             options.defaultLoaders.babel,
             {
               loader: 'swingset/loader',
+              options: {
+                isContentImport: true,
+              },
             },
           ],
         })
 
         config.module.rules.push({
-          test: /swingset\/__component-data/,
+          test: /swingset\/(dist\/)?meta/,
           use: [
             options.defaultLoaders.babel,
             {
@@ -34,6 +37,20 @@ export default function swingset(swingsetConfig: SwingsetConfig) {
               options: {
                 isMetaImport: true,
                 componentRootPattern: swingsetConfig.componentRootPattern,
+              },
+            },
+          ],
+        })
+
+        config.module.rules.push({
+          test: /swingset\/(dist\/)?theme/,
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: 'swingset/loader',
+              options: {
+                isThemeImport: true,
+                theme: 'swingset/default-theme',
               },
             },
           ],
