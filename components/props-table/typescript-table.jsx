@@ -1,19 +1,15 @@
-/**
- * Copyright (c) HashiCorp, Inc.
- * SPDX-License-Identifier: MPL-2.0
- */
-
 import s from './style.module.css'
 import marked from 'marked'
 import { Fragment } from 'react'
 
-export default function PropsTable({ props }) {
+export default function PropsTableTypescript({ props }) {
   return (
     <table className={s.root}>
       <thead>
         <tr>
           <th>Name</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>{renderRows(props)}</tbody>
@@ -24,34 +20,28 @@ export default function PropsTable({ props }) {
 function renderRows(props, prefixes = []) {
   const res = []
   if (Array.isArray(props)) {
-    props.map((prop) => {
-      // render the row for the current property
-      res.push(renderRow('[x]', prop, prefixes, true))
-      // render rows for sub-properties if they exist
-      if (prop.properties)
-        res.push(renderRows(prop.properties, [...prefixes, '[x]']))
-    })
-  } else {
-    for (let key in props) {
-      const value = props[key]
-      // figure out whether the property of the current item is an array, and whether it has multiple valid types
-      const arrayPropertyOptions =
-        value.properties && value.properties.length
-          ? value.properties.length > 1
-            ? value.properties.length
-            : 'single'
-          : null
+    props.forEach((prop) => {
+      const isComplexArray = prop.type === 'Array' && !prop.typeValue
+      const rowName = isComplexArray ? `${prop.name}[x]` : prop.name
+
       // render the row given the information
-      res.push(renderRow(key, value, prefixes, null, arrayPropertyOptions))
+      if (prop.name) {
+        res.push(renderRow(rowName, prop, prefixes))
+      }
+
       // render rows for sub-properties if relevant
-      if (value.properties)
-        res.push(renderRows(value.properties, [...prefixes, key]))
-    }
+      const shouldRenderProperties =
+        prop.properties && (prop.isObjectLike || isComplexArray)
+      if (shouldRenderProperties) {
+        const nestedPrefixes = [...prefixes, rowName].filter(Boolean)
+        res.push(renderRows(prop.properties, nestedPrefixes))
+      }
+    })
   }
   return res
 }
 
-function renderRow(key, value, prefixes, isArray, arrayOptions) {
+function renderRow(key, value, prefixes, arrayOptions) {
   // this bunch of business is to ensure that object syntax chain are separated by periods,
   // but array syntax are not. like `foo.bar.baz` vs `foo[x].bar`
   // if the current item is an array syntax, we slice off the trailing period below
@@ -63,17 +53,11 @@ function renderRow(key, value, prefixes, isArray, arrayOptions) {
     <tr key={key}>
       <td>
         <code>
-          {prefixes.length ? (
-            <span className={s.prefix}>
-              {isArray ? prefixSet.slice(0, -1) : prefixSet}
-            </span>
-          ) : (
-            ''
-          )}
+          {prefixes.length ? <span className={s.prefix}>{prefixSet}</span> : ''}
           {key}
-          {value.required ? <span className={s.required}>*</span> : ''}
+          {!value.optional ? <span className={s.required}>*</span> : ''}
         </code>
-        <div className={s.type}>{value.type}</div>
+        <div className={s.type}>{value.typeValue ?? value.type}</div>
       </td>
       <td className={s.descriptionCol}>
         <span
@@ -99,19 +83,15 @@ function renderRow(key, value, prefixes, isArray, arrayOptions) {
           </div>
         )}
         {value.properties && (
-          <div className={s.containsNested}>
-            {renderHelperText(arrayOptions)}
-          </div>
+          <div className={s.containsNested}>{renderHelperText(value)}</div>
         )}
       </td>
+      <td>{value.value && <code>{value.value}</code>}</td>
     </tr>
   )
 }
 
-function renderHelperText(arrayOptions) {
-  if (typeof arrayOptions === 'number')
-    return `Array can contain any of the ${arrayOptions} types below:`
-  if (arrayOptions === 'single')
-    return 'Array members must be of the type below:'
-  return 'Object contains nested props, see below:'
+function renderHelperText(value) {
+  if (value.isObjectLike) return 'Object contains nested props, see below:'
+  return ''
 }

@@ -20,6 +20,7 @@ import type {
 } from './types'
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 import { GetStaticPropsContext } from 'next'
+import { getStructuredPropsFromComponentFile } from './utils/props'
 
 export function createStaticPaths() {
   return function getStaticPaths() {
@@ -165,12 +166,22 @@ async function getComponentMdxSource(
 
   contentWithHeadline += `\n</div>\n${content}`
 
+  const isTSSource = currentComponentData.componentFilePath.includes('.ts')
+
+  let componentProps: any[] = []
+  if (isTSSource && !propsContent) {
+    componentProps = getStructuredPropsFromComponentFile(
+      currentComponentData.componentFilePath
+    )
+  }
+
   // Serialize the content using mdx-remote
   const mdxSource = await serialize(contentWithHeadline, {
     scope: {
-      // TODO: process props using marked here?
       componentProps: propsContent
         ? requireFromString(propsContent, currentComponentData.propsPath)
+        : isTSSource
+        ? componentProps
         : null,
       packageJson,
     },
