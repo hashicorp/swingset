@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import sg from '../shared.module.css'
 import s from './style.module.css'
 import classnames from 'classnames'
@@ -27,10 +32,7 @@ export default function createKnobsComponent(
 
     return (
       <div className={s.knobs} id={id}>
-        <div
-          className={sg.save}
-          onClick={() => setUrlState(name, id, values, true)}
-        >
+        <div className={sg.save} onClick={() => setUrlState(id, values, true)}>
           Share
         </div>
         <Component {...knobsToProps(values)} />

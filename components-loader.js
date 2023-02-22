@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 const globby = require('globby')
 const fs = require('fs')
 const path = require('path')
@@ -10,9 +15,13 @@ module.exports = function swingsetComponentsLoader() {
   const { pluginOptions, webpackConfig } = getOptions(this)
 
   // Resolve components glob
-  const allComponents = globby.sync(`${pluginOptions.componentsRoot}`, {
-    onlyFiles: false,
-  })
+  const allComponents = globby
+    .sync(`${pluginOptions.componentsRoot}`, {
+      onlyFiles: false,
+    })
+    .filter((folderPath) => {
+      return !folderPath.includes('node_modules')
+    })
 
   const usedComponents = removeComponentsWithoutDocs(
     allComponents,

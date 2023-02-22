@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import createLiveComponent from '../components/live-component'
 import createKnobsComponent from '../components/knobs-component'
 import PropsTable from '../components/props-table'

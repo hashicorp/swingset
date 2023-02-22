@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { SerializeOptions } from 'next-mdx-remote/dist/types'
 import { ReactNode } from 'react'

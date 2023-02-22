@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import sg from '../shared.module.css'
 import s from './style.module.css'
 import { ReactElement, useState } from 'react'
@@ -34,10 +39,7 @@ export default function createLiveComponent(
 
     return (
       <div className={s.liveComponent} id={id}>
-        <div
-          className={sg.save}
-          onClick={() => setUrlState(componentName, id, code, true)}
-        >
+        <div className={sg.save} onClick={() => setUrlState(id, code, true)}>
           Share
         </div>
         <LiveProvider

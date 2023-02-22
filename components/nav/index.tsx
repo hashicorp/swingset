@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import classnames from 'classnames'
@@ -26,7 +31,7 @@ export default function Nav({ navData }: { navData: NavItem[] }) {
               const href = `${baseRoute}/${route.sourceType}/${route.slug}`
               return (
                 <li key={route.name}>
-                  <Link href={href}>
+                  <Link href={href} legacyBehavior>
                     <a
                       className={classnames(
                         s.navItem,

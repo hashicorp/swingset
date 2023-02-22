@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import s from './style.module.css'
 import marked from 'marked'
 import { Fragment } from 'react'
