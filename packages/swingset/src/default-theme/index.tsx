@@ -1,6 +1,6 @@
 import Link from 'next/link'
 // @ts-expect-error -- this should be resolved once the theme is externalized
-import data from 'swingset/meta'
+import { meta, categories } from 'swingset/meta'
 
 import Page from './page'
 
@@ -18,10 +18,17 @@ export default function SwingsetLayout({
               <span className="ss-text-lg ss-font-bold">Swingset</span>
               <nav>
                 <ul>
-                  {Object.entries(data).map(([, d]: [string, any]) => (
-                    <li>
-                      <Link href={`/swingset/${d.slug}`}>{d.slug}</Link>&nbsp;
-                    </li>
+                  {Object.entries(categories).map(([title, items]) => (
+                    <>
+                      <li>
+                        <h3 className="ss-my-2 ss-text-gray-600">{title}</h3>
+                      </li>
+                      {(items as string[]).map((slug: string) => (
+                        <li>
+                          <Link href={`/swingset/${slug}`}>{slug}</Link>
+                        </li>
+                      ))}
+                    </>
                   ))}
                 </ul>
               </nav>
@@ -29,6 +36,11 @@ export default function SwingsetLayout({
           </aside>
           <main className="ss-ml-72 ss-pt-10">{children}</main>
         </div>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__SWINGSET_META=${JSON.stringify(meta)};`,
+          }}
+        ></script>
       </body>
     </html>
   )

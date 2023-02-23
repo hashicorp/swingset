@@ -1,10 +1,12 @@
 import type { NextConfig } from 'next'
+import { MARKDOWN_EXTENSION_REGEX } from './constants'
 
 interface SwingsetConfig {
   componentRootPattern: string
+  docsRoot?: string
 }
 
-const MARKDOWN_EXTENSION_REGEX = /\.mdx?$/
+const DEFAULT_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx']
 
 export default function swingset(swingsetConfig: SwingsetConfig) {
   return function withSwingset(
@@ -12,6 +14,10 @@ export default function swingset(swingsetConfig: SwingsetConfig) {
   ): NextConfig {
     return {
       ...nextConfig,
+      pageExtensions: [
+        ...(nextConfig.pageExtensions ?? DEFAULT_EXTENSIONS),
+        'mdx',
+      ],
       webpack(config, options) {
         config.module.rules.push({
           test: MARKDOWN_EXTENSION_REGEX,
@@ -37,6 +43,7 @@ export default function swingset(swingsetConfig: SwingsetConfig) {
               options: {
                 isMetaImport: true,
                 componentRootPattern: swingsetConfig.componentRootPattern,
+                docsRoot: swingsetConfig.docsRoot,
               },
             },
           ],
