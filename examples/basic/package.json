@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next"
+    "dev": "next",
+    "build": "next build"
   },
   "dependencies": {
     "next": ">=13",

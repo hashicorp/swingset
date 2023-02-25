@@ -10,6 +10,7 @@ import { Entity } from './types'
 import { stringifyEntity } from './resolvers/stringify-entity'
 import { getCategories } from './get-categories'
 import { resolveDocs } from './resolvers/doc'
+import { NEXT_MDX_COMPONENTS_ALIAS } from './constants'
 
 interface LoaderOptions {
   isMetaImport: boolean
@@ -23,7 +24,7 @@ interface LoaderOptions {
 function getCompileOptions(options?: CompileOptions): CompileOptions {
   return {
     outputFormat: 'program',
-    providerImportSource: undefined,
+    providerImportSource: NEXT_MDX_COMPONENTS_ALIAS,
     ...options,
   }
 }
