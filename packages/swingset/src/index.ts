@@ -1,17 +1,15 @@
 import type { NextConfig } from 'next'
 import { MARKDOWN_EXTENSION_REGEX } from './constants'
-
-interface SwingsetConfig {
-  componentRootPattern: string
-  docsRoot?: string
-}
+import { applyConfigDefaults, SwingsetConfig } from './config'
 
 const DEFAULT_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx']
 
-export default function swingset(swingsetConfig: SwingsetConfig) {
+export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
   return function withSwingset(
     nextConfig: Partial<NextConfig> = {}
   ): NextConfig {
+    const resolvedConfig = applyConfigDefaults(swingsetConfig)
+
     return {
       ...nextConfig,
       pageExtensions: [
@@ -42,8 +40,8 @@ export default function swingset(swingsetConfig: SwingsetConfig) {
               loader: 'swingset/loader',
               options: {
                 isMetaImport: true,
-                componentRootPattern: swingsetConfig.componentRootPattern,
-                docsRoot: swingsetConfig.docsRoot,
+                componentRoot: resolvedConfig.componentRoot,
+                docsRoot: resolvedConfig.docsRoot,
               },
             },
           ],

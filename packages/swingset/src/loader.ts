@@ -1,24 +1,22 @@
 import path from 'node:path'
-import fs from 'node:fs'
 import { compile, CompileOptions } from '@mdx-js/mdx'
 import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
 import { findPagesDir, existsSync } from 'next/dist/lib/find-pages-dir.js'
-import directoryTree from 'directory-tree'
 import type { LoaderContext } from 'webpack'
 
-import {
-  groupComponentsByCategory,
-  resolveComponentMeta,
-} from './resolve-component-meta'
-import { MARKDOWN_EXTENSION_REGEX } from './constants'
-import { getFileFrontmatter } from './get-frontmatter'
+import { resolveComponents } from './resolvers/component'
+import { Entity } from './types'
+import { stringifyEntity } from './resolvers/stringify-entity'
+import { getCategories } from './get-categories'
+import { resolveDocs } from './resolvers/doc'
 
 interface LoaderOptions {
   isMetaImport: boolean
   isContentImport: boolean
   isThemeImport: boolean
-  componentRootPattern: string
+  componentRoot: string
+  docsRoot: string
   theme: string
 }
 
@@ -48,65 +46,39 @@ export async function loader(
     isMetaImport,
     isContentImport,
     isThemeImport,
-    componentRootPattern,
+    componentRoot,
+    docsRoot,
     theme,
   } = context.getOptions()
 
   context.cacheable(true)
 
   if (isMetaImport) {
-    const docsFiles = resolveDocsMeta()
-    if (docsFiles) {
-      context.addContextDependency(
-        path.join(process.cwd(), 'app', '(swingset)', 'swingset', 'docs')
-      )
-    }
+    const entities: Entity[] = [
+      ...(await resolveComponents({ componentRoot })),
+      ...(await resolveDocs({ docsRoot })),
+    ]
 
-    context.addContextDependency(path.join(process.cwd(), componentRootPattern))
-    const componentMeta = await resolveComponentMeta({ componentRootPattern })
+    context.addContextDependency(path.join(process.cwd(), componentRoot))
+    context.addContextDependency(path.join(process.cwd(), docsRoot))
+
     const result = `export const meta = {
-      ${componentMeta
+      ${entities
         .map(
-          (meta) =>
-            `'${meta.slug}': {
-            frontmatter: ${JSON.stringify(meta.frontmatter)},
-            category: ${JSON.stringify(meta.category)},
-            componentPath: ${JSON.stringify(meta.componentPath)},
-            slug: ${JSON.stringify(meta.slug)},
-            load: () => import('${
-              meta.componentPath
-            }/docs.mdx').then(mod => mod.default)
-          }`
+          (entity) => `'${entity.normalizedPath}': ${stringifyEntity(entity)}`
         )
         .join(',\n')}
     };
 
-    export const docsMeta = {
-      ${docsFiles
-        .map(
-          (file) => `'${file.relativePath
-            .replace('.mdx', '')
-            .replace(/\/index$/, '')}': {
-        frontmatter: ${JSON.stringify(file.frontmatter)},
-        relativePath: ${JSON.stringify(file.relativePath)},
-        path: ${JSON.stringify(file.path)},
-        load: () => import('${file.path}').then(mod => mod.default),
-      }`
-        )
-        .join(',\n')}
-    };
-
-    export function getComponentMeta(component) {
-      return meta[component]
+    export function getEntity(slug) {
+      return meta[slug]
     }
 
-    export function getDocsMeta(component) {
-      return docsMeta[component]
+    export function generateStaticParams() {
+      return Object.keys(meta).map(slug => ({ path: slug.split('/') }))
     }
-
-    export const categories = ${JSON.stringify(
-      groupComponentsByCategory(componentMeta)
-    )}`
+    
+    export const categories = ${JSON.stringify(getCategories(entities))}`
 
     return result
   }
@@ -153,40 +125,4 @@ function getDocsDir() {
   } else {
     return false
   }
-}
-
-function resolveDocsMeta() {
-  const docsDir = getDocsDir()
-  let docsFiles: any[] = []
-
-  if (docsDir) {
-    const directoryTreeItemCallback: directoryTree.DirectoryTreeCallback = (
-      item,
-      _,
-      stats
-    ) => {
-      if (stats.isFile()) {
-        const contents = fs.readFileSync(item.path, 'utf-8')
-        const relativePath = path.relative(docsDir, item.path)
-        const frontmatter = getFileFrontmatter(contents)
-
-        docsFiles.push({
-          relativePath,
-          frontmatter,
-          ...item,
-        })
-      }
-    }
-
-    const tree = directoryTree(
-      docsDir,
-      {
-        extensions: MARKDOWN_EXTENSION_REGEX,
-        attributes: ['type'],
-      },
-      directoryTreeItemCallback,
-      directoryTreeItemCallback
-    )
-  }
-  return docsFiles
 }

@@ -13,5 +13,7 @@
     "moduleResolution": "node",
     "types": ["vitest/globals", "webpack-env"],
     "resolveJsonModule": true
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist/**/*"]
 }

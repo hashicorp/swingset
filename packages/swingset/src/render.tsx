@@ -1,22 +1,15 @@
 // @ts-expect-error -- this should be resolved once the theme is externalized
-import { getDocsMeta, getComponentMeta } from 'swingset/meta'
+import { getEntity } from 'swingset/meta'
 
 interface RenderDocsProps {
   component: string
 }
 
 export async function RenderDocs({ component }: RenderDocsProps) {
-  const componentData = getComponentMeta(component)
-  const doc = getDocsMeta(component)
+  const entity = getEntity(component)
 
-  if (doc) {
-    const Content = await doc.load()
-
-    return <Content />
-  }
-
-  if (componentData) {
-    const Content = await componentData.load()
+  if (entity) {
+    const Content = await entity.load()
 
     return <Content />
   }

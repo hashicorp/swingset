@@ -29,6 +29,7 @@
     "@changesets/changelog-github": "^0.4.7",
     "@changesets/cli": "^2.25.2",
     "@types/require-from-string": "^1.2.1",
+    "concurrently": "^7.6.0",
     "jest": "^27.0.6",
     "next": "^13.0.6",
     "react": "^18.2.0",
