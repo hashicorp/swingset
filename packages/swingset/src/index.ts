@@ -11,6 +11,7 @@ const DEFAULT_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx']
 function addNextMdxImportAlias(config: any) {
   console.log('addNextMdxImportAlias')
   config.resolve.alias[NEXT_MDX_COMPONENTS_ALIAS] ||= [
+    'private-next-root-dir/src/mdx-components',
     'private-next-root-dir/mdx-components',
     '@mdx-js/react',
   ]
