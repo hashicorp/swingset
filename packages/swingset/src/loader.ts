@@ -102,10 +102,11 @@ export const frontmatter = ${stringifiedFrontmatter};
   }
 
   if (isThemeImport) {
-    return `import Theme, { Page } from '${theme}';
+    return `import Theme, { Page as ThemePage } from '${theme}';
+import { createPage } from 'swingset/create-page';
 
 export default Theme;
-export { Page };`
+export const Page = createPage(ThemePage);`
   }
 }
 

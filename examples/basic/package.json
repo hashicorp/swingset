@@ -7,9 +7,9 @@
     "build": "next build"
   },
   "dependencies": {
-    "next": ">=13",
-    "react-dom": "*",
+    "next": "^13.2.3",
     "react": "*",
+    "react-dom": "*",
     "swingset": "file:../../packages/swingset"
   }
 }

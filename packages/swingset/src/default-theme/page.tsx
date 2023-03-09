@@ -1,17 +1,15 @@
-// @ts-expect-error -- this should be resolved once the theme is externalized
-import { getEntity } from 'swingset/meta'
-// @ts-expect-error
-import { RenderDocs } from 'swingset/render'
-
-export default async function Page({ params }: { params: any }) {
-  const slug = params.path.join('/')
-  const pageData = getEntity(slug)
-
+export default async function Page({
+  data,
+  content,
+}: {
+  data: any
+  content: React.ReactNode
+}) {
   return (
     <>
-      <h1>{pageData?.frontmatter?.title ?? pageData?.slug}</h1>
-      <p>{pageData?.frontmatter?.description}</p>
-      <RenderDocs component={slug} />
+      <h1>{data?.frontmatter?.title ?? data?.slug}</h1>
+      <p>{data?.frontmatter?.description}</p>
+      {content}
     </>
   )
 }

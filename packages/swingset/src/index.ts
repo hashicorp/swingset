@@ -9,7 +9,6 @@ const DEFAULT_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx']
 
 // c.f. https://github.com/vercel/next.js/blob/canary/packages/next-mdx/index.js
 function addNextMdxImportAlias(config: any) {
-  console.log('addNextMdxImportAlias')
   config.resolve.alias[NEXT_MDX_COMPONENTS_ALIAS] ||= [
     'private-next-root-dir/src/mdx-components',
     'private-next-root-dir/mdx-components',
@@ -32,8 +31,6 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
       webpack(config, options) {
         // Allow re-use of the pattern for defining component overrides provided by @next/mdx
         addNextMdxImportAlias(config)
-
-        console.log(config.resolve.alias)
 
         config.module.rules.push({
           test: MARKDOWN_EXTENSION_REGEX,
