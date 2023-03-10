@@ -70,7 +70,7 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
               loader: 'swingset/loader',
               options: {
                 isThemeImport: true,
-                theme: 'swingset/default-theme',
+                theme: resolvedConfig.theme,
               },
             },
           ],
