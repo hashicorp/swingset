@@ -1,3 +1,5 @@
+import Content from './content.mdx'
+
 export default async function SwingsetRoot() {
-  return <div>Hello from the root</div>
+  return <Content />
 }

@@ -1,3 +1,5 @@
+import themeComponents from 'swingset-theme-hashicorp/components'
+
 export function useMDXComponents(components) {
   // Allows customizing built-in components, e.g. to add styling.
   return {
@@ -15,6 +17,7 @@ export function useMDXComponents(components) {
         </div>
       )
     },
+    ...themeComponents,
     ...components,
   }
 }

@@ -4,6 +4,8 @@ import { meta, categories } from 'swingset/meta'
 
 import Page from './page'
 
+import '../style.css'
+
 export default function SwingsetLayout({
   children,
 }: {
@@ -15,7 +17,9 @@ export default function SwingsetLayout({
         <div className="ss-h-full ss-max-w-7xl ss-my-0 ss-mx-auto">
           <aside className="ss-fixed ss-top-0 ss-bottom-0 ss-z-0">
             <div className="ss-pt-10">
-              <span className="ss-text-lg ss-font-bold">Swingset</span>
+              <span className="ss-text-lg ss-font-bold">
+                <Link href="/swingset">Swingset</Link>
+              </span>
               <nav>
                 <ul>
                   {Object.entries(categories).map(([title, items]) => (
