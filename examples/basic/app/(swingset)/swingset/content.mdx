@@ -4,6 +4,25 @@ Welcome to Swingset. Swingset is a drop-in component documentation system built 
 
 ## Features
 
+### App Router native
+
+Swingset is built for the new App Router and React Server Components. Running the bootstrap command will generate a route group for swingset:
+
+```
+$ swingset bootstrap
+
+Generating swingset route group...
+
+Success! Route group created:
+
+(swingset)
+  ├ /layout.tsx
+  └ /swingset
+    ├ /page.tsx 
+    └ /[...path]
+      └ /page.tsx
+```
+
 ### Component documentation
 
 Document your components with MDX by placing a `docs.mdx` file next to your component source:
@@ -39,3 +58,15 @@ export default withSwingset({
 ### Integrates with `@next/mdx`
 
 Swingset integrates with `@next/mdx` by supporting the same `mdx-components.ts` file at the root of your application. Swingset will make the custom components declared there available.
+
+### Use with Storybook
+
+Documentation pages within Swingset are treated as modules. This means that you can import other modules into your `.mdx` files as you would any other JavaScript file. This works great if you leverage Storybook for component development, as stories are directly consumable from your documentation:
+
+```tsx
+import * as stories from './Button.stories'
+
+# This is the Primary story
+
+<stories.Primary />
+```

@@ -38,7 +38,7 @@ export default function SwingsetLayout({
               </nav>
             </div>
           </aside>
-          <main className="ss-ml-72 ss-pt-10">{children}</main>
+          <main className="ss-ml-72 ss-py-10">{children}</main>
         </div>
         <script
           dangerouslySetInnerHTML={{
