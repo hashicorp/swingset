@@ -3,23 +3,21 @@ import { compile, CompileOptions } from '@mdx-js/mdx'
 import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
 import { findPagesDir, existsSync } from 'next/dist/lib/find-pages-dir.js'
-import type { LoaderContext } from 'webpack'
+import { type LoaderContext } from 'webpack'
 
 import { resolveComponents } from './resolvers/component'
-import { Entity } from './types'
 import { stringifyEntity } from './resolvers/stringify-entity'
 import { getCategories } from './get-categories'
 import { resolveDocs } from './resolvers/doc'
 import { NEXT_MDX_COMPONENTS_ALIAS } from './constants'
+import { type SwingsetConfig } from './config'
+import { type Entity } from './types'
 
-interface LoaderOptions {
+type LoaderOptions = {
   isMetaImport: boolean
   isContentImport: boolean
   isThemeImport: boolean
-  componentRoot: string
-  docsRoot: string
-  theme: string
-}
+} & SwingsetConfig
 
 function getCompileOptions(options?: CompileOptions): CompileOptions {
   return {
@@ -50,6 +48,8 @@ export async function loader(
     componentRoot,
     docsRoot,
     theme,
+    remarkPlugins,
+    rehypePlugins,
   } = context.getOptions()
 
   context.cacheable(true)
@@ -88,6 +88,8 @@ export async function loader(
     const { result, frontmatter } = await compileMDX(source, {
       jsx: true,
       format: 'detect',
+      remarkPlugins,
+      rehypePlugins,
     })
 
     const mdxModule = String(result)

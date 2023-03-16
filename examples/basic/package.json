@@ -10,6 +10,7 @@
     "next": "^13.2.3",
     "react": "*",
     "react-dom": "*",
+    "remark-gfm": "^3.0.1",
     "swingset": "file:../../packages/swingset",
     "swingset-theme-hashicorp": "file:../../packages/swingset-theme-hashicorp"
   }

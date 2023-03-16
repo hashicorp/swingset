@@ -42,6 +42,7 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
               loader: 'swingset/loader',
               options: {
                 isContentImport: true,
+                ...resolvedConfig,
               },
             },
           ],
@@ -55,8 +56,7 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
               loader: 'swingset/loader',
               options: {
                 isMetaImport: true,
-                componentRoot: resolvedConfig.componentRoot,
-                docsRoot: resolvedConfig.docsRoot,
+                ...resolvedConfig,
               },
             },
           ],
@@ -70,7 +70,7 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
               loader: 'swingset/loader',
               options: {
                 isThemeImport: true,
-                theme: resolvedConfig.theme,
+                ...resolvedConfig,
               },
             },
           ],

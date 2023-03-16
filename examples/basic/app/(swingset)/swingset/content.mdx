@@ -55,6 +55,29 @@ export default withSwingset({
 })
 ```
 
+### Custom remark and rehype plugins
+
+Want to add support for GitHub Flavored Markdown? Swingset accepts `remark` and `rehype` plugins.
+
+- [x] Add `remarkGfm`
+- [x] Restart your server
+- [ ] Task lists!
+
+
+```js
+import withSwingset from 'swingset'
+import remarkGfm from 'remark-gfm'
+
+export default withSwingset({
+  componentRoot: './components',
+  remarkPlugins: [remarkGfm]
+})({
+  experimental: {
+    appDir: true,
+  },
+})
+```
+
 ### Integrates with `@next/mdx`
 
 Swingset integrates with `@next/mdx` by supporting the same `mdx-components.ts` file at the root of your application. Swingset will make the custom components declared there available. Example:
