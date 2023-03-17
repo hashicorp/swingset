@@ -32,6 +32,7 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
         // Allow re-use of the pattern for defining component overrides provided by @next/mdx
         addNextMdxImportAlias(config)
 
+        // Load .mdx files as modules
         config.module.rules.push({
           test: MARKDOWN_EXTENSION_REGEX,
           issuer: (request: string | null) =>
@@ -48,6 +49,24 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
           ],
         })
 
+        // Load tsx files from within an .mdx files
+        config.module.rules.push({
+          test: /\.tsx$/,
+          issuer: (request: string | null) =>
+            request && MARKDOWN_EXTENSION_REGEX.test(request),
+          use: [
+            options.defaultLoaders.babel,
+            {
+              loader: 'swingset/loader',
+              options: {
+                isComponentImport: true,
+                ...resolvedConfig,
+              },
+            },
+          ],
+        })
+
+        // Load swingset metadata
         config.module.rules.push({
           test: /swingset\/(dist\/)?meta/,
           use: [
@@ -62,6 +81,7 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
           ],
         })
 
+        // Load swingset theme
         config.module.rules.push({
           test: /swingset\/(dist\/)?theme/,
           use: [

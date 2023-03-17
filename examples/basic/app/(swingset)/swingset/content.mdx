@@ -1,3 +1,5 @@
+import { Button } from 'components/button'
+
 # Swingset!
 
 Welcome to Swingset. Swingset is a drop-in component documentation system built for Next.js's App Router and React Server Components.
@@ -34,6 +36,16 @@ components/
     index.tsx
 ```
 
+#### Componet prop extraction
+
+Swingset automatically exposes prop metadata for components imported into your documentation.
+
+```typescript
+<PropsTable component={Button} />
+```
+
+<PropsTable component={Button} />
+
 ### Custom documentation
 
 Swingset also supports standalone documentation pages. By default, `.mdx` files in `/app/(swingset)/swingset/docs/` are rendered.
@@ -61,7 +73,7 @@ Want to add support for GitHub Flavored Markdown? Swingset accepts `remark` and 
 
 - [x] Add `remarkGfm`
 - [x] Restart your server
-- [ ] Task lists!
+- [ ] Render task lists!
 
 
 ```js

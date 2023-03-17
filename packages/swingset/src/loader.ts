@@ -1,4 +1,5 @@
 import path from 'node:path'
+import fs from 'node:fs'
 import { compile, CompileOptions } from '@mdx-js/mdx'
 import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
@@ -12,10 +13,12 @@ import { resolveDocs } from './resolvers/doc'
 import { NEXT_MDX_COMPONENTS_ALIAS } from './constants'
 import { type SwingsetConfig } from './config'
 import { type Entity } from './types'
+import { getRelatedComponentPropsMetadata } from './get-props'
 
 type LoaderOptions = {
   isMetaImport: boolean
   isContentImport: boolean
+  isComponentImport: boolean
   isThemeImport: boolean
 } & SwingsetConfig
 
@@ -45,6 +48,7 @@ export async function loader(
     isMetaImport,
     isContentImport,
     isThemeImport,
+    isComponentImport,
     componentRoot,
     docsRoot,
     theme,
@@ -59,7 +63,6 @@ export async function loader(
       ...(await resolveComponents({ componentRoot })),
       ...(await resolveDocs({ docsRoot })),
     ]
-
     context.addContextDependency(path.join(process.cwd(), componentRoot))
     context.addContextDependency(path.join(process.cwd(), docsRoot))
 
@@ -78,7 +81,7 @@ export async function loader(
     export function generateStaticParams() {
       return Object.keys(meta).map(slug => ({ path: slug.split('/') }))
     }
-    
+
     export const categories = ${JSON.stringify(getCategories(entities))}`
 
     return result
@@ -96,9 +99,30 @@ export async function loader(
     const stringifiedFrontmatter = JSON.stringify(frontmatter) || '{}'
 
     const mod = `${mdxModule}
-  
+
 export const frontmatter = ${stringifiedFrontmatter};
   `
+
+    return mod
+  }
+
+  // Append prop metadata to a component when imported from an mdx file
+  if (isComponentImport) {
+    console.log(source)
+    const propsMetadata = await getRelatedComponentPropsMetadata({
+      source,
+      filepath: context.resourcePath,
+      directory: path.dirname(context.resourcePath),
+    })
+
+    // TODO: this breaks if the function name is not the same as the computed displayName from react-docgen
+    const mod = `${source}
+
+${propsMetadata.map((metadata) => {
+  // @ts-expect-error -- displayName exists on the actual object. Fixed upstream
+  return `${metadata.displayName}.propsMetadata = ${JSON.stringify(metadata)};`
+})}
+`
 
     return mod
   }

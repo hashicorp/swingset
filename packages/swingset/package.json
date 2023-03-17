@@ -17,6 +17,7 @@
     "github-slugger": "^2.0.0",
     "globby": "^13.1.3",
     "next-mdx-remote": "^4.3.0",
+    "react-docgen": "^6.0.0-beta.5",
     "readdirp": "^3.6.0",
     "vfile": "^5.3.7",
     "vfile-matter": "^4.0.1"
