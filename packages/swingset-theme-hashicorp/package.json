@@ -1,0 +1,38 @@
+{
+  "name": "swingset-theme-hashicorp",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build:js": "tsup",
+    "build:styles": "postcss src/css/styles.css -o style.css --verbose",
+    "build": "concurrently npm:build:*",
+    "dev:js": "tsup --watch",
+    "dev:styles": "TAILWIND_MODE=watch postcss src/css/styles.css -o style.css --verbose --watch",
+    "dev": "concurrently npm:dev:*",
+    "test": "vitest run"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./style.css": "./style.css",
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "swingset": "*"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "next": "^13.1.6",
+    "postcss-cli": "^10.1.0",
+    "postcss": "^8.4.21",
+    "react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "swingset": "file:../swingset",
+    "tailwindcss": "^3.2.7"
+  }
+}

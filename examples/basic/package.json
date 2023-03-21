@@ -1,23 +1,17 @@
 {
-  "name": "example",
-  "version": "1.0.0",
-  "description": "an example app that uses swingset",
-  "main": "index.js",
+  "name": "example-basic",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "next dev",
+    "dev": "next",
     "build": "next build"
   },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
-    "@next/bundle-analyzer": "^12.1.0",
-    "next": "^12.1.0",
-    "next-transpile-modules": "^9.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "swingset": "file:.yalc/swingset"
-  },
-  "devDependencies": {
-    "typescript": "^4.6.3"
+    "next": "^13.2.3",
+    "react": "*",
+    "react-dom": "*",
+    "remark-gfm": "^3.0.1",
+    "swingset": "file:../../packages/swingset",
+    "swingset-theme-hashicorp": "file:../../packages/swingset-theme-hashicorp"
   }
 }
