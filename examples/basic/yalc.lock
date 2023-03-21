@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "swingset": {
-      "signature": "bf65767774a59436f5409505dbb4641c",
-      "file": true
-    }
-  }
-}

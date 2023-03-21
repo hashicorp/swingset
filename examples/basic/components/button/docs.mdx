@@ -1,24 +1,16 @@
 ---
-componentName: 'Button'
-componentCategory: 'Interactive Elements'
+description: The button is used widely across HashiCorp properties, and has many ways it can be customized. Let's start with its most basic form.
 ---
+import { Button } from '.'
 
-This is the docs for the button component
+export const Simple = () => (<Button>Click me</Button>)
 
-<LiveComponent components={{ Test: () => <p>test successful</p> }}>
-  {`<>
-  <Button text='this is a button' />
-  <ButtonSecondary text={\`\${foo}\`} />
-  <Test />
-</>`}
-</LiveComponent>
+* [x] Make Button
+* [ ] ???
+* [ ] profit
 
-<PropsTable props={componentProps} />
+## Simple
 
-<Tester />
+<Simple />
 
-## Exposed `package.json`
-
-<pre>
-  <code>{JSON.stringify(packageJson, null, 2)}</code>
-</pre>
+<PropsTable component={Button} />
