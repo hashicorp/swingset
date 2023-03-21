@@ -46,9 +46,8 @@
     "url": "git+https://github.com/hashicorp/swingset.git"
   },
   "scripts": {
-    "example": "cd examples/basic && [ ! -d 'node_modules' ] && npm i || npm start",
-    "build": "rm -rf ./dist && rollup -c rollup.config.js",
-    "typecheck": "tsc --noEmit",
+    "prerelease": "turbo build",
+    "prerelease:canary": "turbo build",
     "release": "changeset publish",
     "release:canary": "changeset publish --tag canary",
     "test": "jest"
