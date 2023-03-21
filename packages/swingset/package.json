@@ -62,5 +62,10 @@
       "import": "./dist/*.js",
       "types": "./dist/*.d.ts"
     }
-  }
+  },
+  "files": [
+    "./dist",
+    "./loader.cjs",
+    "./style.css"
+  ]
 }

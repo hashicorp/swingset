@@ -22,6 +22,10 @@
       "types": "./dist/*.d.ts"
     }
   },
+  "files": [
+    "./dist",
+    "./style.css"
+  ],
   "peerDependencies": {
     "swingset": "*"
   },
