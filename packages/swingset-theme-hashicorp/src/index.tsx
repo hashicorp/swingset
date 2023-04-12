@@ -1,6 +1,6 @@
-import Link from 'next/link'
 // @ts-expect-error -- this should be resolved once the theme is externalized
 import { meta, categories } from 'swingset/meta'
+import { Link } from './components/link'
 
 import Page from './page'
 

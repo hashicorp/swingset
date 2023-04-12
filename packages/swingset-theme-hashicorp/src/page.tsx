@@ -1,3 +1,4 @@
+import { Heading } from './components/heading'
 import { OpenInEditor } from './components/open-in-editor'
 
 export default async function Page({
@@ -9,7 +10,7 @@ export default async function Page({
 }) {
   return (
     <>
-      <h1>{data?.frontmatter?.title ?? data?.slug}</h1>
+      <Heading as="h1">{data?.frontmatter?.title ?? data?.slug}</Heading>
       <p>{data?.frontmatter?.description}</p>
       {content}
       <div className="ss-mt-4 ss-text-right">
