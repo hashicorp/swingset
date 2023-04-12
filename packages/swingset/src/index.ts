@@ -49,7 +49,7 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
           ],
         })
 
-        // Load tsx files from within an .mdx files
+        // Load tsx files from within an .mdx file
         config.module.rules.push({
           test: /\.tsx$/,
           issuer: (request: string | null) =>
