@@ -4,3 +4,10 @@ node_modules
 .next
 .yalc
 yalc.lock
+.vscode
+
+# Turbo
+*/**/.turbo
+
+# Vercel
+.vercel
