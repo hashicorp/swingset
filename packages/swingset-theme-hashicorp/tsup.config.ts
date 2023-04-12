@@ -1,5 +1,5 @@
-import { defineConfig } from 'tsup'
 import { Buffer } from 'node:buffer'
+import { defineConfig } from 'tsup'
 
 /**
  * Ensure that the "use client"; directive for RSC is always at the top of the output file even after the build is finished.

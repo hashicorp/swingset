@@ -32,11 +32,14 @@
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "next": "^13.1.6",
-    "postcss-cli": "^10.1.0",
     "postcss": "^8.4.21",
-    "react-dom": "^18.2.0",
+    "postcss-cli": "^10.1.0",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "swingset": "file:../swingset",
     "tailwindcss": "^3.2.7"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.5.2"
   }
 }
