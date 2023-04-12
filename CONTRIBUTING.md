@@ -22,4 +22,4 @@ Once the log output stops, we can stop the above process and run all of the dev 
 npx turbo run dev --filter example-basic...
 ```
 
-Finally, visit <http://localhost:3000/swingset> in your browser. Any changes to the core swingset package will be rebuilt and reflect in the running example app.
+Finally, visit <http://localhost:3000/swingset> in your browser. Any changes to the core `swingset` package will be rebuilt and reflect in the running example app.
