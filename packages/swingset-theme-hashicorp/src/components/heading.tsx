@@ -23,5 +23,10 @@ const headingStyles = cva('m-0 p0', {
 
 export function Heading({ as = 'h2', className, ...restProps }: HeadingProps) {
   const Component = as
-  return <Component className={headingStyles({ as })} {...restProps} />
+  return (
+    <Component
+      className={cx(headingStyles({ as }), className)}
+      {...restProps}
+    />
+  )
 }
