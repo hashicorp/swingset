@@ -17,8 +17,12 @@ function InlineCode({ children }: { children: ReactNode }) {
 }
 
 export function PropsTable({ component }: PropsTableProps) {
-  console.log(component.propsMetadata)
+  if (!component?.propsMetadata?.props) {
+    return null
+  }
+
   const headers = ['Name', 'Type', 'Description', 'Required']
+
   const rows = Object.entries(component.propsMetadata.props).map(
     ([key, data]: [string, any]) => (
       <tr key={key}>

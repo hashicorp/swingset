@@ -37,6 +37,7 @@ export async function resolveComponents({
       __type: 'component',
       frontmatter,
       category: (frontmatter.category as string) ?? 'default',
+      title: (frontmatter.title as string) ?? componentSlug,
       filepath,
       relativePath,
       normalizedPath,
