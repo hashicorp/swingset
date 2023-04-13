@@ -45,7 +45,7 @@ export function PropsTable({ component }: PropsTableProps) {
           {headers.map((header) => (
             <th
               key={header}
-              className="ss-text-left ss-px-1 ss-py-2 ss-border-b-2 ss-bg-gray-50"
+              className="ss-text-left ss-px-1 ss-py-2 ss-border-b-2 ss-bg-gray-50 ss-font-medium"
             >
               {header}
             </th>
