@@ -15,6 +15,7 @@ export interface ComponentEntity extends Entity {
   category: string
   componentPath: string
   slug: string
+  title: string
 }
 
 export interface DocsEntity extends Entity {

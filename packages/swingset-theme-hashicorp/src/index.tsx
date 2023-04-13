@@ -27,11 +27,13 @@ export default function SwingsetLayout({
                       <li>
                         <h3 className="ss-my-2 ss-text-gray-600">{title}</h3>
                       </li>
-                      {(items as string[]).map((slug: string) => (
-                        <li>
-                          <Link href={`/swingset/${slug}`}>{slug}</Link>
-                        </li>
-                      ))}
+                      {(items as { title: string; slug: string }[]).map(
+                        ({ title, slug }) => (
+                          <li>
+                            <Link href={`/swingset/${slug}`}>{title}</Link>
+                          </li>
+                        )
+                      )}
                     </>
                   ))}
                 </ul>

@@ -108,7 +108,6 @@ export const frontmatter = ${stringifiedFrontmatter};
 
   // Append prop metadata to a component when imported from an mdx file
   if (isComponentImport) {
-    console.log(source)
     const propsMetadata = await getRelatedComponentPropsMetadata({
       source,
       filepath: context.resourcePath,
