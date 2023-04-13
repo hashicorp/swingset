@@ -3,6 +3,7 @@ import { cx, cva } from 'class-variance-authority'
 
 type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  weight?: 'normal' | 'semiBold' | 'bold'
 }
 
 const headingStyles = cva('m-0 p0', {
@@ -15,17 +16,28 @@ const headingStyles = cva('m-0 p0', {
       h5: 'ss-text-md',
       h6: 'ss-text-md',
     },
+    weight: {
+      normal: 'ss-font-normal',
+      semiBold: 'ss-font-semibold',
+      bold: 'ss-font-bold',
+    },
   },
   defaultVariants: {
     as: 'h2',
+    weight: 'semiBold',
   },
 })
 
-export function Heading({ as = 'h2', className, ...restProps }: HeadingProps) {
+export function Heading({
+  as = 'h2',
+  weight,
+  className,
+  ...restProps
+}: HeadingProps) {
   const Component = as
   return (
     <Component
-      className={cx(headingStyles({ as }), className)}
+      className={cx(headingStyles({ as, weight }), className)}
       {...restProps}
     />
   )

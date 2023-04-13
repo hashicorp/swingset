@@ -11,7 +11,9 @@ export default async function Page({
   return (
     <>
       <header className="ss-border-b ss-border-faint ss-pb-6 ss-mb-6">
-        <Heading as="h1">{data?.frontmatter?.title ?? data?.slug}</Heading>
+        <Heading as="h1" weight="semiBold">
+          {data?.frontmatter?.title ?? data?.slug}
+        </Heading>
         {data?.frontmatter?.description ? (
           <p className="ss-mt-2 ss-text-foreground-faint ss-max-w-lg">
             {data?.frontmatter?.description}
