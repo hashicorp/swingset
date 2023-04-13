@@ -18,7 +18,12 @@ export default function SwingsetLayout({
         <div className="ss-hidden lg:ss-fixed lg:ss-inset-y-0 lg:ss-z-50 lg:ss-flex lg:ss-w-72 lg:ss-flex-col">
           <div className="ss-flex ss-grow ss-flex-col ss-gap-y-5 ss-overflow-y-auto ss-border-r ss-border-faint ss-bg-surface-faint ss-px-6 ss-py-10">
             <div className="ss-flex ss-shrink-0 ss-items-center">
-              <Link href="/swingset">Swingset</Link>
+              <Link
+                href="/swingset"
+                className="ss-tracking-widest ss-text-sm ss-uppercase ss-font-bold"
+              >
+                Swingset
+              </Link>
             </div>
             <nav className="ss-flex ss-flex-1 ss-flex-col">
               <ul
