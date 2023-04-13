@@ -10,10 +10,18 @@ export default async function Page({
 }) {
   return (
     <>
-      <Heading as="h1">{data?.frontmatter?.title ?? data?.slug}</Heading>
-      <p>{data?.frontmatter?.description}</p>
-      {content}
-      <div className="ss-mt-4 ss-text-right">
+      <header className="ss-border-b ss-border-faint ss-pb-6 ss-mb-6">
+        <Heading as="h1" weight="semiBold">
+          {data?.frontmatter?.title ?? data?.slug}
+        </Heading>
+        {data?.frontmatter?.description ? (
+          <p className="ss-mt-2 ss-text-foreground-faint ss-max-w-lg">
+            {data?.frontmatter?.description}
+          </p>
+        ) : null}
+      </header>
+      <div className="ss-pb-12">{content}</div>
+      <div className="ss-mt-auto ss-border-t ss-border-faint ss-pt-12 ss-text-right">
         <OpenInEditor path={data.filepath} />
       </div>
     </>

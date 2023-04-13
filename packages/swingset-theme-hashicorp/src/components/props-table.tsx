@@ -5,7 +5,9 @@ interface PropsTableProps {
 }
 
 function TableData({ children }: { children: ReactNode }) {
-  return <td className="ss-border-b ss-py-2 ss-px-1">{children}</td>
+  return (
+    <td className="ss-border-b ss-border-faint ss-py-2 ss-px-1">{children}</td>
+  )
 }
 
 function InlineCode({ children }: { children: ReactNode }) {
@@ -45,7 +47,7 @@ export function PropsTable({ component }: PropsTableProps) {
           {headers.map((header) => (
             <th
               key={header}
-              className="ss-text-left ss-px-1 ss-py-2 ss-border-b-2 ss-bg-gray-50"
+              className="ss-text-left ss-px-1 ss-py-2 ss-border-b-2 ss-border-faint ss-bg-surface-faint ss-font-medium"
             >
               {header}
             </th>
