@@ -108,20 +108,29 @@ export const frontmatter = ${stringifiedFrontmatter};
 
   // Append prop metadata to a component when imported from an mdx file
   if (isComponentImport) {
-    const propsMetadata = await getRelatedComponentPropsMetadata({
-      source,
-      filepath: context.resourcePath,
-      directory: path.dirname(context.resourcePath),
-    })
+    let mod = source
 
-    // TODO: this breaks if the function name is not the same as the computed displayName from react-docgen
-    const mod = `${source}
+    try {
+      const propsMetadata = await getRelatedComponentPropsMetadata({
+        source,
+        filepath: context.resourcePath,
+        directory: path.dirname(context.resourcePath),
+      })
+
+      // TODO: this breaks if the function name is not the same as the computed displayName from react-docgen
+      mod = `${source}
 
 ${propsMetadata.map((metadata) => {
   // @ts-expect-error -- displayName exists on the actual object. Fixed upstream
   return `${metadata.displayName}.propsMetadata = ${JSON.stringify(metadata)};`
 })}
 `
+    } catch (error) {
+      console.log(
+        `[swingset/loader] error detecting props metadata for component file: ${context.resourcePath}`,
+        error
+      )
+    }
 
     return mod
   }
