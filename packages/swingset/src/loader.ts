@@ -1,9 +1,7 @@
 import path from 'node:path'
-import fs from 'node:fs'
 import { compile, CompileOptions } from '@mdx-js/mdx'
 import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
-import { findPagesDir, existsSync } from 'next/dist/lib/find-pages-dir.js'
 import { type LoaderContext } from 'webpack'
 
 import { resolveComponents } from './resolvers/component'
@@ -141,24 +139,5 @@ import { createPage } from 'swingset/create-page';
 
 export default Theme;
 export const Page = createPage(ThemePage);`
-  }
-}
-
-function getDocsDir() {
-  const { appDir } = findPagesDir(process.cwd(), true)
-
-  if (!appDir) {
-    throw new Error(
-      '[swingset/loader] app directory not detected, ensure experimental.appDir is set to true'
-    )
-  }
-
-  // TODO: make the swingset path configurable?
-  const docsDir = path.join(appDir, '(swingset)', 'swingset', 'docs')
-
-  if (existsSync(docsDir)) {
-    return docsDir
-  } else {
-    return false
   }
 }

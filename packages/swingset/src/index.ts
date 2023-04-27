@@ -55,7 +55,6 @@ export default function swingset(swingsetConfig: Partial<SwingsetConfig>) {
           issuer: (request: string | null) =>
             request && MARKDOWN_EXTENSION_REGEX.test(request),
           use: [
-            options.defaultLoaders.babel,
             {
               loader: 'swingset/loader',
               options: {
