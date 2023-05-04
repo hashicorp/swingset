@@ -10,7 +10,7 @@ on:
 
 jobs:
   release-canary:
-    uses: hashicorp/web-platform-packages/.github/workflows/canary-release.yml@f5097485701cd34541d66527404256e2036b6338
+    uses: hashicorp/web-platform-packages/.github/workflows/release.yml@69853727452b125f28e777ca7c1e71c82edd30aa
     secrets:
-      PUBLISH_GITHUB_TOKEN: ${{ secrets.CHANGESETS_PAT }}
+      CHANGESETS_PAT: ${{ secrets.CHANGESETS_PAT }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
