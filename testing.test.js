@@ -54,7 +54,7 @@ test('nested values with an array containing a monotype', () => {
   expect(res.base[0]).toBe('nested-string')
 })
 
-test('no test values used at all', () => {
+test('no test values used at all, when explicitly passing undefined', () => {
   const res = getTestValues({
     base: {
       properties: {
@@ -72,6 +72,7 @@ test('no test values used at all', () => {
           },
         },
       },
+      testValue: undefined,
     },
   })
   expect(res).toEqual({})
@@ -145,5 +146,5 @@ test('sub-properties define test values but base property is undefined', () => {
       },
     },
   })
-  expect(res).toEqual({})
+  expect(res).toEqual({ base: { foo: 'nested' } })
 })
