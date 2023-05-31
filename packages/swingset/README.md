@@ -2,6 +2,9 @@
 
 Welcome to Swingset. Swingset is a drop-in component documentation system built for Next.js's App Router and React Server Components.
 
+> **Note**
+> Swingset is currently under active development. We're actively iterating on the core features and APIs, and some things may change.
+
 ## Installation
 
 Install `swingset` with your package manager of choice:
@@ -118,10 +121,3 @@ import * as stories from './Button.stories'
 ## Contributing
 
 See [CONTRIBUTING.md](../../CONTRIBUTING.md).
-
-## Goals
-
-- [ ] Fast, automatic HMR for content
-- [ ] Document components in your repo via a glob pattern
-- [ ] Support arbitrary pages as well
-- [ ] layout / theme fully customizable
