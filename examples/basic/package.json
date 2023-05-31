@@ -7,7 +7,7 @@
     "build": "next build"
   },
   "dependencies": {
-    "next": "^13.2.4",
+    "next": "^13.4.4",
     "react": "*",
     "react-dom": "*",
     "remark-gfm": "^3.0.1",

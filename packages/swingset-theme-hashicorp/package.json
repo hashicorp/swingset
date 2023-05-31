@@ -30,16 +30,16 @@
     "swingset": "*"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.13",
-    "next": "^13.1.6",
-    "postcss": "^8.4.21",
+    "autoprefixer": "^10.4.14",
+    "next": "^13.4.4",
+    "postcss": "^8.4.24",
     "postcss-cli": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "swingset": "file:../swingset",
-    "tailwindcss": "^3.2.7"
+    "tailwindcss": "^3.3.2"
   },
   "dependencies": {
-    "class-variance-authority": "^0.5.2"
+    "class-variance-authority": "^0.6.0"
   }
 }

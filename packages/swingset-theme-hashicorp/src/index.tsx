@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 // @ts-expect-error -- this should be resolved once the theme is externalized
 import { meta, categories } from 'swingset/meta'
