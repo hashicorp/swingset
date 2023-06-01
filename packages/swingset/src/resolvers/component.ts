@@ -2,9 +2,11 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { globbyStream } from 'globby'
 import { slug } from 'github-slugger'
-import { getFileFrontmatter } from '../get-frontmatter'
-import { ComponentEntity } from '../types'
-import { buildLoadFunction } from './build-load-function'
+import { getFileFrontmatter } from '../get-frontmatter.js'
+import { ComponentEntity } from '../types.js'
+import { buildLoadFunction } from './build-load-function.js'
+
+const DOCS_DIRECTORY = 'docs'
 
 interface ComponentResolverOptions {
   componentRoot: string
@@ -31,20 +33,54 @@ export async function resolveComponents({
     const componentPath = path.relative(process.cwd(), path.dirname(filepath))
     const relativePath = path.relative(process.cwd(), filepath)
     const normalizedPath = path.relative(componentRootPath, componentPath)
+
     const componentSlug = slug(componentPath.split('/').pop() as string)
 
-    result.push({
-      __type: 'component',
-      frontmatter,
-      category: (frontmatter.category as string) ?? 'default',
-      title: (frontmatter.title as string) ?? componentSlug,
-      filepath,
-      relativePath,
-      normalizedPath,
-      componentPath,
-      slug: componentSlug,
-      load: buildLoadFunction(filepath),
-    })
+    const isNestedDocument = componentSlug === DOCS_DIRECTORY
+
+    if (isNestedDocument) {
+      const filename = path.basename(filepath).replace('.mdx', '')
+
+      // detect index.mdx
+      const isIndexDocument = filename === 'index'
+
+      // correctly detect the component path
+      const parentComponentPath = path.dirname(componentPath)
+      const normalizedNestedPath = path.relative(
+        componentRootPath,
+        path.join(parentComponentPath, filename)
+      )
+      const title =
+        (frontmatter.title as string) ??
+        `${parentComponentPath.split('/').pop()} ${filename}`
+
+      result.push({
+        __type: 'component',
+        category: parentComponentPath,
+        componentPath: parentComponentPath,
+        filepath,
+        frontmatter,
+        isNested: true,
+        load: buildLoadFunction(filepath),
+        normalizedPath: normalizedNestedPath,
+        relativePath,
+        slug: normalizedNestedPath,
+        title,
+      })
+    } else {
+      result.push({
+        __type: 'component',
+        category: (frontmatter.category as string) ?? 'default',
+        componentPath,
+        filepath,
+        frontmatter,
+        load: buildLoadFunction(filepath),
+        normalizedPath,
+        relativePath,
+        slug: componentSlug,
+        title: (frontmatter.title as string) ?? componentSlug,
+      })
+    }
   }
 
   return result

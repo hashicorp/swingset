@@ -16,6 +16,8 @@ export interface ComponentEntity extends Entity {
   componentPath: string
   slug: string
   title: string
+  isNested?: boolean
+  children?: ComponentEntity[]
 }
 
 export interface DocsEntity extends Entity {

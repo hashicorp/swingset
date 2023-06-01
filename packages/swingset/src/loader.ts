@@ -4,14 +4,14 @@ import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
 import { type LoaderContext } from 'webpack'
 
-import { resolveComponents } from './resolvers/component'
-import { stringifyEntity } from './resolvers/stringify-entity'
-import { getCategories } from './get-categories'
-import { resolveDocs } from './resolvers/doc'
-import { NEXT_MDX_COMPONENTS_ALIAS } from './constants'
-import { type SwingsetConfig } from './config'
-import { type Entity } from './types'
-import { getRelatedComponentPropsMetadata } from './get-props'
+import { resolveComponents } from './resolvers/component.js'
+import { stringifyEntity } from './resolvers/stringify-entity.js'
+import { getNavigationTree } from './get-nav-tree.js'
+import { resolveDocs } from './resolvers/doc.js'
+import { NEXT_MDX_COMPONENTS_ALIAS } from './constants.js'
+import { type SwingsetConfig } from './config.js'
+import { type Entity } from './types.js'
+import { getRelatedComponentPropsMetadata } from './get-props.js'
 
 type LoaderOptions = {
   isMetaImport: boolean
@@ -64,23 +64,33 @@ export async function loader(
     context.addContextDependency(path.join(process.cwd(), componentRoot))
     context.addContextDependency(path.join(process.cwd(), docsRoot))
 
-    const result = `export const meta = {
-      ${entities
-        .map(
-          (entity) => `'${entity.normalizedPath}': ${stringifyEntity(entity)}`
-        )
-        .join(',\n')}
-    };
+    const result = `
+      export const meta = {
+        ${entities
+          .map(
+            (entity) => `'${entity.normalizedPath}': ${stringifyEntity(entity)}`
+          )
+          .join(',\n')}
+      };
 
-    export function getEntity(slug) {
-      return meta[slug]
-    }
+      export function getEntity(slug) {
+        return meta[slug]
+      }
 
-    export function generateStaticParams() {
-      return Object.keys(meta).map(slug => ({ path: slug.split('/') }))
-    }
+      export function getNestedEntities(slug) {
+        const entity = meta[slug]
 
-    export const categories = ${JSON.stringify(getCategories(entities))}`
+        if (!entity) return []
+
+        return Object.values(meta).filter(e => e.isNested && e.componentPath === entity.componentPath)
+      }
+
+      export function generateStaticParams() {
+        return Object.keys(meta).map(slug => ({ path: slug.split('/') }))
+      }
+
+      export const categories = ${JSON.stringify(getNavigationTree(entities))}
+    `
 
     return result
   }
@@ -134,10 +144,12 @@ ${propsMetadata.map((metadata) => {
   }
 
   if (isThemeImport) {
-    return `import Theme, { Page as ThemePage } from '${theme}';
-import { createPage } from 'swingset/create-page';
+    return `
+      import Theme, { Page as ThemePage } from '${theme}';
+      import { createPage } from 'swingset/create-page';
 
-export default Theme;
-export const Page = createPage(ThemePage);`
+      export default Theme;
+      export const Page = createPage(ThemePage);
+    `
   }
 }
