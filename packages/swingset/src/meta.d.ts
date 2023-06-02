@@ -3,11 +3,12 @@
  */
 import { EvaluatedEntity } from './types'
 
-declare const meta: EvaluatedEntity[]
-export default meta
+export const meta: Record<string, EvaluatedEntity>
+
+export const categories: Record<string, string[]>
 
 export function getEntity(slug: string): EvaluatedEntity | undefined
 
 export function getNestedEntities(slug: string): ComponentEntity[]
 
-export const categories: Record<string, string[]>
+export const generateStaticParams: () => { path: string[] }[]

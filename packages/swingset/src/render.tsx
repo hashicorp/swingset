@@ -1,4 +1,4 @@
-import { getEntity } from './meta'
+import { getEntity } from 'swingset/meta'
 import { type Entity, type EvaluatedEntity } from './types'
 
 interface RenderDocsProps<T extends Entity> {

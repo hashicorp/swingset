@@ -1,4 +1,4 @@
-import { getNestedEntities } from 'swingset/meta'
+import { ComponentEntity, EvaluatedEntity } from 'swingset/types'
 import { Heading } from './components/heading'
 import { OpenInEditor } from './components/open-in-editor'
 
@@ -6,18 +6,21 @@ export default async function Page({
   data,
   content,
 }: {
-  data: any
+  data: EvaluatedEntity
   content: React.ReactNode
 }) {
+  const title = (data?.frontmatter?.title ??
+    (data as EvaluatedEntity<ComponentEntity>)?.slug) as string
+
   return (
     <>
       <header className="ss-border-b ss-border-faint ss-pb-6 ss-mb-6">
         <Heading as="h1" weight="semiBold">
-          {data?.frontmatter?.title ?? data?.slug}
+          {title}
         </Heading>
         {data?.frontmatter?.description ? (
           <p className="ss-mt-2 ss-text-foreground-faint ss-max-w-lg">
-            {data?.frontmatter?.description}
+            {data?.frontmatter?.description as string}
           </p>
         ) : null}
       </header>
