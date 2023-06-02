@@ -19,3 +19,7 @@ export default withSwingset({
   theme: 'swingset-theme-hashicorp',
 })()
 ```
+
+## Developing
+
+This theme uses [tailwind](https://tailwindcss.com/) for styling. The tailwind classes are prefixed with `ss-` to ensure there are no collisions.
