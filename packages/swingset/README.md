@@ -120,4 +120,4 @@ import * as stories from './Button.stories'
 
 ## Contributing
 
-See [CONTRIBUTING.md](../../CONTRIBUTING.md).
+See [CONTRIBUTING.md](/CONTRIBUTING.md).
