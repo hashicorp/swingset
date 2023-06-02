@@ -1,6 +1,5 @@
 import React from 'react'
-// @ts-expect-error -- this should be resolved once the theme is externalized
-import { getEntity } from 'swingset/meta'
+import { getEntity } from './meta'
 import { RenderDocs } from './render'
 
 type SwingsetPageProps = {

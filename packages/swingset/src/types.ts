@@ -27,6 +27,7 @@ export interface DocsEntity extends Entity {
 /**
  * This helper type is used to provide a type for the load function, which is passed around internally as a string and returned from the loader.
  */
-export type EvaluatedEntity<T extends Entity> = T & {
-  load: () => Promise<{ default: React.ComponentType }>
-}
+export type EvaluatedEntity<T extends Entity = ComponentEntity | DocsEntity> =
+  T & {
+    load: () => Promise<React.ElementType>
+  }

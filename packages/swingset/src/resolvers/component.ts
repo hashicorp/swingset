@@ -39,7 +39,7 @@ export async function resolveComponents({
     const isNestedDocument = componentSlug === DOCS_DIRECTORY
 
     if (isNestedDocument) {
-      const filename = path.basename(filepath).replace('.mdx', '')
+      const filename = path.basename(filepath, '.mdx')
 
       // detect index.mdx
       // TODO: warn if docs.mdx and docs/index.mdx exist
