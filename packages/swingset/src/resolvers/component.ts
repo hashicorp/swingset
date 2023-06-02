@@ -42,6 +42,7 @@ export async function resolveComponents({
       const filename = path.basename(filepath).replace('.mdx', '')
 
       // detect index.mdx
+      // TODO: warn if docs.mdx and docs/index.mdx exist
       const isIndexDocument = filename === 'index'
 
       // correctly detect the component path
