@@ -1,3 +1,4 @@
+import { getNestedEntities } from 'swingset/meta'
 import { Heading } from './components/heading'
 import { OpenInEditor } from './components/open-in-editor'
 

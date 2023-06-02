@@ -2,8 +2,8 @@ import type { NextConfig } from 'next'
 import {
   MARKDOWN_EXTENSION_REGEX,
   NEXT_MDX_COMPONENTS_ALIAS,
-} from './constants'
-import { applyConfigDefaults, SwingsetConfig } from './config'
+} from './constants.js'
+import { applyConfigDefaults, SwingsetConfig } from './config.js'
 
 const DEFAULT_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx']
 
