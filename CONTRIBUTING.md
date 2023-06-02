@@ -23,3 +23,26 @@ npx turbo run dev --filter example-basic...
 ```
 
 Finally, visit <http://localhost:3000/swingset> in your browser. Any changes to the core `swingset` package will be rebuilt and reflect in the running example app.
+
+## Custom themes
+
+Swingset on its own is an unstyled core, exposing the data and utilities necessary to build your component documentation. To render a UI, swingset relies on themes. A theme exposes a number of components that swingset will use to render its UI. Currently, a theme must expose number of exports to render the full UI:
+
+- `default` - The root swingset layout, used on all pages
+- `page` - A named export, used to render documentation pages
+
+The component exported as `page` will receive two props:
+
+- `data` - The resolved `Entity` for the given page. Will be a `ComponentEntity` or a `DocsEntity`. See [the types](./packages/swingset/src/types.ts] for more details.
+- `content` - The rendered output for the page.
+
+A simple page implementation might look like this:
+
+```tsx
+export const Page = ({ data, content }) => {
+  return (
+    <h1>{data.frontmatter.title}</h1>
+    <section>{content}</section>
+  )
+}
+```
