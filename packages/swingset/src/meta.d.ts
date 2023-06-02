@@ -8,4 +8,6 @@ export default meta
 
 export function getEntity(slug: string): Entity
 
+export function getNestedEntities(slug: string): ComponentEntity[]
+
 export const categories: Record<string, string[]>

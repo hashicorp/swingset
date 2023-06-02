@@ -45,7 +45,7 @@
     "./loader": "./loader.cjs",
     "./meta": {
       "import": "./dist/meta.js",
-      "types": "./dist/meta.d.ts'"
+      "types": "./dist/meta.d.ts"
     },
     "./theme": {
       "import": "./dist/theme.js",
@@ -59,6 +59,13 @@
     "./*": {
       "import": "./dist/*.js",
       "types": "./dist/*.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*"
+      ]
     }
   },
   "files": [

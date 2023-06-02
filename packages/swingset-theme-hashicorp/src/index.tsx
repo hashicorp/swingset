@@ -8,6 +8,35 @@ import Page from './page'
 
 import '../style.css'
 
+function NavList({ items, level }: any) {
+  const isNested = level > 0
+
+  return (
+    <ul
+      role="list"
+      className={cx(
+        'ss-mt-2 ss-space-y-1',
+        isNested && 'ss-ml-2 ss-border-l ss-border-faint ss-mt-0'
+      )}
+    >
+      {items.map(({ title, slug, children }: any) => (
+        <li key={slug}>
+          <Link
+            href={`/swingset/${slug}`}
+            className={cx(
+              'ss-text-foreground-primary hover:ss-text-foreground-action hover:ss-bg-surface-action',
+              'ss-group ss-flex ss-gap-x-3 ss-rounded-md ss-p-2 ss-text-sm ss-leading-6'
+            )}
+          >
+            {title}
+          </Link>
+          {children && <NavList level={level + 1} items={children} />}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export default function SwingsetLayout({
   children,
 }: {
@@ -37,23 +66,7 @@ export default function SwingsetLayout({
                       <h3 className="ss-uppercase ss-text-xs ss-font-semibold ss-leading-6 ss-text-foreground-faint ss-border-b ss-border-faint ss-pb-2">
                         {title}
                       </h3>
-                      <ul role="list" className="-ss-mx-2 ss-mt-2 ss-space-y-1">
-                        {(items as { title: string; slug: string }[]).map(
-                          ({ title, slug }) => (
-                            <li key={slug}>
-                              <Link
-                                href={`/swingset/${slug}`}
-                                className={cx(
-                                  'ss-text-foreground-primary hover:ss-text-foreground-action hover:ss-bg-surface-action',
-                                  'ss-group ss-flex ss-gap-x-3 ss-rounded-md ss-p-2 ss-text-sm ss-leading-6'
-                                )}
-                              >
-                                {title}
-                              </Link>
-                            </li>
-                          )
-                        )}
-                      </ul>
+                      <NavList items={items} level={0} />
                     </li>
                   </>
                 ))}
