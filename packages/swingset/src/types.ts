@@ -1,5 +1,9 @@
 import React from 'react'
 
+export type SwingsetPageProps = {
+  params: { path: string[] }
+}
+
 export interface Entity {
   __type: any
   filepath: string
