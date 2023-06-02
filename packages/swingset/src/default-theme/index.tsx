@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-// @ts-expect-error -- this should be resolved once the theme is externalized
+// note: this uses swingset/meta as the import statement, instead of a relative path, so the application build step can pick this up
 import { meta, categories } from 'swingset/meta'
 
 import Page from './page'

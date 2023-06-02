@@ -1,5 +1,6 @@
 import React from 'react'
-import { getEntity } from './meta'
+// note: this uses swingset/meta as the import statement, instead of a relative path, so the application build step can pick this up
+import { getEntity } from 'swingset/meta'
 import { RenderDocs } from './render'
 
 type SwingsetPageProps = {
