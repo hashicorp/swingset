@@ -1,28 +1,10 @@
-/**
- * Copyright (c) HashiCorp, Inc.
- * SPDX-License-Identifier: MPL-2.0
- */
+import { ReactElement } from 'react'
 
-import s from './style.module.css'
-
-export default function Button({
-  text,
-  testObject,
-  theme,
-}: {
-  text: string
-  testObject: Record<string, any>
-  theme: any
-}) {
-  return (
-    <button className={s.root}>
-      {text}, {JSON.stringify(testObject)}
-    </button>
-  )
+interface ButtonProps {
+  color?: string
+  children: ReactElement
 }
 
-export function ButtonSecondary({ text }: { text: string }) {
-  return <button className={s.root}>{text}, secondary</button>
+export function Button({ children }: ButtonProps) {
+  return <button>{children}</button>
 }
-
-export const foo = 'bar'
