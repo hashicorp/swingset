@@ -1,3 +1,10 @@
+/**
+ * Takes in the front matter path property, and parses it into
+ * navigation metadata
+ *  Example:
+ * parseComponentPath('Components/Forms/Input')
+ * outputs: { category: 'Components', folder: 'Forms', page: 'Input' }
+ */
 export function parseComponentPath(rawPath: string) {
 
   const rawPathArr = rawPath.split('/')
