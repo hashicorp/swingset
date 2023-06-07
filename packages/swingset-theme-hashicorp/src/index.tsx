@@ -1,11 +1,12 @@
+// NOTE: global css import needs to be at the top so component-specific CSS is loaded after the theme reset (component-specific CSS is loaded as a result of the swingset/meta import below)
+import '../style.css'
+
 import React from 'react'
 import Link from 'next/link'
 import { meta, categories } from 'swingset/meta'
 import { cx } from 'class-variance-authority'
 
 import Page from './page'
-
-import '../style.css'
 
 function NavList({ items, level }: any) {
   const isNested = level > 0
