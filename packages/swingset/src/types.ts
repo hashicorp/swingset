@@ -11,6 +11,11 @@ export interface Entity {
   load: string
   normalizedPath: string
   relativePath: string
+  parsedPath: {
+    category?: string
+    folder?: string
+    page: string
+  }
 }
 
 // TODO: support subpaths? e.g. components/button/docs/accessibility.mdx

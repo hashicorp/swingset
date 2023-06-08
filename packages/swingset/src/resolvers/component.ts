@@ -5,6 +5,7 @@ import { slug } from 'github-slugger'
 import { getFileFrontmatter } from '../get-frontmatter.js'
 import { ComponentEntity } from '../types.js'
 import { buildLoadFunction } from './build-load-function.js'
+import { parseComponentPath } from '../parse-component-path.js'
 
 const DOCS_DIRECTORY = 'docs'
 
@@ -67,6 +68,7 @@ export async function resolveComponents({
         relativePath,
         slug: normalizedNestedPath,
         title,
+        parsedPath: parseComponentPath(relativePath)
       })
     } else {
       result.push({
@@ -80,6 +82,7 @@ export async function resolveComponents({
         relativePath,
         slug: componentSlug,
         title: (frontmatter.title as string) ?? componentSlug,
+        parsedPath: parseComponentPath(relativePath)
       })
     }
   }
