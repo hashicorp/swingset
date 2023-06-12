@@ -8,19 +8,21 @@ import { Entity } from './types'
  * outputs: { category: 'Components', folder: 'Forms', page: 'Input' }
  */
 export function parseComponentPath(rawPath: string): Entity['parsedPath'] {
-  const rawPathArr = rawPath.split('/')
+  const rawPathArr = rawPath.split('/');
 
-  const isValidPath = rawPathArr.length >= 1 && rawPathArr.length <= 3;
+  const firstElNotEmpty = rawPathArr[0] !== '';
+  const inRange = rawPathArr.length >= 1 && rawPathArr.length <= 3
+  const isValidPath = inRange && firstElNotEmpty
 
   if (!isValidPath) {
-    throw new Error(`Invalid Input`)
+    throw new Error(
+      `Segments must be <= 3 AND >= 1. Received: ${rawPathArr.length}, ${rawPath}`
+    )
   }
 
   let result: Entity['parsedPath'] = {
     page: '',
   }
-
-
 
   if (rawPathArr.length === 3) {
     result = {
@@ -42,5 +44,5 @@ export function parseComponentPath(rawPath: string): Entity['parsedPath'] {
     }
   }
 
-  return result;
+  return result
 }
