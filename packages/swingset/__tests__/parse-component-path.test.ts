@@ -32,4 +32,10 @@ describe('parseComponentPath', () => {
 
     expect(result).toEqual(expectation)
   })
+  it('Throws an error when invalid input is received', ({expect}) => {
+
+    expect(() => parseComponentPath('edibles/fruits/berries/blueberries')).toThrowError()
+    expect(() => parseComponentPath('')).toThrowError()
+    
+  })
 })
