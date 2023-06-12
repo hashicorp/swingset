@@ -11,7 +11,7 @@ export interface Entity {
   load: string
   normalizedPath: string
   relativePath: string
-  parsedPath: {
+  parsedPath?: {
     category?: string
     folder?: string
     page: string
