@@ -9,12 +9,9 @@ import { Entity } from './types'
  */
 export function parseComponentPath(rawPath: string): Entity['parsedPath'] {
   const rawPathArr = rawPath.split('/');
-
  
-  const inRange = rawPathArr.length >= 1 && rawPathArr.length <= 3
-  const isValidPath = inRange
 
-  if (!isValidPath) {
+  if (rawPathArr.length > 3) {
     throw new Error(
       `Received Component path with more than 3 segments: '${rawPath}'. Remove the extra segments. Expected format: '[Category]/[Folder]/[Page]'`
     )
