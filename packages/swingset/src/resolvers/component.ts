@@ -81,7 +81,7 @@ export async function resolveComponents({
         relativePath,
         slug: componentSlug,
         title: (frontmatter.title as string) ?? componentSlug,
-        parsedPath: parseComponentPath(frontmatter.path as string)
+        parsedPath: parseComponentPath((frontmatter.path ?? '') as string)
       })
     }
   }
