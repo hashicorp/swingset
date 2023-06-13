@@ -68,7 +68,6 @@ export async function resolveComponents({
         relativePath,
         slug: normalizedNestedPath,
         title,
-        parsedPath: parseComponentPath(componentPath)
       })
     } else {
       result.push({
@@ -82,7 +81,7 @@ export async function resolveComponents({
         relativePath,
         slug: componentSlug,
         title: (frontmatter.title as string) ?? componentSlug,
-        parsedPath: parseComponentPath(componentPath)
+        parsedPath: parseComponentPath(frontmatter.path as string)
       })
     }
   }
