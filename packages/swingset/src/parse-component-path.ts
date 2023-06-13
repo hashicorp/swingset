@@ -1,4 +1,4 @@
-import { Entity } from './types'
+import { ComponentEntity } from './types'
 
 /**
  * Takes in the front matter path property, and parses it into
@@ -7,7 +7,7 @@ import { Entity } from './types'
  * parseComponentPath('Components/Forms/Input')
  * outputs: { category: 'Components', folder: 'Forms', page: 'Input' }
  */
-export function parseComponentPath(rawPath: string): Entity['parsedPath'] {
+export function parseComponentPath(rawPath: string): ComponentEntity['parsedPath'] {
   const rawPathArr = rawPath.split('/');
  
 
@@ -17,7 +17,7 @@ export function parseComponentPath(rawPath: string): Entity['parsedPath'] {
     )
   }
 
-  let result: Entity['parsedPath'] = {
+  let result: ComponentEntity['parsedPath'] = {
     page: '',
   }
 
