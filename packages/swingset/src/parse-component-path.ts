@@ -7,8 +7,13 @@ import { ComponentEntity } from './types'
  * parseComponentPath('Components/Forms/Input')
  * outputs: { category: 'Components', folder: 'Forms', page: 'Input' }
  */
-export function parseComponentPath(rawPath: string): ComponentEntity['parsedPath'] {
+export function parseComponentPath(rawPath: string): ComponentEntity['navigationData'] {
+
+
+  
   const rawPathArr = rawPath.split('/');
+
+  
  
 
   if (rawPathArr.length > 3) {
@@ -17,7 +22,8 @@ export function parseComponentPath(rawPath: string): ComponentEntity['parsedPath
     )
   }
 
-  let result: ComponentEntity['parsedPath'] = {
+  let result: ComponentEntity['navigationData'] = {
+    category: 'default',
     page: '',
   }
 
@@ -37,6 +43,7 @@ export function parseComponentPath(rawPath: string): ComponentEntity['parsedPath
 
   if (rawPathArr.length === 1) {
     result = {
+      category: 'default',
       page: rawPathArr[0],
     }
   }
