@@ -8,8 +8,7 @@
     "build": "concurrently npm:build:*",
     "dev:js": "tsup --watch",
     "dev:styles": "TAILWIND_MODE=watch postcss src/css/styles.css -o style.css --verbose --watch",
-    "dev": "concurrently npm:dev:*",
-    "test": "vitest run"
+    "dev": "concurrently npm:dev:*"
   },
   "exports": {
     ".": {

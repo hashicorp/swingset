@@ -22,6 +22,11 @@ export interface ComponentEntity extends Entity {
   title: string
   isNested?: boolean
   children?: ComponentEntity[]
+  parsedPath?: {
+    category?: string
+    folder?: string
+    page: string
+  }
 }
 
 export interface DocsEntity extends Entity {

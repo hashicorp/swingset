@@ -11,7 +11,7 @@ export async function RenderDocs({ data, slug }: RenderDocsProps<Entity>) {
   let entity = data
 
   if (!entity && slug) {
-    entity = getEntity(slug)
+     entity = getEntity(slug)
   }
 
   if (entity) {
