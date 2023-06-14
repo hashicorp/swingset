@@ -1,11 +1,11 @@
 // NOTE: global css import needs to be at the top so component-specific CSS is loaded after the theme reset (component-specific CSS is loaded as a result of the swingset/meta import below)
-'use client'
 import '../style.css'
 
 import React from 'react'
 import Link from 'next/link'
-import { meta, categories, categories__NEW } from 'swingset/meta'
+import { meta, categories } from 'swingset/meta'
 import { cx } from 'class-variance-authority'
+import SideNavigation from './components/side-nav'
 
 import Page from './page'
 
@@ -43,8 +43,8 @@ export default function SwingsetLayout({
 }: {
   children: React.ReactNode
 }) {
-  console.log(categories)
-  console.log(categories__NEW)
+  
+  
   return (
     <html lang="en" className="ss-h-full">
       <body className="ss-h-full flex flex-col">
@@ -58,23 +58,7 @@ export default function SwingsetLayout({
                 Swingset
               </Link>
             </div>
-            <nav className="ss-flex ss-flex-1 ss-flex-col">
-              <ul
-                role="list"
-                className="ss-flex ss-flex-1 ss-flex-col ss-gap-y-7"
-              >
-                {Object.entries(categories).map(([title, items]) => (
-                  <>
-                    <li>
-                      <h3 className="ss-uppercase ss-text-xs ss-font-semibold ss-leading-6 ss-text-foreground-faint ss-border-b ss-border-faint ss-pb-2">
-                        {title}
-                      </h3>
-                      <NavList items={items} level={0} />
-                    </li>
-                  </>
-                ))}
-              </ul>
-            </nav>
+    <SideNavigation categories={categories} />
           </div>
         </div>
         <main className="ss-py-10 lg:ss-pl-72 ss-flex ss-flex-col ss-flex-grow ss-h-full">
