@@ -70,6 +70,16 @@ export async function resolveComponents({
         title,
       })
     } else {
+      const navigationData = parseComponentPath(
+        (frontmatter.path ?? '') as string
+      )
+
+      let computedSlug = componentSlug
+
+      if (navigationData?.folder) {
+        computedSlug = path.join(slug(navigationData.folder), componentSlug)
+      }
+
       result.push({
         __type: 'component',
         category: (frontmatter.category as string) ?? 'default',
@@ -79,9 +89,9 @@ export async function resolveComponents({
         load: buildLoadFunction(filepath),
         normalizedPath,
         relativePath,
-        slug: componentSlug,
+        slug: computedSlug,
         title: (frontmatter.title as string) ?? componentSlug,
-        parsedPath: parseComponentPath((frontmatter.path ?? '') as string)
+        navigationData,
       })
     }
   }

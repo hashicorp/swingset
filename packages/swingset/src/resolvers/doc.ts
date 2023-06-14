@@ -31,6 +31,7 @@ export async function resolveDocs({ docsRoot }: DocResolverOptions) {
       filepath,
       relativePath,
       normalizedPath,
+      slug: normalizedPath,
       load: buildLoadFunction(filepath),
     })
   }

@@ -11,6 +11,7 @@ export interface Entity {
   load: string
   normalizedPath: string
   relativePath: string
+  slug: string
 }
 
 // TODO: support subpaths? e.g. components/button/docs/accessibility.mdx
@@ -18,12 +19,11 @@ export interface ComponentEntity extends Entity {
   __type: 'component'
   category: string
   componentPath: string
-  slug: string
   title: string
   isNested?: boolean
   children?: ComponentEntity[]
-  parsedPath?: {
-    category?: string
+  navigationData?: {
+    category: string
     folder?: string
     page: string
   }

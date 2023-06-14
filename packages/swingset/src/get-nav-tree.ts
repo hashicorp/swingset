@@ -26,16 +26,23 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
   for (const entity of componentEntitiesWithChildren) {
     if (entity.isNested) continue
 
-    result[entity.category] ||= []
+    //TODO: Handle Default Category
+    const category = entity.navigationData?.category!
 
-    result[entity.category].push({
+
+
+    result[category] ||= []
+
+
+  
+    result[category].push({
       title: entity.title,
       slug: entity.slug,
       componentPath: entity.componentPath,
       children: entity.children,
     })
 
-    result[entity.category].sort((a, b) => (a.slug > b.slug ? 1 : -1))
+    result[category].sort((a, b) => (a.slug > b.slug ? 1 : -1))
   }
 
   return result
