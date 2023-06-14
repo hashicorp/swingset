@@ -1,4 +1,4 @@
-import { NavigationNode } from 'swingset/types'
+import { NavigationNode, ComponentNode } from 'swingset/types'
 import { Link } from '../link'
 import { cx } from 'class-variance-authority'
 
@@ -27,7 +27,7 @@ function ComponentList({
   isNested,
   items,
 }: {
-  isNested?: boolean
+  isNested?: true 
   items: NavigationNode[]
 }) {
   return (
@@ -49,7 +49,7 @@ function ComponentList({
   )
 }
 
-function Folder({ title, items }: { title: string; items: any[] }) {
+function Folder({ title, items }: { title: ComponentNode['title']; items: ComponentNode[] }) {
   return (
     <details>
       <summary>{title}</summary>
