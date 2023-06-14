@@ -45,7 +45,7 @@ function SideNavBar(props: SideNavBarProps) {
  
 
   const categoriesArr = Object.entries(categories)
-  console.log(categoriesArr)
+  
 
   const categoriesJSX = categoriesArr.map(([category, entities]) => {
 
