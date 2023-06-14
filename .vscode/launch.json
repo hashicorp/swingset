@@ -6,7 +6,7 @@
       "type": "node-terminal",
       "request": "launch",
       "command": "npx next dev",
-      "cwd": "${workspaceFolder}/examples/basic"
+      "cwd": "${workspaceFolder}${pathSeparator}examples${pathSeparator}basic"
     }
   ]
 }
