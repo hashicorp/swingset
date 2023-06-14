@@ -24,6 +24,12 @@ export default function SwingsetLayout({
                       <li>
                         <h3 className="ss-my-2 ss-text-gray-600">{title}</h3>
                       </li>
+                      {/**
+                       * TODO: Rewrite this for the new 
+                       * https://github.com/hashicorp/swingset/pull/105
+                       * @type {NavigationTree}
+                       * Leaving ts ignore to ensure build step succeeds
+                       * @ts-ignore   */}
                       {(items as string[]).map((slug: string) => (
                         <li>
                           <Link href={`/swingset/${slug}`}>{slug}</Link>
