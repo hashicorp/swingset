@@ -6,6 +6,8 @@ node_modules
 yalc.lock
 .vscode
 
+!.vscode/launch.json
+
 # Turbo
 */**/.turbo
 
