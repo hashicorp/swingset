@@ -1,9 +1,10 @@
 // NOTE: global css import needs to be at the top so component-specific CSS is loaded after the theme reset (component-specific CSS is loaded as a result of the swingset/meta import below)
+'use client'
 import '../style.css'
 
 import React from 'react'
 import Link from 'next/link'
-import { meta, categories } from 'swingset/meta'
+import { meta, categories, categories__NEW } from 'swingset/meta'
 import { cx } from 'class-variance-authority'
 
 import Page from './page'
@@ -42,6 +43,8 @@ export default function SwingsetLayout({
 }: {
   children: React.ReactNode
 }) {
+  console.log(categories)
+  console.log(categories__NEW)
   return (
     <html lang="en" className="ss-h-full">
       <body className="ss-h-full flex flex-col">
