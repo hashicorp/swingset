@@ -1,50 +1,34 @@
-import { ComponentEntity, DocsEntity } from './types.js'
+import { ComponentEntity, DocsEntity, NavigationTree, FolderNode, ComponentNode } from './types.js'
 
-type ComponentNavigation = Pick<
-  ComponentEntity,
-  'title' | 'slug' | 'componentPath' | 'children'
->
-
-type Folder = {
-  title: string
-  parentCategory: string
-  children: ComponentNavigation[]
-}
-
-type NavigationData = Record<
-  string,
-  {
-    folders: Folder[]
-    children: ComponentNavigation[]
-  }
->
-
-export function getNavigationTree__NEW(entities: (ComponentEntity | DocsEntity)[]) {
-  const result: NavigationData = {}
+export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
+  const result: NavigationTree = {}
 
   const componentEntities = entities.filter(
     (entity) => entity.__type === 'component'
   ) as ComponentEntity[]
 
-  const componentEntitiesWithChildren = componentEntities.map((entity) => {
-    if (entity.isNested) return entity
+  const componentEntitiesWithChildren = componentEntities.map((componentEntity) => {
+    if (componentEntity.isNested) return componentEntity
 
-    entity.children = componentEntities.filter(
+    componentEntity.children = componentEntities.filter(
       (childEntity) =>
         childEntity.isNested &&
-        childEntity.componentPath === entity.componentPath
+        childEntity.componentPath === componentEntity.componentPath
     )
 
-    return entity
+    return componentEntity
   })
+  
 
-  const folders = new Map<Folder['title'], Folder>()
+  //TODO: Account for duplicate folder names [category]/[folder]
+  const folders = new Map<FolderNode['title'], FolderNode>()
 
   // bucket components into categories, nested documents are categorized under their component's path
   for (const entity of componentEntitiesWithChildren) {
     if (entity.isNested) continue
 
-    const entityData = {
+    const entityData: ComponentNode = {
+      type: 'component',
       title: entity.title,
       slug: entity.slug,
       componentPath: entity.componentPath,
@@ -55,7 +39,7 @@ export function getNavigationTree__NEW(entities: (ComponentEntity | DocsEntity)[
     const category = entity.navigationData?.category!
     const folder = entity.navigationData?.folder
 
-    result[category] ||= { folders: [], children: [] }
+    result[category] ||= []
 
     if (folder) {
       if (folders.has(folder)) {
@@ -64,38 +48,29 @@ export function getNavigationTree__NEW(entities: (ComponentEntity | DocsEntity)[
         storedFolder?.children.push(entityData)
       } else {
         folders.set(folder, {
+          type: 'folder',
           title: folder,
           parentCategory: category,
           children: [entityData],
         })
       }
     } else {
-      result[category].children.push(entityData)
+      result[category].push(entityData)
     }
 
-   
-
-    // result[category].push({
-    //   title: entity.title,
-    //   slug: entity.slug,
-    //   componentPath: entity.componentPath,
-    //   children: entity.children,
-    // })
-
-    // result[category].sort((a, b) => (a.slug > b.slug ? 1 : -1))
   }
-
+  //TODO: Sort Categories Alphbetically before returning -> see original
   folders.forEach((folder) => {
-    result[folder.parentCategory].folders.push(folder)
+    result[folder.parentCategory].push(folder)
   })
 
   return result
 }
 
 /*
-ORIGINAL FUNC
+ORIGINAL FUNC - keeping to reference sort
 =================
-*/
+
 
 
 
@@ -148,3 +123,4 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
   console.log(result)
   return result
 }
+*/

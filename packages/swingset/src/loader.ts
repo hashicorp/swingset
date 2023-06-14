@@ -3,10 +3,9 @@ import { compile, CompileOptions } from '@mdx-js/mdx'
 import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
 import { type LoaderContext } from 'webpack'
-
 import { resolveComponents } from './resolvers/component.js'
 import { stringifyEntity } from './resolvers/stringify-entity.js'
-import { getNavigationTree, getNavigationTree__NEW } from './get-nav-tree.js'
+import {  getNavigationTree } from './get-nav-tree.js'
 import { resolveDocs } from './resolvers/doc.js'
 import { NEXT_MDX_COMPONENTS_ALIAS } from './constants.js'
 import { type SwingsetConfig } from './config.js'
@@ -90,8 +89,6 @@ export async function loader(
       }
 
       export const categories = ${JSON.stringify(getNavigationTree(entities))}
-
-      export const categories__NEW = ${JSON.stringify(getNavigationTree__NEW(entities))}
     `
 
     return result
