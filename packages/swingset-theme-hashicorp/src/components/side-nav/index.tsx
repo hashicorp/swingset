@@ -38,33 +38,16 @@ type SideNavBarProps = {
   categories: NavigationTree
 }
 
-function SideNavBar(props: SideNavBarProps) {
+function SideNavigation(props: SideNavBarProps) {
   const { categories } = props
 
-  
- 
-
-  const categoriesArr = Object.entries(categories)
-  
-
-  const categoriesJSX = categoriesArr.map(([category, entities]) => {
-
-    return <Category
-      title={category}
-      key={category} 
-      items={entities}
-      />
-
-  })
-
-
-
-
-  return (
-    <nav>
-      {categoriesJSX}
-    </nav>
+  const categoriesJSX = Object.entries(categories).map(
+    ([category, entities]) => (
+      <Category title={category} key={category} items={entities} />
+    )
   )
+
+  return <nav>{categoriesJSX}</nav>
 }
 
-export default SideNavBar
+export { SideNavigation }

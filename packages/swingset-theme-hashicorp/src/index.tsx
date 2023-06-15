@@ -5,18 +5,15 @@ import React from 'react'
 import Link from 'next/link'
 import { meta, categories } from 'swingset/meta'
 import { cx } from 'class-variance-authority'
-import {SideNavigation} from './components/side-nav'
+import { SideNavigation } from './components/side-nav'
 
 import Page from './page'
-
 
 export default function SwingsetLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  
-  
   return (
     <html lang="en" className="ss-h-full">
       <body className="ss-h-full flex flex-col">
@@ -30,7 +27,7 @@ export default function SwingsetLayout({
                 Swingset
               </Link>
             </div>
-    <SideNavigation categories={categories} />
+            <SideNavigation categories={categories} />
           </div>
         </aside>
         <main className="ss-py-10 lg:ss-pl-72 ss-flex ss-flex-col ss-flex-grow ss-h-full">
