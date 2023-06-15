@@ -1,3 +1,4 @@
+'use client'
 import { NavigationNode, ComponentNode } from 'swingset/types'
 import { Link } from '../link'
 import { cx } from 'class-variance-authority'
@@ -27,20 +28,31 @@ function ComponentList({
   isNested,
   items,
 }: {
-  isNested?: true 
+  isNested?: true
   items: NavigationNode[]
 }) {
   return (
-    <ul>
+    <ul className={cx(
+      'ss-mt-2 ss-space-y-1',
+      isNested && 'ss-ml-2 ss-border-l ss-border-faint ss-mt-0'
+    )}>
       {items.map((item) => {
         const isFolder = item.type === 'folder'
-
+        console.log(item)
         return (
-          <li key={item.title} className={cx(isNested && 'ss-text-red-600')}>
+          <li key={item.title} >
             {isFolder ? (
               <Folder title={item.title} items={item.children} />
             ) : (
-              <Link href={`swingset/${item.slug}`}>{item.title}</Link>
+              <Link
+              className={cx(
+                'ss-text-foreground-primary hover:ss-text-foreground-action hover:ss-bg-surface-action',
+                'ss-group ss-flex ss-gap-x-3 ss-rounded-md ss-p-2 ss-text-sm ss-leading-6'
+              )}
+                href={`swingset/${item.slug}`}
+              >
+                {item.title}
+              </Link>
             )}
           </li>
         )
@@ -49,10 +61,23 @@ function ComponentList({
   )
 }
 
-function Folder({ title, items }: { title: ComponentNode['title']; items: ComponentNode[] }) {
+function Folder({
+  title,
+  items,
+}: {
+  title: ComponentNode['title']
+  items: ComponentNode[]
+}) {
   return (
     <details>
-      <summary>{title}</summary>
+      <summary
+        className={cx(
+          'ss-text-foreground-primary hover:ss-text-foreground-action hover:ss-bg-surface-action',
+          'ss-rounded-md ss-p-2 ss-text-sm ss-leading-6'
+        )}
+      >
+        {title}
+      </summary>
       <ComponentList isNested={true} items={items} />
     </details>
   )
