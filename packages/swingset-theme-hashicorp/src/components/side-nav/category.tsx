@@ -42,7 +42,7 @@ function ComponentList({
       )}
     >
       {items.map((item) => {
-        const isFolder = item.type === 'folder'
+        const isFolder = item.__type === 'folder'
 
         if (isFolder) {
           return (
