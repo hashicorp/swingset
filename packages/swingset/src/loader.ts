@@ -67,9 +67,7 @@ export async function loader(
     const result = `
       export const meta = {
         ${entities
-          .map(
-            (entity) => `'${entity.slug}': ${stringifyEntity(entity)}`
-          )
+          .map((entity) => `'${entity.slug}': ${stringifyEntity(entity)}`)
           .join(',\n')}
       };
 

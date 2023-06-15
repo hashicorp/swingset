@@ -4,7 +4,10 @@ node_modules
 .next
 .yalc
 yalc.lock
-.vscode
+
+# VS Code
+.vscode/*
+!.vscode/launch.json
 
 # Turbo
 */**/.turbo
