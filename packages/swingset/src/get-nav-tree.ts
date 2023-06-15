@@ -1,7 +1,7 @@
-import { ComponentEntity, DocsEntity, NavigationTree, FolderNode, ComponentNode } from './types.js'
+import { ComponentEntity, DocsEntity, NavigationTree, FolderNode, ComponentNode, NavigationNode } from './types.js'
 
 export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
-  const result: NavigationTree = {}
+  const tree: NavigationTree = {}
 
   const componentEntities = entities.filter(
     (entity) => entity.__type === 'component'
@@ -39,7 +39,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
     const category = entity.navigationData?.category!
     const folder = entity.navigationData?.folder
 
-    result[category] ||= []
+    tree[category] ||= []
 
     if (folder) {
       if (folders.has(folder)) {
@@ -55,72 +55,61 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
         })
       }
     } else {
-      result[category].push(entityData)
+      tree[category].push(entityData)
     }
 
   }
-  //TODO: Sort Categories Alphbetically before returning -> see original
+
   folders.forEach((folder) => {
-    result[folder.parentCategory].push(folder)
+    tree[folder.parentCategory].push(folder)
   })
 
-  return result
+  const sortedTree = sortNavigationTree(tree);
+  
+  return sortedTree
 }
 
-/*
-ORIGINAL FUNC - keeping to reference sort
-=================
 
 
-
-
-export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
-  let result: Record<
-    string,
-    Pick<ComponentEntity, 'title' | 'slug' | 'componentPath' | 'children'>[]
-  > = {}
-
-  const componentEntities = entities.filter(
-    (entity) => entity.__type === 'component'
-  ) as ComponentEntity[]
-
-  
-
-  const componentEntitiesWithChildren = componentEntities.map((entity) => {
-    if (entity.isNested) return entity
-
-    entity.children = componentEntities.filter(
-      (childEntity) =>
-        childEntity.isNested &&
-        childEntity.componentPath === entity.componentPath
-    )
-
-    return entity
-  })
-
-  // bucket components into categories, nested documents are categorized under their component's path
-  for (const entity of componentEntitiesWithChildren) {
-    if (entity.isNested) continue
-
-    //TODO: Handle Default Category
-    const category = entity.navigationData?.category!
-
-
-
-    result[category] ||= []
-
-
-  
-    result[category].push({
-      title: entity.title,
-      slug: entity.slug,
-      componentPath: entity.componentPath,
-      children: entity.children,
-    })
-
-    result[category].sort((a, b) => (a.slug > b.slug ? 1 : -1))
-  }
-  console.log(result)
-  return result
+const compareTitleSort = (a: any, b: any) => {
+  if (a.title > b.title) return 1
+  return -1
 }
-*/
+
+
+function sortNavigationTree(tree: NavigationTree) {
+  const sortedByCategories = Object.keys(tree)
+    .sort()
+    .reduce<NavigationTree>((acc, category) => {
+      acc[category] = tree[category]
+      return acc
+    }, {})
+
+    function sortInPlace(toSort: NavigationTree[string] | NavigationTree[string][number]) {
+      
+      const isRoot = 'length' in toSort
+    
+      isRoot ? toSort as NavigationTree[string] : toSort as NavigationTree[string][number]
+    
+      if (isRoot) {
+        (toSort as NavigationTree[string]).sort(compareTitleSort)
+      }
+    
+      for (const node of (toSort as NavigationTree[string])) {
+       
+        const hasChildren = 'children' in node && node.children!.length > 0;
+      
+    
+        if (hasChildren) {
+          sortInPlace(node.children! as unknown as NavigationNode)
+        }
+      }
+    
+    
+    }
+
+  Object.values(sortedByCategories).forEach((categoryContents) =>  sortInPlace(categoryContents))
+
+  
+  return sortedByCategories
+}
