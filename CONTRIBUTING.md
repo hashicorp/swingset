@@ -26,7 +26,7 @@ Finally, visit <http://localhost:3000/swingset> in your browser. Any changes to 
 
 ## Debugging the example app
 
-If you are iterating on the loader code, it might be helpful to use the Node debugger instead of relying on `console.log()` statements. To make this easier, we have included a VSCode launch configuration.
+If you are iterating on the loader code, it might be helpful to use the Node.js [Debugger](https://nodejs.org/api/debugger.html) instead of relying on `console.log()` statements. To make this easier, we have included a VSCode launch configuration.
 
 First, run the `dev` task for `example-basic`'s dependencies:
 
