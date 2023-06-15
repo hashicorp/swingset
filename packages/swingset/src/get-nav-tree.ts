@@ -31,7 +31,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
   for (const entity of componentEntitiesWithChildren) {
     if (entity.isNested) continue
 
-    const entityData: ComponentNode = {
+    const componentNode: ComponentNode = {
       __type: 'component',
       title: entity.title,
       slug: entity.slug,
@@ -66,7 +66,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
         __type: 'folder',
         title: folderTitle,
         parentCategory: categoryTitle,
-        children: [entityData],
+        children: [componentNode],
       })
       continue
     }
@@ -79,7 +79,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
     }
 
     //if node doesnt belong in folder, add node
-    storedCategory.children.push(entityData)
+    storedCategory.children.push(componentNode)
   }
 
   const tree = Object.fromEntries(categories)
