@@ -11,7 +11,7 @@ function Category({
 }) {
   return (
     <li className="ss-list-none">
-      <section className='ss-mb-4'>
+      <section className="ss-mb-4">
         <CategoryHeading>{title.toUpperCase()}</CategoryHeading>
         <ComponentList items={items} />
       </section>
@@ -20,7 +20,11 @@ function Category({
 }
 //Swap this out for already existing heading && Enquire about semantics, https://helios.hashicorp.design/components/application-state uses <div>
 function CategoryHeading({ children }: { children: string }) {
-  return <div className="ss-uppercase ss-text-xs ss-font-semibold ss-leading-6 ss-text-foreground-faint ss-border-b ss-border-faint ss-pb-2">{children.toUpperCase()}</div>
+  return (
+    <div className="ss-uppercase ss-text-xs ss-font-semibold ss-leading-6 ss-text-foreground-faint ss-border-b ss-border-faint ss-pb-2">
+      {children.toUpperCase()}
+    </div>
+  )
 }
 
 function ComponentList({
@@ -41,14 +45,16 @@ function ComponentList({
         const isFolder = item.type === 'folder'
 
         if (isFolder) {
-          return <Folder title={item.title} items={item.children} />
+          return (
+            <Folder key={item.title} title={item.title} items={item.children} />
+          )
         }
 
         const hasChildren = (item.children?.length as number) > 0
 
         if (hasChildren) {
           return (
-            <li>
+            <li key={item.title}>
               <LinkItem to={item.slug} title={item.title} />
               <ComponentList
                 isNested
@@ -60,10 +66,7 @@ function ComponentList({
 
         return (
           <li key={item.title}>
-            <LinkItem
-            to={item.slug}
-            title={item.title}
-            />
+            <LinkItem to={item.slug} title={item.title} />
           </li>
         )
       })}
@@ -92,6 +95,5 @@ function Folder({
     </details>
   )
 }
-
 
 export default Category
