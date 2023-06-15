@@ -41,18 +41,17 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
 
     const categoryTitle = entity.navigationData?.category || 'default'
 
-    let storedCategory =
-      categories.has(categoryTitle) && categories.get(categoryTitle)!
+    const hasCategory = categories.has(categoryTitle)
 
     //if category doesnt exist, create it
-    if (storedCategory === false) {
-      categories.set(categoryTitle, {
-        type: 'category',
-        title: categoryTitle,
-        children: [],
-      })
-      storedCategory = categories.get(categoryTitle)!
-    }
+    const storedCategory = hasCategory
+      ? categories.get(categoryTitle)!
+      : categories.set(categoryTitle, {
+          type: 'category',
+          title: categoryTitle,
+          children: [],
+        }) && categories.get(categoryTitle)!
+
 
     const folderTitle = entity.navigationData?.folder
     const hasFolder = !!folderTitle
