@@ -51,7 +51,7 @@ export type ComponentNode = Omit<
     '__type' | 'title' | 'slug' | 'componentPath' | 'children'
   >,
   '__type'
-> & { readonly type: ComponentEntity['__type'] }
+> & { type: ComponentEntity['__type'] }
 
 export type FolderNode = {
   type: 'folder'
