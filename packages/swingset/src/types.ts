@@ -62,5 +62,12 @@ export type FolderNode = {
 
 export type NavigationNode = ComponentNode | FolderNode
 
+export type CategoryNode = {
+  type: 'category'
+  title: string
+  children: NavigationNode[]
+}
 
-export type NavigationTree = Record<string, NavigationNode[]>
+
+
+export type NavigationTree = CategoryNode[]

@@ -8,9 +8,11 @@ type SideNavBarProps = {
 function SideNavigation(props: SideNavBarProps) {
   const { categories } = props
 
-  const categoriesJSX = Object.entries(categories).map(
-    ([category, entities]) => (
-      <Category title={category} key={category} items={entities} />
+  
+
+  const categoriesJSX = Object.values(categories).map(
+    (category) => (
+      <Category title={category.title} key={category.title} items={category.children} />
     )
   )
 
