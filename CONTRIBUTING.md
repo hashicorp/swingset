@@ -34,7 +34,7 @@ First, run the `dev` task for `example-basic`'s dependencies:
 npx turbo run dev --filter example-basic^...
 ```
 
-Next, open the VSCode debug panel (`Ctrl+Shift+D` on Windows/Linux, `⇧+⌘+D` on macOS) and run the `Debug examples/basic app` launch configuration. This will start Next's development process and attach a debugger. Any `debugger;` statements you have added in Swingset's core should be triggered.
+Next, open the VSCode debug panel (`Ctrl+Shift+D` on Windows/Linux, `⇧+⌘+D` on macOS) and run the `Debug examples/basic app` launch configuration. This will start Next's development process and attach a debugger. Any [`debugger;`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) statements you have added in Swingset's core should be triggered.
 
 ## Custom themes
 
