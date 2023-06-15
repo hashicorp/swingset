@@ -11,7 +11,7 @@ function Category({
 }) {
   return (
     <li className="ss-list-none">
-      <section>
+      <section className='ss-mb-4'>
         <CategoryHeading>{title.toUpperCase()}</CategoryHeading>
         <ComponentList items={items} />
       </section>
