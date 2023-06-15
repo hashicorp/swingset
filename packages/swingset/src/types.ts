@@ -41,17 +41,10 @@ export type EvaluatedEntity<T extends Entity = ComponentEntity | DocsEntity> =
     load: () => Promise<React.ElementType>
   }
 
-/* 
-Utility type to extract just necessary properties before going to theme, also renames '__type' key to type for external usage.
-Unwanted Behavior?? The children property comes through as a ComponentEntity, which exposes the entities to the theme/clients 
-*/
-export type ComponentNode = Omit<
-  Pick<
-    ComponentEntity,
-    '__type' | 'title' | 'slug' | 'componentPath' | 'children'
-  >,
-  '__type'
-> & { type: ComponentEntity['__type'] }
+export type ComponentNode = Pick<
+  ComponentEntity,
+  '__type' | 'title' | 'slug' | 'componentPath' | 'children'
+>
 
 export type FolderNode = {
   type: 'folder'
@@ -67,7 +60,5 @@ export type CategoryNode = {
   title: string
   children: NavigationNode[]
 }
-
-
 
 export type NavigationTree = CategoryNode[]
