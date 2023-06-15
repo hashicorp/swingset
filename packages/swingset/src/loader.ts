@@ -5,7 +5,7 @@ import { matter } from 'vfile-matter'
 import { type LoaderContext } from 'webpack'
 import { resolveComponents } from './resolvers/component.js'
 import { stringifyEntity } from './resolvers/stringify-entity.js'
-import {  getNavigationTree } from './get-nav-tree.js'
+import { getNavigationTree } from './get-nav-tree.js'
 import { resolveDocs } from './resolvers/doc.js'
 import { NEXT_MDX_COMPONENTS_ALIAS } from './constants.js'
 import { type SwingsetConfig } from './config.js'
@@ -66,9 +66,7 @@ export async function loader(
     const result = `
       export const meta = {
         ${entities
-          .map(
-            (entity) => `'${entity.slug}': ${stringifyEntity(entity)}`
-          )
+          .map((entity) => `'${entity.slug}': ${stringifyEntity(entity)}`)
           .join(',\n')}
       };
 
