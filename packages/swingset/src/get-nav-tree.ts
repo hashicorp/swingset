@@ -6,8 +6,6 @@ import {
 } from './types.js'
 
 export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
-
-
   const componentEntities = entities.filter(
     (entity) => entity.__type === 'component'
   ) as ComponentEntity[]
@@ -29,7 +27,6 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
   //TODO: Account for duplicate folder names [category]/[folder]
   const categories = new Map<CategoryNode['title'], CategoryNode>()
 
-
   // bucket components into categories, nested documents are categorized under their component's path
   for (const entity of componentEntitiesWithChildren) {
     if (entity.isNested) continue
@@ -42,7 +39,6 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
       children: entity.children,
     }
 
-  
     const categoryTitle = entity.navigationData?.category || 'default'
     const folderTitle = entity.navigationData?.folder
     const hasFolder = !!folderTitle
@@ -50,11 +46,8 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
     const storedCategory =
       categories.has(categoryTitle) && categories.get(categoryTitle)
 
-     
-
     if (!!storedCategory) {
       if (hasFolder) {
-        
         storedCategory.children.forEach((child) => {
           const correctFolder =
             child.type === 'folder' && child.title === folderTitle
@@ -63,7 +56,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
             child.children.push(entityData)
           }
         })
-      }else{
+      } else {
         storedCategory.children.push(entityData)
       }
     } else {
