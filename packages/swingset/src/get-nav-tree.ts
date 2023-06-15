@@ -40,47 +40,46 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
     }
 
     const categoryTitle = entity.navigationData?.category || 'default'
+
+    let storedCategory =
+      categories.has(categoryTitle) && categories.get(categoryTitle)!
+
+    //if category doesnt exist, create it
+    if (storedCategory === false) {
+      categories.set(categoryTitle, {
+        type: 'category',
+        title: categoryTitle,
+        children: [],
+      })
+      storedCategory = categories.get(categoryTitle)!
+    }
+
     const folderTitle = entity.navigationData?.folder
     const hasFolder = !!folderTitle
+    const folder = storedCategory.children.find(
+      (node) => node.title === folderTitle
+    )
 
-    const storedCategory =
-      categories.has(categoryTitle) && categories.get(categoryTitle)
-
-    if (!!storedCategory) {
-      if (hasFolder) {
-        storedCategory.children.forEach((child) => {
-          const correctFolder =
-            child.__type === 'folder' && child.title === folderTitle
-
-          if (correctFolder) {
-            child.children.push(entityData)
-          }
-        })
-      } else {
-        storedCategory.children.push(entityData)
-      }
-    } else {
-      if (hasFolder) {
-        categories.set(categoryTitle, {
-          type: 'category',
-          title: categoryTitle,
-          children: [
-            {
-              __type: 'folder',
-              title: folderTitle,
-              parentCategory: categoryTitle,
-              children: [entityData],
-            },
-          ],
-        })
-      } else {
-        categories.set(categoryTitle, {
-          type: 'category',
-          title: categoryTitle,
-          children: [entityData],
-        })
-      }
+    //if node belongs in a folder, and folder doesnt exist, create folder with node
+    if (hasFolder && !!folder === false) {
+      storedCategory.children.push({
+        __type: 'folder',
+        title: folderTitle,
+        parentCategory: categoryTitle,
+        children: [entityData],
+      })
+      continue
     }
+
+    //if node belongs in a folder, and folder already exists, add node to folder
+    if (hasFolder && !!folder) {
+      folder.children ||= []
+      folder.children.push(entity)
+      continue
+    }
+
+    //if node doesnt belong in folder, add node
+    storedCategory.children.push(entityData)
   }
 
   const tree = Object.fromEntries(categories)
