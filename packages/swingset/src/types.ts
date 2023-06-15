@@ -47,7 +47,7 @@ export type ComponentNode = Pick<
 >
 
 export type FolderNode = {
-  type: 'folder'
+  __type: 'folder'
   title: string
   parentCategory: string
   children: ComponentNode[]

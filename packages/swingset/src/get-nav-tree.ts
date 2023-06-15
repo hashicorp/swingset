@@ -32,7 +32,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
     if (entity.isNested) continue
 
     const entityData: ComponentNode = {
-      type: 'component',
+      __type: 'component',
       title: entity.title,
       slug: entity.slug,
       componentPath: entity.componentPath,
@@ -50,7 +50,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
       if (hasFolder) {
         storedCategory.children.forEach((child) => {
           const correctFolder =
-            child.type === 'folder' && child.title === folderTitle
+            child.__type === 'folder' && child.title === folderTitle
 
           if (correctFolder) {
             child.children.push(entityData)
@@ -66,7 +66,7 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
           title: categoryTitle,
           children: [
             {
-              type: 'folder',
+              __type: 'folder',
               title: folderTitle,
               parentCategory: categoryTitle,
               children: [entityData],
