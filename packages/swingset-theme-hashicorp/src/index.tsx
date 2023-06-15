@@ -4,7 +4,6 @@ import '../style.css'
 import React from 'react'
 import Link from 'next/link'
 import { meta, categories } from 'swingset/meta'
-import { cx } from 'class-variance-authority'
 import { SideNavigation } from './components/side-nav'
 
 import Page from './page'
