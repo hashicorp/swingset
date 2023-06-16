@@ -5,9 +5,7 @@ type SideNavBarProps = {
   categories: NavigationTree
 }
 
-function SideNavigation(props: SideNavBarProps) {
-  const { categories } = props
-
+function SideNavigation({ categories }: SideNavBarProps) {
   
 
   const renderCategories = categories.map(
