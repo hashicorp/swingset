@@ -3,9 +3,12 @@ import {
   DocsEntity,
   ComponentNode,
   CategoryNode,
+  NavigationTree,
 } from './types.js'
 
-export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
+export function getNavigationTree(
+  entities: (ComponentEntity | DocsEntity)[]
+): NavigationTree {
   const componentEntities = entities.filter(
     (entity) => entity.__type === 'component'
   ) as ComponentEntity[]
@@ -52,7 +55,6 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
           children: [],
         }) && categories.get(categoryTitle)!
 
-
     const folderTitle = entity.navigationData?.folder
     const hasFolder = !!folderTitle
     const folder = storedCategory.children.find(
@@ -73,6 +75,10 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
     //if node belongs in a folder, and folder already exists, add node to folder
     if (hasFolder && !!folder) {
       folder.children ||= []
+      /**TODO:
+       *  We should be pushing @type {ComponentNode} instead of @type {ComponentEntity}
+       *  https://github.com/hashicorp/swingset/issues/107
+       */
       folder.children.push(entity)
       continue
     }
@@ -81,6 +87,6 @@ export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
     storedCategory.children.push(componentNode)
   }
 
-  const tree = Object.fromEntries(categories)
+  const tree = Array.from(categories.values())
   return tree
 }
