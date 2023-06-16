@@ -30,7 +30,7 @@ describe(getNavigationTree.name, () => {
           },
         ],
         title: 'default',
-        type: 'category',
+        __type: 'category',
       },
     ]
 
@@ -83,7 +83,7 @@ describe(getNavigationTree.name, () => {
           },
         ],
         title: 'default',
-        type: 'category',
+        __type: 'category',
       },
     ]
 
