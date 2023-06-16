@@ -40,3 +40,25 @@ export type EvaluatedEntity<T extends Entity = ComponentEntity | DocsEntity> =
   T & {
     load: () => Promise<React.ElementType>
   }
+
+export type ComponentNode = Pick<
+  ComponentEntity,
+  '__type' | 'title' | 'slug' | 'componentPath'
+>
+
+export type FolderNode = {
+  __type: 'folder'
+  title: string
+  parentCategory: string
+  children: ComponentNode[]
+}
+
+export type NavigationNode = ComponentNode | FolderNode
+
+export type CategoryNode = {
+  type: 'category'
+  title: string
+  children: NavigationNode[]
+}
+
+export type NavigationTree = CategoryNode[]

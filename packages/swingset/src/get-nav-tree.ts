@@ -1,49 +1,87 @@
-import { ComponentEntity, DocsEntity } from './types.js'
+import {
+  ComponentEntity,
+  DocsEntity,
+  ComponentNode,
+  CategoryNode,
+  NavigationTree,
+} from './types.js'
 
-export function getNavigationTree(entities: (ComponentEntity | DocsEntity)[]) {
-  let result: Record<
-    string,
-    Pick<ComponentEntity, 'title' | 'slug' | 'componentPath' | 'children'>[]
-  > = {}
-
+export function getNavigationTree(
+  entities: (ComponentEntity | DocsEntity)[]
+): NavigationTree {
   const componentEntities = entities.filter(
     (entity) => entity.__type === 'component'
   ) as ComponentEntity[]
 
-  const componentEntitiesWithChildren = componentEntities.map((entity) => {
-    if (entity.isNested) return entity
+  const componentEntitiesWithChildren = componentEntities.map(
+    (componentEntity) => {
+      if (componentEntity.isNested) return componentEntity
 
-    entity.children = componentEntities.filter(
-      (childEntity) =>
-        childEntity.isNested &&
-        childEntity.componentPath === entity.componentPath
-    )
+      componentEntity.children = componentEntities.filter(
+        (childEntity) =>
+          childEntity.isNested &&
+          childEntity.componentPath === componentEntity.componentPath
+      )
 
-    return entity
-  })
+      return componentEntity
+    }
+  )
+
+  const categories = new Map<CategoryNode['title'], CategoryNode>()
 
   // bucket components into categories, nested documents are categorized under their component's path
   for (const entity of componentEntitiesWithChildren) {
     if (entity.isNested) continue
 
-    //TODO: Handle Default Category
-    const category = entity.navigationData?.category!
-
-
-
-    result[category] ||= []
-
-
-  
-    result[category].push({
+    const componentNode: ComponentNode = {
+      __type: 'component',
       title: entity.title,
       slug: entity.slug,
       componentPath: entity.componentPath,
-      children: entity.children,
-    })
+    }
 
-    result[category].sort((a, b) => (a.slug > b.slug ? 1 : -1))
+    const categoryTitle = entity.navigationData?.category || 'default'
+
+    const hasCategory = categories.has(categoryTitle)
+
+    if (!hasCategory) {
+      categories.set(categoryTitle, {
+        type: 'category',
+        title: categoryTitle,
+        children: [],
+      })
+    }
+
+    const storedCategory = categories.get(categoryTitle)!
+
+    const folderTitle = entity.navigationData?.folder
+    const hasFolder = !!folderTitle
+    const folder = storedCategory.children.find(
+      (node) => node.title === folderTitle
+    )
+
+    //if node belongs in a folder, and folder doesnt exist, create folder with node
+    if (hasFolder && !!folder === false) {
+      storedCategory.children.push({
+        __type: 'folder',
+        title: folderTitle,
+        parentCategory: categoryTitle,
+        children: [componentNode],
+      })
+      continue
+    }
+
+    //if node belongs in a folder, and folder already exists, add node to folder
+    if (hasFolder && !!folder && folder.__type === 'folder') {
+      folder.children ||= []
+      folder.children.push(componentNode)
+      continue
+    }
+
+    //if node doesnt belong in folder, add node
+    storedCategory.children.push(componentNode)
   }
 
-  return result
+  const tree = Array.from(categories.values())
+  return tree
 }

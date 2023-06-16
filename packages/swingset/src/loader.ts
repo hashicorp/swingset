@@ -3,7 +3,6 @@ import { compile, CompileOptions } from '@mdx-js/mdx'
 import { VFile } from 'vfile'
 import { matter } from 'vfile-matter'
 import { type LoaderContext } from 'webpack'
-
 import { resolveComponents } from './resolvers/component.js'
 import { stringifyEntity } from './resolvers/stringify-entity.js'
 import { getNavigationTree } from './get-nav-tree.js'
