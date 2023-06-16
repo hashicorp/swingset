@@ -10,13 +10,13 @@ function SideNavigation(props: SideNavBarProps) {
 
   
 
-  const categoriesJSX = Object.values(categories).map(
+  const renderCategories = categories.map(
     (category) => (
       <Category title={category.title} key={category.title} items={category.children} />
     )
   )
 
-  return <nav>{categoriesJSX}</nav>
+  return <nav>{renderCategories}</nav>
 }
 
 export { SideNavigation }
