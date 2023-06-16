@@ -27,7 +27,6 @@ export function getNavigationTree(
     }
   )
 
-  //TODO: Account for duplicate folder names [category]/[folder]
   const categories = new Map<CategoryNode['title'], CategoryNode>()
 
   // bucket components into categories, nested documents are categorized under their component's path
@@ -39,21 +38,21 @@ export function getNavigationTree(
       title: entity.title,
       slug: entity.slug,
       componentPath: entity.componentPath,
-      children: entity.children,
     }
 
     const categoryTitle = entity.navigationData?.category || 'default'
 
     const hasCategory = categories.has(categoryTitle)
 
-    //if category doesnt exist, create it
-    const storedCategory = hasCategory
-      ? categories.get(categoryTitle)!
-      : categories.set(categoryTitle, {
-          type: 'category',
-          title: categoryTitle,
-          children: [],
-        }) && categories.get(categoryTitle)!
+    if (!hasCategory) {
+      categories.set(categoryTitle, {
+        type: 'category',
+        title: categoryTitle,
+        children: [],
+      })
+    }
+
+    const storedCategory = categories.get(categoryTitle)!
 
     const folderTitle = entity.navigationData?.folder
     const hasFolder = !!folderTitle
@@ -73,13 +72,9 @@ export function getNavigationTree(
     }
 
     //if node belongs in a folder, and folder already exists, add node to folder
-    if (hasFolder && !!folder) {
+    if (hasFolder && !!folder && folder.__type === 'folder') {
       folder.children ||= []
-      /**TODO:
-       *  We should be pushing @type {ComponentNode} instead of @type {ComponentEntity}
-       *  https://github.com/hashicorp/swingset/issues/107
-       */
-      folder.children.push(entity)
+      folder.children.push(componentNode)
       continue
     }
 

@@ -43,7 +43,7 @@ export type EvaluatedEntity<T extends Entity = ComponentEntity | DocsEntity> =
 
 export type ComponentNode = Pick<
   ComponentEntity,
-  '__type' | 'title' | 'slug' | 'componentPath' | 'children'
+  '__type' | 'title' | 'slug' | 'componentPath'
 >
 
 export type FolderNode = {

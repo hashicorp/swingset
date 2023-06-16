@@ -50,19 +50,6 @@ function ComponentList({
           )
         }
 
-        const hasChildren = (item.children?.length as number) > 0
-
-        if (hasChildren) {
-          return (
-            <li key={item.title}>
-              <LinkItem to={item.slug} title={item.title} />
-              <ComponentList
-                isNested
-                items={item.children as unknown[] as ComponentNode[]}
-              />
-            </li>
-          )
-        }
 
         return (
           <li key={item.title}>
