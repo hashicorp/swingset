@@ -1,7 +1,12 @@
 import { Link } from "../link"
 import { cx } from "class-variance-authority"
 
-function LinkItem({ title, to }: Record<'title' | 'to', string>) {
+type LinkItemProps = {
+  title: string
+  to: string
+}
+
+function LinkItem({ title, to }: LinkItemProps) {
  return (
    <Link
      className={cx(
