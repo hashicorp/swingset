@@ -4,6 +4,7 @@ import {
   ComponentNode,
   CategoryNode,
   NavigationTree,
+  NavigationNode,
 } from './types.js'
 
 export function getNavigationTree(
@@ -83,5 +84,29 @@ export function getNavigationTree(
   }
 
   const tree = Array.from(categories.values())
+
+  tree.sort(compareTitleSort)
+
   return tree
+}
+
+function compareTitleSort<T extends CategoryNode | NavigationNode>(
+  a: T,
+  b: T
+): -1 | 0 | 1 {
+  const aHasChildren = 'children' in a && a.children.length > 0
+  const bHasChildren = 'children' in b && b.children.length > 0
+  if (aHasChildren) {
+    a.children.sort(compareTitleSort)
+  }
+  if (bHasChildren) {
+    b.children.sort(compareTitleSort)
+  }
+  if (a.title > b.title) {
+    return 1
+  }
+  if (b.title > a.title) {
+    return -1
+  }
+  return 0
 }
