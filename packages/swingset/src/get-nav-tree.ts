@@ -47,7 +47,7 @@ export function getNavigationTree(
 
     if (!hasCategory) {
       categories.set(categoryTitle, {
-        type: 'category',
+        __type: 'category',
         title: categoryTitle,
         children: [],
       })

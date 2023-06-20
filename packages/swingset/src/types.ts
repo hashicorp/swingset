@@ -56,7 +56,7 @@ export type FolderNode = {
 export type NavigationNode = ComponentNode | FolderNode
 
 export type CategoryNode = {
-  type: 'category'
+  __type: 'category'
   title: string
   children: NavigationNode[]
 }
