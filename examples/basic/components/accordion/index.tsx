@@ -1,10 +1,15 @@
 import { ReactElement } from 'react'
 
-interface ButtonProps {
+interface AccordionProps {
  color?: string
  children: ReactElement
 }
 
-export function Button({ children }: ButtonProps) {
- return <button>{children}</button>
+export function Accordion({ children }: AccordionProps) {
+ return (
+  <details>
+   <summary>Hello 👋</summary>
+   Nice meeting you! How's everything going?
+  </details>
+ )
 }
