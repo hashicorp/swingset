@@ -1,8 +1,8 @@
 import { describe, it } from 'vitest'
 import { parseComponentPath } from '../src/parse-component-path'
 
-describe('parseComponentPath', () => {
-  it('converts the front matter string to an object', ({ expect }) => {
+describe(parseComponentPath.name, () => {
+  it('Converts a 3 segment path to a navigationData object', ({ expect }) => {
     const expectation = {
       category: 'Components',
       folder: 'Forms',
@@ -13,7 +13,7 @@ describe('parseComponentPath', () => {
 
     expect(result).toEqual(expectation)
   })
-  it('converts the front matter string to an object', ({ expect }) => {
+  it('Converts a 2 segment path to a navigationData object', ({ expect }) => {
     const expectation = {
       category: 'Components',
       page: 'Button',
@@ -23,8 +23,9 @@ describe('parseComponentPath', () => {
 
     expect(result).toEqual(expectation)
   })
-  it('converts the front matter string to an object', ({ expect }) => {
+  it('Converts a 1 segment path to a navigationData object', ({ expect }) => {
     const expectation = {
+      category: 'default',
       page: 'Button',
     }
 
@@ -32,10 +33,14 @@ describe('parseComponentPath', () => {
 
     expect(result).toEqual(expectation)
   })
-  it('Throws an error when invalid input is received', ({expect}) => {
+  it('Throws an error when too many segments are received', ({ expect }) => {
+    const input = 'edibles/fruits/berries/blueberries'
 
-    expect(() => parseComponentPath('edibles/fruits/berries/blueberries')).toThrowError()
-   
-    
+    const errorSnapshot =
+      "\"Received Component path with more than 3 segments: 'edibles/fruits/berries/blueberries'. Remove the extra segments. Expected format: '[Category]/[Folder]/[Page]'\""
+
+    expect(() => parseComponentPath(input)).toThrowErrorMatchingInlineSnapshot(
+      errorSnapshot
+    )
   })
 })
