@@ -9,4 +9,5 @@ export default withSwingset({
   experimental: {
     appDir: true,
   },
+  transpilePackages: ['@hashicorp/flight-icons'],
 })
