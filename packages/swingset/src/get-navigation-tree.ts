@@ -85,23 +85,30 @@ export function getNavigationTree(
 
   const tree = Array.from(categories.values())
 
-  tree.sort(compareTitleSort)
+  deepSort(tree)
 
   return tree
+}
+/**
+ *
+ * Sorts tree alphabetically
+ */
+function deepSort(nodes: (CategoryNode | NavigationNode)[]) {
+  nodes.sort(compareTitleSort)
+
+  for (const node of nodes) {
+    const hasChildren = 'children' in node
+
+    if (hasChildren) {
+      deepSort(node.children)
+    }
+  }
 }
 
 function compareTitleSort<T extends CategoryNode | NavigationNode>(
   a: T,
   b: T
 ): -1 | 0 | 1 {
-  const aHasChildren = 'children' in a && a.children.length > 0
-  const bHasChildren = 'children' in b && b.children.length > 0
-  if (aHasChildren) {
-    a.children.sort(compareTitleSort)
-  }
-  if (bHasChildren) {
-    b.children.sort(compareTitleSort)
-  }
   if (a.title > b.title) {
     return 1
   }
