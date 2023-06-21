@@ -89,6 +89,7 @@ export function getNavigationTree(
 
   return tree
 }
+
 /**
  *
  * Sorts tree alphabetically
