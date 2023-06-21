@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest'
-import { getNavigationTree } from '../src/get-nav-tree'
-import { ComponentNode, ComponentEntity, NavigationTree } from '../src/types'
+import { getNavigationTree } from '../src/get-navigation-tree'
+import { ComponentEntity, NavigationTree } from '../src/types'
 
 describe(getNavigationTree.name, () => {
   it('Builds the Navigation Tree', ({ expect }) => {
