@@ -51,6 +51,6 @@
     "prerelease:canary": "turbo build",
     "release": "changeset publish",
     "release:canary": "changeset publish --tag canary",
-    "test": "jest"
+    "test": "npx turbo run test --concurrency 1 --continue"
   }
 }
