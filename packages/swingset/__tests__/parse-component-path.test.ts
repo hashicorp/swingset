@@ -36,6 +36,11 @@ describe(parseComponentPath.name, () => {
   it('Throws an error when too many segments are received', ({ expect }) => {
     const input = 'edibles/fruits/berries/blueberries'
 
-    expect(() => parseComponentPath(input)).toThrowError()
+    const errorSnapshot =
+      "\"Received Component path with more than 3 segments: 'edibles/fruits/berries/blueberries'. Remove the extra segments. Expected format: '[Category]/[Folder]/[Page]'\""
+
+    expect(() => parseComponentPath(input)).toThrowErrorMatchingInlineSnapshot(
+      errorSnapshot
+    )
   })
 })
