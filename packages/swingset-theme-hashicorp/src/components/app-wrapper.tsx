@@ -16,8 +16,8 @@ export function AppWrapper({ children }: any) {
  return (
   <>
    <SideNavigation categories={categories} isOpen={isOpen} toggle={toggle} />
-   <main className={cx("ss-py-10 ss-flex ss-flex-col ss-flex-grow ss-h-full ss-transition-all", isOpen && "lg:ss-mx-96")}>
-    <div className="ss-px-4 sm:ss-px-6 lg:ss-px-8 ss-flex ss-flex-col ss-flex-grow">
+   <main className={cx("ss-py-10 ss-flex ss-flex-col ss-flex-grow ss-h-full ss-transition-all ss-px-4 sm:ss-m-0", isOpen && "lg:ss-mx-64 xl:ss-mx-72 2xl:ss-mx-[460px]")}>
+    <div className="ss-flex ss-flex-col ss-flex-grow md:ss-px-8">
      {children}
     </div>
    </main>

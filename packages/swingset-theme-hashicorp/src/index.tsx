@@ -13,7 +13,7 @@ export default function SwingsetLayout({
 }) {
   return (
     <html lang="en" className="ss-h-full">
-      <body className="ss-h-full flex flex-col">
+      <body className="ss-h-full flex flex-col ss-items-center">
         <AppWrapper>{children}</AppWrapper>
       </body>
     </html>

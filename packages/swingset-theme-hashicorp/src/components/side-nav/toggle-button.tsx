@@ -8,7 +8,7 @@ type ToggleButtonProps = {
 
 export function ToggleButton({ toggle, isOpen }: ToggleButtonProps) {
  return (
-  <button className="ss-fixed ss-left-72 ss-p-2" onClick={toggle}>
+  <button className="ss-fixed ss-left-72 ss-p-2 ss-top-6" onClick={toggle}>
    <div
     className={cx(
      'ss-bg-surface-faint ss-border-faint ss-border-2 ss-rounded-full ss-transition-transform ss-shadow-md ss-p-1 ss-bg-opacity-60 ss-backdrop-blur-sm',
