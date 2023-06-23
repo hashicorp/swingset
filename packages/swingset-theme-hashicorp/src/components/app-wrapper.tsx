@@ -1,12 +1,12 @@
 'use client'
 import { SideNavigation } from './side-nav'
 import { categories } from 'swingset/meta'
-import { useState } from 'react';
+import { useState, ReactNode, } from 'react';
 import { cx } from 'class-variance-authority'
 
 
 
-export function AppWrapper({ children }: any) {
+export function AppWrapper({ children }: { children: ReactNode }) {
 
  const [isOpen, setIsOpen] = useState<boolean>(true);
  const toggle = () => setIsOpen((curr) => !curr)
