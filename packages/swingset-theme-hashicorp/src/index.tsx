@@ -3,8 +3,6 @@ import '../style.css'
 import React from 'react'
 import { AppWrapper } from './components/app-wrapper'
 import { meta } from 'swingset/meta'
-
-
 import Page from './page'
 
 export default function SwingsetLayout({
