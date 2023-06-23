@@ -2,6 +2,7 @@
 import '../style.css'
 import React from 'react'
 import { AppWrapper } from './components/app-wrapper'
+import { meta } from 'swingset/meta'
 
 
 import Page from './page'
@@ -15,6 +16,11 @@ export default function SwingsetLayout({
     <html lang="en" className="ss-h-full">
       <body className="ss-h-full flex flex-col ss-items-center">
         <AppWrapper>{children}</AppWrapper>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__SWINGSET_META=${JSON.stringify(meta)};`,
+          }}
+        ></script>
       </body>
     </html>
   )
