@@ -1,6 +1,5 @@
 import { NavigationTree } from 'swingset/types'
 import Category from './category'
-//import { useState } from 'react'
 import { Link } from '../link'
 import { cx } from 'class-variance-authority'
 import { ToggleButton } from './toggle-button'
