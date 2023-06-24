@@ -22,10 +22,10 @@ function SideNavigation({ categories, isOpen, toggle }: SideNavBarProps) {
   return (
     <>
       <aside
-        aria-disabled={!isOpen}
+        aria-hidden={!isOpen}
         className={cx(
           'ss-hidden lg:ss-fixed lg:ss-inset-y-0 lg:ss-z-50 lg:ss-flex lg:ss-flex-col lg:ss-w-72 ss-transition-transform',
-          !isOpen && 'ss--translate-x-full'
+          !isOpen && 'ss--translate-x-full ss-invisible'
         )}
       >
         <div className="ss-flex ss-grow ss-flex-col ss-gap-y-5 ss-overflow-y-auto ss-border-r ss-border-faint ss-bg-surface-faint ss-px-6 ss-py-10">
