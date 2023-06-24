@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import yargs from 'yargs'
+import fs from 'fs'
 
 const { argv } = yargs(process.argv.slice(2))
   .command(
@@ -15,8 +16,7 @@ const { argv } = yargs(process.argv.slice(2))
     'lorem ipsum',
     () => {},
     (argv) => {
-      console.log('heyo')
+      const fileContents = fs.readFileSync('./.gitignore', 'utf-8')
+      console.log(fileContents)
     }
   )
-
-console.log(argv)
