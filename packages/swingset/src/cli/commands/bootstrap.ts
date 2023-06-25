@@ -1,16 +1,11 @@
-import yargs from 'yargs'
 import fs from 'fs'
-import { LOGS } from './logs'
+import { LOGS } from '../logs'
+import { Bootstrap } from '../types'
 
-type BootstrapCommand = {
-  name: 'bootstrap'
-  description: 'Creates a swingset template in the `app` or `pages` directory'
-  builder: {}
-  handler: (
-    args: yargs.ArgumentsCamelCase<yargs.InferredOptionTypes<{}>>
-  ) => void
-}
 /*
+This command generates the following file structure, 
+Is supporting this old next versions aka page directory necessary? 
+
 app/
 (swingset)
   ├ /layout.tsx
@@ -20,20 +15,14 @@ app/
       └ /page.tsx
 */
 
-const bootstrap: BootstrapCommand = {
+const bootstrap: Bootstrap = {
   name: 'bootstrap',
   description: 'Creates a swingset template in the `app` or `pages` directory',
   builder: {},
   handler: (_) => {
     const appDir = './app'
-
     const hasAppDir = fs.existsSync(appDir)
 
-    /* 
-    Is supporting this old next versions worth the effort? 
-    const hasPagesDir = fs.existsSync(pagesDir)
-    fs.existsSync(pagesDir) 
-    */
     console.log('Getting you started with Swingset...')
     if (!hasAppDir) {
       fs.mkdirSync(appDir)
@@ -61,7 +50,7 @@ const bootstrap: BootstrapCommand = {
     const dynamicPathDir = `${swingsetDir}/[...path]`
     fs.mkdirSync(dynamicPathDir)
     const dyanamicPageTSXFile = `${dynamicPathDir}/page.tsx`
-    const dyanamicPageContent = `import { generateStaticParams } from 'swingset/meta'\nimport { Page } from 'swingset/theme'\nexport default Page\nexport { generateStaticParams }`
+    const dyanamicPageContent = `import { generateStaticParams } from 'swingset/meta'\nimport { Page } from 'swingset/theme'\n\nexport default Page\nexport { generateStaticParams }`
     fs.writeFileSync(dyanamicPageTSXFile, dyanamicPageContent, {
       encoding: 'utf-8',
     })

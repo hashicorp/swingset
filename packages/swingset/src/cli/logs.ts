@@ -6,7 +6,7 @@ const yellowTxt = '\x1b[33m'
 
 /* 
 Helpers to semantically color console outout, 
-if the cli grows we can look into a https://github.com/chalk/chalk#readme or a similar pkg
+if the cli grows for some reason we can look into a https://github.com/chalk/chalk#readme or a similar pkg
 */
 const error = (txt: string) => `${redTxt}ERROR:${endTxt} ${txt}`
 const success = (txt: string) => `${greenTxt}SUCCESS:${endTxt} ${txt}`
