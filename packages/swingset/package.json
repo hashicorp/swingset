@@ -11,9 +11,7 @@
     "dev": "concurrently npm:dev:*",
     "test": "vitest run"
   },
-  "bin": {
-    "swingset": "./dist/cli/index.js"
-  },
+  "bin": "./dist/cli/index.js",
   "dependencies": {
     "@mdx-js/mdx": "^2.3.0",
     "github-slugger": "^2.0.0",

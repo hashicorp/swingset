@@ -1,7 +1,6 @@
 import fs from 'fs'
 import { LOGS } from '../logs'
 import { Bootstrap } from '../types'
-import { convertNextConfig } from '../convert-next-config'
 
 /*
 This command generates the following file structure, 
@@ -67,25 +66,17 @@ import remarkGfm from 'remark-gfm'
 export default withSwingset({
   componentRootPattern: './components',
   theme: 'swingset-theme-hashicorp',
-  remarkPlugins: [remarkGfm],
 })({
   experimental: {
     appDir: true,
   },
-})
-`
+})`
       )
+      LOGS.bootstrap.complete()
     } else {
-      const nextConfigContents = fs.readFileSync(nextConfigPath, {
-        encoding: 'ascii',
-      })
-      /**
-       * //TODO: Build logic to add swingset without editing their current config
-       */
-      console.log(convertNextConfig(nextConfigContents) && 'Next config found')
     }
 
-    LOGS.bootstrap.bootstrapComplete()
+    LOGS.bootstrap.completeNoConfig()
   },
 }
 

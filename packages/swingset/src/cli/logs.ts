@@ -15,14 +15,22 @@ const codeText = (txt: string) => `${grayBg}${yellowTxt}${txt}${endTxt}`
 export const LOGS = {
   bootstrap: {
     hasSwingset: () => {
-      console.log(`${error('Unable to generate Swingset Template')}
-Delete ${codeText('app/(swingset)')}, then run ${codeText(
-        'npx swingset bootstrap'
-      )} `)
+      console.log(
+        `${error(
+          'Unable to generate Swingset template.'
+        )} Route group ${codeText('app/(swingset)')} already exists.`
+      )
     },
-    bootstrapComplete: () => {
+    complete: () => {
       console.log(
         `${success('Checkout')} ${codeText('app/(swingset)')} to get started.`
+      )
+    },
+    completeNoConfig: () => {
+      console.log(
+        `${success('Add the swingset plug-in to your')} ${codeText(
+          'next.config'
+        )} to get started. Open README for example.`
       )
     },
   },
