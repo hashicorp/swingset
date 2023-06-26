@@ -13,7 +13,7 @@ interface Command {
 
 export interface Bootstrap extends Command {
   name: 'bootstrap'
-  description: 'Creates a swingset template in the `app` or `pages` directory'
+  description: 'Creates a swingset template in the `app` directory'
   builder: {}
 }
 

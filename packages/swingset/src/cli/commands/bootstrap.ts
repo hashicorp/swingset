@@ -19,7 +19,7 @@ app/
 
 const bootstrap: Bootstrap = {
   name: 'bootstrap',
-  description: 'Creates a swingset template in the `app` or `pages` directory',
+  description: 'Creates a swingset template in the `app` directory',
   builder: {},
   handler: async (_) => {
     LOGS.bootstrap.start()
