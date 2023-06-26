@@ -13,16 +13,18 @@ const success = (txt: string) => `${greenTxt}SUCCESS:${endTxt} ${txt}`
 const codeText = (txt: string) => `${grayBg}${yellowTxt}${txt}${endTxt}`
 
 export const LOGS = {
-  hasSwingset: () => {
-    console.log(`${error('Unable to generate Swingset Template')}
+  bootstrap: {
+    hasSwingset: () => {
+      console.log(`${error('Unable to generate Swingset Template')}
 Delete ${codeText('app/(swingset)')}, then run ${codeText(
-      'npx swingset bootstrap'
-    )} `)
-  },
-  bootstrapComplete: () => {
-    console.log(
-      `${success('Checkout')} ${codeText('app/(swingset)')} to get started.`
-    )
+        'npx swingset bootstrap'
+      )} `)
+    },
+    bootstrapComplete: () => {
+      console.log(
+        `${success('Checkout')} ${codeText('app/(swingset)')} to get started.`
+      )
+    },
   },
   default: () => {
     console.log(`Try running ${codeText('swingset bootstrap')} to get started.`)
