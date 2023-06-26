@@ -28,6 +28,7 @@ const bootstrap: Bootstrap = {
     try {
       pkg = await detect()
     } catch (err) {
+      LOGS.bootstrap.unableToInstall()
       error(err as string)
       process.exit(1)
     }
