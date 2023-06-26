@@ -1,6 +1,8 @@
 import fs from 'fs'
-import { LOGS } from '../logs'
+import { error, LOGS } from '../logs'
 import { Bootstrap } from '../types'
+import { detect, PM } from 'detect-package-manager'
+import childProcess from 'child_process'
 
 /*
 This command generates the following file structure, 
@@ -19,11 +21,24 @@ const bootstrap: Bootstrap = {
   name: 'bootstrap',
   description: 'Creates a swingset template in the `app` or `pages` directory',
   builder: {},
-  handler: (_) => {
+  handler: async (_) => {
+    LOGS.bootstrap.start()
+
+    let pkg: PM = 'npm'
+    try {
+      pkg = await detect()
+    } catch (err) {
+      error(err as string)
+      process.exit(1)
+    }
+    const installSwingsetCMD =
+      pkg === 'yarn' ? `${pkg} add swingset` : `${pkg} install swingset`
+
+    childProcess.execSync(installSwingsetCMD)
+
     const appDir = './app'
     const hasAppDir = fs.existsSync(appDir)
 
-    console.log('Getting you started with Swingset...')
     if (!hasAppDir) {
       fs.mkdirSync(appDir)
     }
@@ -33,7 +48,7 @@ const bootstrap: Bootstrap = {
 
     if (hasSwingset) {
       LOGS.bootstrap.hasSwingset()
-      return
+      process.exit(1)
     }
     fs.mkdirSync(swingsetRouteGroupDir)
     const layoutTSXFile = `${swingsetRouteGroupDir}/layout.tsx`
@@ -73,10 +88,11 @@ export default withSwingset({
 })`
       )
       LOGS.bootstrap.complete()
+      process.exit(0)
     } else {
+      LOGS.bootstrap.completeNoConfig()
+      process.exit(0)
     }
-
-    LOGS.bootstrap.completeNoConfig()
   },
 }
 

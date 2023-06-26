@@ -8,17 +8,27 @@ const yellowTxt = '\x1b[33m'
 Helpers to semantically color console outout, 
 if the cli grows for some reason we can look into a https://github.com/chalk/chalk#readme or a similar pkg
 */
-const error = (txt: string) => `${redTxt}ERROR:${endTxt} ${txt}`
-const success = (txt: string) => `${greenTxt}SUCCESS:${endTxt} ${txt}`
-const codeText = (txt: string) => `${grayBg}${yellowTxt}${txt}${endTxt}`
+export const error = (txt: string) => `${redTxt}ERROR:${endTxt} ${txt}`
+export const success = (txt: string) => `${greenTxt}SUCCESS:${endTxt} ${txt}`
+export const codeText = (txt: string) => `${grayBg}${yellowTxt}${txt}${endTxt}`
 
 export const LOGS = {
   bootstrap: {
+    start: () => {
+      console.log('Getting you started with Swingset...')
+    },
     hasSwingset: () => {
-      console.log(
+      console.error(
         `${error(
           'Unable to generate Swingset template.'
         )} Route group ${codeText('app/(swingset)')} already exists.`
+      )
+    },
+    unableToInstall: () => {
+      console.error(
+        error(
+          'Unable to install swingset package, received following error: \n'
+        )
       )
     },
     complete: () => {

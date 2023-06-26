@@ -2,7 +2,7 @@ import { ArgumentsCamelCase, InferredOptionTypes } from 'yargs'
 
 export type CommandHandler = (
   args: ArgumentsCamelCase<InferredOptionTypes<{}>>
-) => void
+) => void | Promise<void>
 
 interface Command {
   name: string
