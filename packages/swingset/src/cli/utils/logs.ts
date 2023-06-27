@@ -1,3 +1,4 @@
+import { FILES } from './constants'
 const redTxt = '\x1b[31m'
 const endTxt = '\x1b[0m'
 const greenTxt = '\x1b[32m'
@@ -12,7 +13,7 @@ export const error = (txt: string) => `${redTxt}ERROR:${endTxt} ${txt}`
 export const success = (txt: string) => `${greenTxt}SUCCESS:${endTxt} ${txt}`
 export const codeText = (txt: string) => `${grayBg}${yellowTxt}${txt}${endTxt}`
 
-export const LOGS = {
+export const Logs = {
   bootstrap: {
     start: () => {
       console.log('Getting you started with Swingset...')
@@ -21,7 +22,7 @@ export const LOGS = {
       console.error(
         `${error(
           'Unable to generate Swingset template.'
-        )} Route group ${codeText('app/(swingset)')} already exists.`
+        )} Route group ${codeText(FILES.paths.routeGroupDir)} already exists.`
       )
     },
     unableToInstall: () => {
@@ -33,7 +34,9 @@ export const LOGS = {
     },
     complete: () => {
       console.log(
-        `${success('Checkout')} ${codeText('app/(swingset)')} to get started.`
+        `${success('Checkout')} ${codeText(
+          FILES.paths.routeGroupDir
+        )} to get started.`
       )
     },
     completeNoConfig: () => {

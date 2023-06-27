@@ -1,8 +1,9 @@
 import fs from 'fs'
-import { error, LOGS } from '../logs'
+import { Logs, codeText } from '../utils/logs'
 import { Bootstrap } from '../types'
-import { detect, PM } from 'detect-package-manager'
 import childProcess from 'child_process'
+import { getInstallCMD } from '../utils/get-install-cmd'
+import { FILES } from '../utils/constants'
 
 /*
 This command generates the following file structure, 
@@ -12,86 +13,80 @@ app/
 (swingset)
   ├ /layout.tsx
   └ /swingset
-    ├ /page.tsx 
+    ├ page.tsx 
     └ /[...path]
-      └ /page.tsx
+      └ page.tsx
+  next.config.js
 */
 
 const bootstrap: Bootstrap = {
   name: 'bootstrap',
   description: 'Creates a swingset template in the `app` directory',
   builder: {},
-  handler: async (_) => {
-    LOGS.bootstrap.start()
+  handler: async () => {
+    Logs.bootstrap.start()
 
-    let pkg: PM = 'npm'
-    try {
-      pkg = await detect()
-    } catch (err) {
-      LOGS.bootstrap.unableToInstall()
-      error(err as string)
-      process.exit(1)
-    }
-    const installSwingsetCMD =
-      pkg === 'yarn' ? `${pkg} add swingset` : `${pkg} install swingset`
+    const installSwingset = await getInstallCMD()
+    console.log('Running', codeText(installSwingset))
+    const stdout = childProcess.execSync(installSwingset)
+    console.log(stdout.toString())
 
-    childProcess.execSync(installSwingsetCMD)
+    /**
+     * Attempt to Create:
+     * app/(swingset)/
+     * If ./app exists, will ignore
+     * if ./app/(swingset) exists, log error and exit 1
+     */
 
-    const appDir = './app'
-    const hasAppDir = fs.existsSync(appDir)
-
-    if (!hasAppDir) {
-      fs.mkdirSync(appDir)
-    }
-
-    const swingsetRouteGroupDir = `${appDir}/(swingset)`
-    const hasSwingset = fs.existsSync(swingsetRouteGroupDir)
+    const hasSwingset = fs.existsSync(FILES.paths.routeGroupDir)
 
     if (hasSwingset) {
-      LOGS.bootstrap.hasSwingset()
+      Logs.bootstrap.hasSwingset()
       process.exit(1)
     }
-    fs.mkdirSync(swingsetRouteGroupDir)
-    const layoutTSXFile = `${swingsetRouteGroupDir}/layout.tsx`
-    const layoutContent = `import layout from 'swingset/theme'\n\nexport default layout`
 
-    fs.writeFileSync(layoutTSXFile, layoutContent, { encoding: 'utf-8' })
-
-    const swingsetDir = `${swingsetRouteGroupDir}/swingset`
-    fs.mkdirSync(swingsetDir)
-    const pageTSXFile = `${swingsetDir}/page.tsx`
-    const pageContent = `import Content from './content.mdx'\n\nexport default async function SwingsetRoot() {\n return <Content />\n}`
-    fs.writeFileSync(pageTSXFile, pageContent, { encoding: 'utf-8' })
-
-    const dynamicPathDir = `${swingsetDir}/[...path]`
-    fs.mkdirSync(dynamicPathDir)
-    const dyanamicPageTSXFile = `${dynamicPathDir}/page.tsx`
-    const dyanamicPageContent = `import { generateStaticParams } from 'swingset/meta'\nimport { Page } from 'swingset/theme'\n\nexport default Page\nexport { generateStaticParams }`
-    fs.writeFileSync(dyanamicPageTSXFile, dyanamicPageContent, {
+    fs.mkdirSync(FILES.paths.routeGroupDir, { recursive: true })
+    fs.writeFileSync(FILES.paths.layout, FILES.content.layout, {
       encoding: 'utf-8',
     })
 
-    const nextConfigPath = `${appDir}/next.config.js`
-    const hasNextConfig = fs.existsSync(nextConfigPath)
-    if (!hasNextConfig) {
-      fs.writeFileSync(
-        nextConfigPath,
-        `import withSwingset from 'swingset'
-import remarkGfm from 'remark-gfm'
+    /**
+     * Create:
+     * app/(swingset)/swingset/page.tsx/
+     * &&
+     * app/(swingset)/swingset/page/[...page]/page.tsx
+     */
 
-export default withSwingset({
-  componentRootPattern: './components',
-  theme: 'swingset-theme-hashicorp',
-})({
-  experimental: {
-    appDir: true,
-  },
-})`
-      )
-      LOGS.bootstrap.complete()
+    fs.mkdirSync(FILES.paths.dynamicDir, { recursive: true })
+    fs.writeFileSync(FILES.paths.page, FILES.content.swingset.page, {
+      encoding: 'utf-8',
+    })
+
+    /**
+     * Create:
+     * app/(swingset)/swingset/page/[...page]/page.tsx
+     */
+
+    fs.writeFileSync(
+      FILES.paths.dynamicPage,
+      FILES.content.swingset.dyanamicPage,
+      {
+        encoding: 'utf-8',
+      }
+    )
+
+    /**
+     * If user has nextconfig already, exit and point them to docs,
+     * if not, create next config with swingset
+     */
+
+    const hasNextConfig = fs.existsSync(FILES.paths.nextConfig)
+    if (!hasNextConfig) {
+      fs.writeFileSync(FILES.paths.nextConfig, FILES.content.nextConfig)
+      Logs.bootstrap.complete()
       process.exit(0)
     } else {
-      LOGS.bootstrap.completeNoConfig()
+      Logs.bootstrap.completeNoConfig()
       process.exit(0)
     }
   },
