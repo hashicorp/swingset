@@ -13,7 +13,6 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.1",
-    "@hashicorp/flight-icons": "^2.13.1",
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
     "concurrently": "^8.0.1",
