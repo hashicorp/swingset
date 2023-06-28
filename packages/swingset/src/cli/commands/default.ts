@@ -1,7 +1,6 @@
-import { Command } from '../types'
 import { Logs } from '../utils/logs'
 
-export const defaultCMD: Command = {
+export const defaultCMD = {
   name: '$0',
   description: 'The default "swingset" command, currently unused',
   builder: {},
