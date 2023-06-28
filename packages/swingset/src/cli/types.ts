@@ -7,6 +7,6 @@ type CommandHandler = (
 export type Command = {
   name: string
   description: string
-  builder: {} | (() => {})
+  builder: {}
   handler: CommandHandler
 }
