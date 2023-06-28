@@ -9,8 +9,9 @@ This command generates the following file structure,
 Is supporting this old next versions aka page directory necessary? 
 app/
 (swingset)
-  ├ /layout.tsx
+  ├ layout.tsx
   └ /swingset
+    ├ content.mdx
     ├ page.tsx 
     └ /[...path]
       └ page.tsx
@@ -29,62 +30,56 @@ const bootstrap = {
     childProcess.execSync(installSwingset, { stdio: 'inherit' })
 
     /**
-     * Attempt to Create:
-     * app/(swingset)/
-     * If ./app exists, will ignore
+     * Attempt to Create Swingset root: src/app/(swingset)/ OR ./app/(swingset)/
+     * If src/app or ./app already exist, they will be ignored
      * if ./app/(swingset) exists, log error and exit 1
      */
 
-    const hasSwingset = fs.existsSync(FILES.paths.routeGroupDir)
+    const hasSwingset = fs.existsSync(FILES.swingsetRoot)
 
     if (hasSwingset) {
       Logs.bootstrap.hasSwingset()
       process.exit(1)
     }
+    fs.mkdirSync(FILES.swingsetRoot, { recursive: true })
 
-    fs.mkdirSync(FILES.paths.routeGroupDir, { recursive: true })
-    fs.writeFileSync(FILES.paths.layout, FILES.content.layout, {
-      encoding: 'utf-8',
-    })
+    // Creates swingset layout: [root]/(swingset)/layout.tsx
+    fs.writeFileSync(FILES.layout.path, FILES.layout.content, 'utf-8')
 
     /**
-     * Create:
-     * app/(swingset)/swingset/page.tsx/
+     * Create home page:
+     * [root](swingset)/swingset/page.tsx/
      * &&
-     * app/(swingset)/swingset/page/[...page]/page.tsx
+     * Dynamic route
+     * [root](swingset)/swingset/[...page]/page.tsx
      */
 
-    fs.mkdirSync(FILES.paths.dynamicDir, { recursive: true })
-    fs.writeFileSync(FILES.paths.page, FILES.content.swingset.page, {
-      encoding: 'utf-8',
-    })
-
-    /**
-     * Create:
-     * app/(swingset)/swingset/page/[...page]/page.tsx
-     */
-
+    fs.writeFileSync(FILES.page.path, FILES.page.content, 'utf-8')
+    fs.mkdirSync(FILES.dynamicPath.path)
     fs.writeFileSync(
-      FILES.paths.dynamicPage,
-      FILES.content.swingset.dyanamicPage,
-      {
-        encoding: 'utf-8',
-      }
+      FILES.dynamicPath.pagePath,
+      FILES.dynamicPath.pageContent,
+      'utf-8'
     )
+
+    //[root](swingset)/swingset/content.mdx
+    fs.writeFileSync(FILES.content.path, FILES.content.content, 'utf-8')
 
     /**
      * If user has nextconfig already, exit and point them to docs,
      * if not, create next config with swingset
      */
 
-    const hasNextConfig = fs.existsSync(FILES.paths.nextConfig)
+    /**
+      TODO: explore using codemod tool to add the swingset plugin to an existing next config
+     */
+
+    const hasNextConfig = fs.existsSync(FILES.nextConfig.path)
     if (!hasNextConfig) {
-      fs.writeFileSync(FILES.paths.nextConfig, FILES.content.nextConfig)
+      fs.writeFileSync(FILES.nextConfig.path, FILES.nextConfig.content)
       Logs.bootstrap.complete()
-      process.exit(0)
     } else {
       Logs.bootstrap.completeNoConfig()
-      process.exit(0)
     }
   },
 }

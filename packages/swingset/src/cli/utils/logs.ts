@@ -4,6 +4,7 @@ const endTxt = '\x1b[0m'
 const greenTxt = '\x1b[32m'
 const grayBg = '\x1b[100m'
 const yellowTxt = '\x1b[33m'
+const blueTxt = '\x1b[34m'
 
 /* 
 Helpers to semantically color console outout, 
@@ -12,17 +13,18 @@ if the cli grows for some reason we can look into a https://github.com/chalk/cha
 export const error = (txt: string) => `${redTxt}ERROR:${endTxt} ${txt}`
 export const success = (txt: string) => `${greenTxt}SUCCESS:${endTxt} ${txt}`
 export const codeText = (txt: string) => `${grayBg}${yellowTxt}${txt}${endTxt}`
+export const linkText = (txt: string) => `${blueTxt}${txt}${endTxt}`
 
 export const Logs = {
   bootstrap: {
     start: () => {
-      console.log('Getting you started with Swingset...')
+      console.log('Getting you started with swingset...')
     },
     hasSwingset: () => {
       console.error(
         `${error(
-          'Unable to generate Swingset template.'
-        )} Route group ${codeText(FILES.paths.routeGroupDir)} already exists.`
+          'Unable to generate swingset template.'
+        )} Route group ${codeText(FILES.routeGroupDir)} already exists.`
       )
     },
     unableToInstall: () => {
@@ -33,15 +35,18 @@ export const Logs = {
     complete: () => {
       console.log(
         `${success('Checkout')} ${codeText(
-          FILES.paths.routeGroupDir
+          FILES.routeGroupDir
         )} to get started.`
       )
     },
     completeNoConfig: () => {
       console.log(
         `${success('Add the swingset plug-in to your')} ${codeText(
-          'next.config'
-        )} to get started. Open README for example.`
+          'next.config.js'
+        )} to get started. 
+Checkout ${linkText(
+          'https://github.com/hashicorp/swingset#installation'
+        )} for examples,`
       )
     },
   },
