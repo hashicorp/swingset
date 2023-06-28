@@ -27,8 +27,7 @@ const bootstrap: Bootstrap = {
 
     const installSwingset = await getPkgInstallCmd()
     console.log('Running', codeText(installSwingset))
-    const stdout = childProcess.execSync(installSwingset)
-    console.log(stdout.toString())
+    childProcess.execSync(installSwingset, { stdio: 'inherit' })
 
     /**
      * Attempt to Create:
