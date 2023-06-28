@@ -52,8 +52,5 @@
     "release": "changeset publish",
     "release:canary": "changeset publish --tag canary",
     "test": "npx turbo run test --concurrency 1 --continue"
-  },
-  "dependencies": {
-    "swingset": "^0.17.0"
   }
 }
