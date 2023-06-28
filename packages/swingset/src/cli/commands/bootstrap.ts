@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { Logs, codeText } from '../utils/logs'
-import { Bootstrap } from '../types'
+import { Command } from '../types'
 import childProcess from 'child_process'
 import { getPkgInstallCmd } from '../utils/get-pkg-install-cmd'
 import { FILES } from '../utils/constants'
@@ -18,7 +18,7 @@ app/
   next.config.js
 */
 
-const bootstrap: Bootstrap = {
+const bootstrap: Command = {
   name: 'bootstrap',
   description: 'Creates a swingset template in the `app` directory',
   builder: {},
