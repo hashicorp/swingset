@@ -5,17 +5,20 @@ import { getPkgInstallCmd } from '../utils/get-pkg-install-cmd'
 import { FILES } from '../utils/constants'
 
 /*
-This command generates the following file structure, 
-Is supporting this old next versions aka page directory necessary? 
-app/
-(swingset)
-  ├ layout.tsx
-  └ /swingset
-    ├ content.mdx
-    ├ page.tsx 
-    └ /[...path]
-      └ page.tsx
-  next.config.js
+This command generates the following file structure
+```
+src/
+├─ app/
+│  ├─ layout.tsx
+│  ├─ (swingset)/
+│  │  ├─ swingset/
+│  │  │  ├─ [...path]/
+│  │  │  │  ├─ page.tsx
+│  │  │  ├─ content.mdx
+│  │  │  ├─ page.tsx
+├─ next.config.js
+```
+May slightly vary if person isn't using src/ directory
 */
 
 const bootstrap = {
@@ -29,10 +32,10 @@ const bootstrap = {
     console.log('Running', codeText(installSwingset))
     childProcess.execSync(installSwingset, { stdio: 'inherit' })
 
-    /**
-     * Attempt to Create Swingset root: src/app/(swingset)/ OR ./app/(swingset)/
-     * If src/app or ./app already exist, they will be ignored
-     * if ./app/(swingset) exists, log error and exit 1
+    /*
+      Attempt to Create Swingset root: src/app/(swingset)/ OR ./app/(swingset)/
+      If src/app or ./app already exist, they will be ignored
+      if ./app/(swingset) exists, log error and exit 1
      */
 
     const hasSwingset = fs.existsSync(FILES.swingsetRoot)
@@ -46,7 +49,7 @@ const bootstrap = {
     // Creates swingset layout: [root]/(swingset)/layout.tsx
     fs.writeFileSync(FILES.layout.path, FILES.layout.content, 'utf-8')
 
-    /**
+    /*
      * Create home page:
      * [root](swingset)/swingset/page.tsx/
      * &&
@@ -65,14 +68,12 @@ const bootstrap = {
     //[root](swingset)/swingset/content.mdx
     fs.writeFileSync(FILES.content.path, FILES.content.content, 'utf-8')
 
-    /**
+    /*
      * If user has nextconfig already, exit and point them to docs,
      * if not, create next config with swingset
      */
 
-    /**
-      TODO: explore using codemod tool to add the swingset plugin to an existing next config
-     */
+    // TODO: explore using codemod tool to add the swingset plugin to an existing next config
 
     const hasNextConfig = fs.existsSync(FILES.nextConfig.path)
     if (!hasNextConfig) {
