@@ -41,12 +41,11 @@ export const Logs = {
     },
     completeNoConfig: () => {
       console.log(
-        `${success('Add the swingset plug-in to your')} ${codeText(
-          'next.config.js'
-        )} to get started. 
-Checkout ${linkText(
+        `${success('Add the swingset plugin to your')} ${codeText(
+          'next.config'
+        )} to get started. (documentation: ${linkText(
           'https://github.com/hashicorp/swingset#installation'
-        )} for examples,`
+        )})`
       )
     },
   },
