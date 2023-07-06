@@ -1,4 +1,5 @@
 import { PropsTable } from './components/props-table'
+import { LiveComponent } from './components/live-component'
 import { Heading } from './components/heading'
 
 export default {
@@ -11,4 +12,5 @@ export default {
   p: (props: any) => <p className="ss-my-4" {...props} />,
   pre: (props: any) => <pre className="ss-my-4" {...props} />,
   PropsTable,
+  LiveComponent,
 }
