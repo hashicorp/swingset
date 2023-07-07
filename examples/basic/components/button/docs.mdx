@@ -13,4 +13,13 @@ export const Simple = () => <Button>Click me</Button>
 
 <PropsTable component={Button} />
 
-<LiveComponent></LiveComponent>
+<LiveComponent>
+  {`function LikesComponent() {
+   const [likes, increaseLikes] = React.useState(0);
+   
+   return (<>
+    <p>{likes}</p>
+    <button onClick={() => increaseLikes(likes + 1)}>Like</button>
+    </>) 
+}; `}
+</LiveComponent>
