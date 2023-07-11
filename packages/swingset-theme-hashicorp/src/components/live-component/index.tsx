@@ -43,6 +43,3 @@ export function LiveComponent({ children, deps }: LiveComponentProps) {
     </>
   )
 }
-/**
- * The default layout styles for Sandpack
- */
