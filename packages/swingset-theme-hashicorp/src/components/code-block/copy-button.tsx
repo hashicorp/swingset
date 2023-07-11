@@ -11,10 +11,11 @@ function CopyButton({ code }: { code: string }) {
   const [isCopied, setIsCopied] = useState(false)
 
   useEffect(() => {
+    const timeoutDuration = 2000
     if (!isCopied) return
     const timerId = setTimeout(() => {
       setIsCopied(false)
-    }, 2000)
+    }, timeoutDuration)
 
     return () => {
       clearTimeout(timerId)
