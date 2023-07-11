@@ -21,25 +21,23 @@ export function LiveComponent({ children, deps }: LiveComponentProps) {
   const dependencies = deps ?? undefined
 
   return (
-    <>
-      <SandpackProvider
-        template="react-ts"
-        files={fileMap}
-        theme={sandpackTheme}
-        customSetup={{ dependencies }}
-      >
-        <div className="flex ss-flex-col ss-w-full ss-border-4 ss-border-gray-300 ss-rounded-lg">
-          <SandpackPreview className="ss-h-[45vh] ss-max-h-[800px] ss-min-h-[280px]" />
-          <div className="ss-bg-black ss-overflow-y-scroll">
-            <SandpackCodeEditor
-              showInlineErrors
-              showTabs
-              showRunButton
-              wrapContent
-            />
-          </div>
+    <SandpackProvider
+      template="react-ts"
+      files={fileMap}
+      theme={sandpackTheme}
+      customSetup={{ dependencies }}
+    >
+      <div className="flex ss-flex-col ss-w-full ss-border-4 ss-border-gray-300 ss-rounded-lg">
+        <SandpackPreview className="ss-h-[45vh] ss-max-h-[800px] ss-min-h-[280px]" />
+        <div className="ss-bg-black ss-overflow-y-scroll">
+          <SandpackCodeEditor
+            showInlineErrors
+            showTabs
+            showRunButton
+            wrapContent
+          />
         </div>
-      </SandpackProvider>
-    </>
+      </div>
+    </SandpackProvider>
   )
 }
