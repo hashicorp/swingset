@@ -2,12 +2,30 @@
 title: 'Button'
 description: The button is used widely across HashiCorp properties, and has many ways it can be customized. Let's start with its most basic form.
 ---
+
 import { Button } from '.'
 
-export const Simple = () => (<Button>Click me</Button>)
+export const Simple = () => <Button>Click me</Button>
 
 ## Simple
 
 <Simple />
 
 <PropsTable component={Button} />
+
+```ts
+const hey = 'hey'
+```
+
+<LiveComponent>
+
+```ts filePath="Tapp.tsx"
+export default function App({ data }) {
+  if (data) {
+    return <p>Hello {data}</p>
+  }
+  return <p>Hello World</p>
+}
+```
+
+</LiveComponent>

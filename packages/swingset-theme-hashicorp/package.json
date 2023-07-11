@@ -39,7 +39,9 @@
     "tailwindcss": "^3.3.2"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^2.6.9",
     "@hashicorp/flight-icons": "^2.14.0",
-    "class-variance-authority": "^0.6.0"
+    "class-variance-authority": "^0.6.0",
+    "prism-react-renderer": "^2.0.6"
   }
 }

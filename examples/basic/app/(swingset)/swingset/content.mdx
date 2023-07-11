@@ -20,7 +20,7 @@ Success! Route group created:
 (swingset)
   ├ /layout.tsx
   └ /swingset
-    ├ /page.tsx 
+    ├ /page.tsx
     └ /[...path]
       └ /page.tsx
 ```
@@ -40,7 +40,7 @@ components/
 
 Swingset automatically exposes prop metadata for components imported into your documentation.
 
-```typescript
+```tsx
 <PropsTable component={Button} />
 ```
 
@@ -75,20 +75,57 @@ Want to add support for GitHub Flavored Markdown? Swingset accepts `remark` and 
 - [x] Restart your server
 - [ ] Render task lists!
 
-
 ```js
 import withSwingset from 'swingset'
 import remarkGfm from 'remark-gfm'
 
 export default withSwingset({
   componentRoot: './components',
-  remarkPlugins: [remarkGfm]
+  remarkPlugins: [remarkGfm],
 })({
   experimental: {
     appDir: true,
   },
 })
 ```
+
+### Inline Playgrounds
+
+Swingset allows you to inspect how components behave right here in the docs. Here's an example using [MUI](https://mui.com/).
+
+<LiveComponent deps={{
+  "@mui/material":"latest",
+  "@emotion/react": "latest",
+  "@emotion/styled": "latest"
+}}>
+
+```tsx filePath="App.tsx"
+import * as React from 'react'
+import Button from './components/Button.tsx'
+
+export default function MyApp() {
+  return (
+    <div>
+      <Button variant="outline">Button</Button>
+    </div>
+  )
+}
+```
+
+```tsx filePath="components/Button.tsx"
+import * as React from 'react'
+import MUIButton from '@mui/material/Button'
+
+export default function Button() {
+  return (
+    <div>
+      <MUIButton variant="contained">Button</MUIButton>
+    </div>
+  )
+}
+```
+
+</LiveComponent>
 
 ### Integrates with `@next/mdx`
 

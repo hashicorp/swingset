@@ -12,7 +12,11 @@
     "lib": ["es2022", "dom"],
     "moduleResolution": "node",
     "types": ["vitest/globals", "webpack-env"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["dist/**/*"]
