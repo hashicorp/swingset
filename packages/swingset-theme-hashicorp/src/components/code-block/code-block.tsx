@@ -23,10 +23,7 @@ function CodeBlock(props: CodeBlockProps) {
       <Highlight code={code} language={language} theme={themes.dracula}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => {
           return (
-            <pre
-              className={className + 'ss-bg-black'}
-              style={{ ...style, padding: '12px' }}
-            >
+            <pre className={'ss-p-3'} style={{ ...style }}>
               {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })}>
                   {line.map((token, key) => (

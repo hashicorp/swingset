@@ -41,7 +41,7 @@ function CopyButton({ code }: { code: string }) {
   return (
     <button
       className={cx(
-        'ss-top-3 ss-absolute ss-right-4 ss-text-gray-200 ss-cursor-pointer hover:ss-backdrop-brightness-150  ss-border-[1px] ss-border-gray-200 ss-p-1 ss-rounded-md active:ss-backdrop-brightness-50 active:ss-scale-90',
+        'ss-top-3 ss-absolute ss-right-3 ss-text-gray-200 ss-cursor-pointer hover:ss-backdrop-brightness-150  ss-border-[1px] ss-border-gray-200 ss-p-1 ss-rounded-md active:ss-backdrop-brightness-50 active:ss-scale-90',
         isCopied &&
           'ss-text-green-400 ss-border-green-400 hover:ss-text-green-400'
       )}
