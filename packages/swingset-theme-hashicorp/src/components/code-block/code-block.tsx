@@ -11,7 +11,6 @@ interface CodeBlockProps {
 
 function CodeBlock(props: CodeBlockProps) {
   const { children } = props
-
   const code = parseCode(children)
   const language = parseLanguage(children.props.className ?? 'language-jsx')
 
