@@ -91,7 +91,45 @@ export default withSwingset({
 
 ### Inline Playgrounds
 
-Swingset allows you to inspect how components behave right here in the docs. Here's an example using [MUI](https://mui.com/).
+Swingset allows you to inspect how components behave right here in the docs. By using Codesandbox's bundler it supports packages on the npm public registry. Here's an example using [MUI](https://mui.com/).
+
+````
+<LiveComponent deps={{
+  "@mui/material":"latest",
+  "@emotion/react": "latest",
+  "@emotion/styled": "latest"
+}}>
+
+```tsx filePath="App.tsx"
+import * as React from 'react'
+import Button from './components/Button.tsx'
+
+export default function MyApp() {
+  return (
+    <div>
+      <Button variant="outline">Button</Button>
+    </div>
+  )
+}
+```
+
+```tsx filePath="components/Button.tsx"
+import * as React from 'react'
+import MUIButton from '@mui/material/Button'
+
+export default function Button() {
+  return (
+    <div>
+      <MUIButton variant="contained">Button</MUIButton>
+    </div>
+  )
+}
+```
+
+</LiveComponent>
+````
+
+Will render the following
 
 <LiveComponent deps={{
   "@mui/material":"latest",
