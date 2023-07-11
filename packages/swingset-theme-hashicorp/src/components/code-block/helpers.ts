@@ -1,19 +1,11 @@
-import { Language, MDXPreClass } from '@/types'
+import { Language, MDXPreClass, MDXPreElement } from '@/types'
 
-export const parseCode = (children: React.Component): string | never => {
-  if (typeof children === 'string') {
-    return (children as string).trimEnd()
-  }
-
-  if ('children' in children.props) {
-    return parseCode(children.props.children as React.Component)
-  }
-
-  //TODO: Link to README.md
-  throw Error('Unable to Find valid <CodeBlock/> component. See docs:')
+export const parseCode = (toParse: MDXPreElement | string): string => {
+  if (typeof toParse === 'string') return toParse.trimEnd()
+  return toParse.props.children.trimEnd()
 }
 
-export const parseLanguage = (langString: MDXPreClass): Language | never => {
+export const parseLanguage = (langString: MDXPreClass): Language => {
   const MDXprefix = 'language-'
   const lang = langString.replace(MDXprefix, '')
 
@@ -26,6 +18,6 @@ export const parseLanguage = (langString: MDXPreClass): Language | never => {
   )
 }
 
-const isSupportedLanguage = (lang: string): true | false => {
+const isSupportedLanguage = (lang: string): boolean => {
   return lang === 'js' || lang === 'jsx' || lang === 'ts' || lang === 'tsx'
 }

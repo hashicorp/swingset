@@ -1,22 +1,19 @@
 'use client' //Library calls hooks internally
 import { Highlight, themes } from 'prism-react-renderer'
 import { parseCode, parseLanguage } from './helpers'
-import { Language, MDXPreClass } from '@/types'
+import { MDXPreClass, MDXPreElement } from '@/types'
 import { CopyButton } from './copy-button'
 
-type CodeBlockProps = {
-  filePath: `${string}.${Language}`
-  children: React.Component
+interface CodeBlockProps {
+  children: MDXPreElement
   className: MDXPreClass
 }
 
 function CodeBlock(props: CodeBlockProps) {
   const { children } = props
+
   const code = parseCode(children)
-  const { className } = children.props as typeof children.props & {
-    className: MDXPreClass
-  }
-  const language = parseLanguage(className || 'language-jsx')
+  const language = parseLanguage(children.props.className ?? 'language-jsx')
 
   return (
     <div className="ss-mb-6 ss-rounded-md ss-overflow-hidden ss-relative">

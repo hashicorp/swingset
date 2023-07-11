@@ -1,31 +1,29 @@
 'use client'
 import {
   SandpackProvider,
-  SandpackLayout,
   SandpackCodeEditor,
   SandpackPreview,
 } from '@codesandbox/sandpack-react'
 import { Children } from 'react'
 import { getFileMap } from './get-file-map'
 import { sandpackTheme } from './code-theme'
+import { MDXPreElement } from '@/types'
 
 type LiveComponentProps = {
-  children: string[]
+  children: MDXPreElement
   deps?: Record<string, string>
 }
 
 export function LiveComponent({ children, deps }: LiveComponentProps) {
-  const codeSnippets = Children.toArray(children) as React.ReactElement[]
-  const fileMap = getFileMap(codeSnippets)
-
-  const dependencies = deps ?? undefined
+  const codeBlocks = Children.toArray(children)
+  const fileMap = getFileMap(codeBlocks as MDXPreElement[])
 
   return (
     <SandpackProvider
       template="react-ts"
       files={fileMap}
       theme={sandpackTheme}
-      customSetup={{ dependencies }}
+      customSetup={{ dependencies: deps }}
     >
       <div className="flex ss-flex-col ss-w-full ss-border-4 ss-border-gray-300 ss-rounded-lg">
         <SandpackPreview className="ss-h-[45vh] ss-max-h-[800px] ss-min-h-[280px]" />

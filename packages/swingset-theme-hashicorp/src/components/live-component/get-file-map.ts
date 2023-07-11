@@ -1,9 +1,10 @@
 import type { SandpackFile } from '@codesandbox/sandpack-react'
 import { parseCode } from '../code-block/helpers'
+import { MDXPreElement } from '@/types'
 
-export const getFileMap = (codeSnippets: React.ReactElement[]) => {
+export const getFileMap = (codeSnippets: MDXPreElement[]) => {
   const fileMap = codeSnippets.reduce(
-    (result: Record<string, SandpackFile>, codeSnippet: React.ReactElement) => {
+    (result: Record<string, SandpackFile>, codeSnippet) => {
       const { props } = codeSnippet
 
       const { filePath, hidden, active, children } = props
