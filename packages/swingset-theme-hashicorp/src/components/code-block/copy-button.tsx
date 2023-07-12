@@ -22,7 +22,7 @@ function CopyButton({ code }: { code: string }) {
     }
   }, [isCopied])
 
-  const handleClick = useCallback<MouseEventHandler>(async () => {
+  const handleClick = useCallback(async () => {
     setIsCopied(true)
     if (!navigator?.clipboard) {
       console.error('Access to clipboard rejected!')
