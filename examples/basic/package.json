@@ -10,6 +10,7 @@
     "next": "^13.4.4",
     "react": "*",
     "react-dom": "*",
+    "rehype-mdx-code-props": "^1.0.0",
     "remark-gfm": "^3.0.1",
     "swingset": "file:../../packages/swingset",
     "swingset-theme-hashicorp": "file:../../packages/swingset-theme-hashicorp"

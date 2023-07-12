@@ -1,4 +1,4 @@
-import themeComponents from 'swingset-theme-hashicorp/components'
+import themeComponents from 'swingset-theme-hashicorp/MDXComponents'
 
 export function useMDXComponents(components) {
   // Allows customizing built-in components, e.g. to add styling.
