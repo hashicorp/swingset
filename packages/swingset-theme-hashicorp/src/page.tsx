@@ -1,5 +1,5 @@
 import { ComponentEntity, EvaluatedEntity } from 'swingset/types'
-import { Heading } from './components/heading'
+import { Heading } from './components/text'
 import { OpenInEditor } from './components/open-in-editor'
 
 export default async function Page({
@@ -15,9 +15,7 @@ export default async function Page({
   return (
     <>
       <header className="ss-border-b ss-border-faint ss-pb-6 ss-mb-6">
-        <Heading as="h1" weight="semiBold">
-          {title}
-        </Heading>
+        <Heading as="h1">{title}</Heading>
         {data?.frontmatter?.description ? (
           <p className="ss-mt-2 ss-text-foreground-faint ss-max-w-lg">
             {data?.frontmatter?.description as string}

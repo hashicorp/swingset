@@ -1,5 +1,5 @@
 import { PropsTable } from './components/props-table'
-import { Heading } from './components/heading'
+import { Heading } from './components/text'
 import { LiveComponent } from './components/live-component'
 import { CodeBlock } from './components/code-block'
 

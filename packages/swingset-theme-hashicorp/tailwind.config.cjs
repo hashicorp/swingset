@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   prefix: 'ss-',
@@ -7,8 +9,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {},
       textColor: {
+        heading: colors.slate[800],
         'foreground-primary': '#3b3d45',
         'foreground-faint': '#656a76',
         'foreground-action': '#1060ff',
