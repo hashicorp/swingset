@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       textColor: {
-        heading: colors.slate[700],
+        dark: colors.slate[700],
         primary: colors.slate[600],
         faint: colors.gray[500],
         action: '#1060ff',

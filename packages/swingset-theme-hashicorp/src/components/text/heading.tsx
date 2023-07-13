@@ -2,7 +2,7 @@ import { cva, VariantProps, cx } from 'class-variance-authority'
 import { type HTMLAttributes } from 'react'
 
 const styles = cva(
-  'ss-m-0 ss-p-0 ss-font-bold ss-leading-normal ss-text-heading',
+  'ss-m-0 ss-p-0 ss-font-bold ss-leading-normal ss-text-dark',
   {
     variants: {
       as: {
