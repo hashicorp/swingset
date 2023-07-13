@@ -32,7 +32,7 @@ function SideNavigation({ categories, isOpen, toggle }: SideNavBarProps) {
           <div className="ss-flex ss-shrink-0 ss-items-center">
             <Link
               href="/swingset"
-              className="ss-tracking-widest ss-text-sm ss-uppercase ss-font-bold ss-no-underline ss-text-foreground-faint ss-transition-colors hover:ss-text-foreground-action"
+              className="ss-tracking-widest ss-text-sm ss-uppercase ss-font-bold ss-no-underline ss-text-faint ss-transition-colors hover:ss-text-action"
             >
               Swingset
             </Link>

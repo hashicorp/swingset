@@ -10,10 +10,10 @@ module.exports = {
   theme: {
     extend: {
       textColor: {
-        heading: colors.slate[800],
-        'foreground-primary': '#3b3d45',
-        'foreground-faint': '#656a76',
-        'foreground-action': '#1060ff',
+        heading: colors.slate[700],
+        primary: colors.slate[600],
+        faint: colors.gray[500],
+        action: '#1060ff',
       },
       backgroundColor: {
         'surface-action': '#f2f8ff',
