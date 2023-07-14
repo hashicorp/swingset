@@ -12,7 +12,7 @@ function Category({
   return (
     <li className="ss-list-none">
       <section className="ss-mb-4">
-        <CategoryHeading>{title.toUpperCase()}</CategoryHeading>
+        <CategoryHeading>{title}</CategoryHeading>
         <ComponentList items={items} />
       </section>
     </li>
@@ -21,8 +21,8 @@ function Category({
 //Swap this out for already existing heading && Enquire about semantics, https://helios.hashicorp.design/components/application-state uses <div>
 function CategoryHeading({ children }: { children: string }) {
   return (
-    <div className="ss-uppercase ss-text-xs ss-font-semibold ss-leading-6 ss-text-foreground-faint ss-border-b ss-border-faint ss-pb-2">
-      {children.toUpperCase()}
+    <div className="ss-capitalize ss-text-xs ss-font-semibold ss-leading-6 ss-text-primary ss-border-b ss-border-faint ss-pb-2">
+      {children}
     </div>
   )
 }
@@ -50,7 +50,6 @@ function ComponentList({
           )
         }
 
-
         return (
           <li key={item.title}>
             <LinkItem to={item.slug} title={item.title} />
@@ -72,7 +71,7 @@ function Folder({
     <details>
       <summary
         className={cx(
-          'ss-text-foreground-primary hover:ss-text-foreground-action hover:ss-bg-surface-action',
+          'ss-text-primary hover:ss-text-action hover:ss-bg-surface-action',
           'ss-rounded-md ss-p-2 ss-text-sm ss-leading-6 ss-cursor-pointer'
         )}
       >
