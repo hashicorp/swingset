@@ -9,7 +9,7 @@ const styles = cva(
         h1: 'ss-text-6xl ss-tracking-tight',
         h2: 'ss-text-4xl',
         h3: 'ss-text-2xl',
-        h4: 'ss-text-2xl',
+        h4: 'ss-text-xl ss-font-extrabold',
         h5: 'ss-text-xl',
         h6: 'ss-text-lg',
       },

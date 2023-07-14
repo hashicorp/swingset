@@ -9,7 +9,6 @@ function Category({
   title: string
   items: NavigationNode[]
 }) {
-  console.log(title)
   return (
     <li className="ss-list-none">
       <section className="ss-mb-4">
