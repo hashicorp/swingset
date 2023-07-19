@@ -16,8 +16,8 @@ export function ToggleButton({ toggle, isOpen }: ToggleButtonProps) {
       aria-label={ariaLabel}
       className={cx(
         'ss-hidden ss-absolute lg:ss-block hover:ss-text-action ss-ml-1 ss-p-1 ss-transition-all ss-top-3 ss-right-3',
-        isOpen && 'ss--rotate-90',
-        !isOpen && 'ss-rotate-90'
+        !isOpen && 'ss--rotate-90',
+        isOpen && 'ss-rotate-90'
       )}
       onClick={toggle}
     >
