@@ -1,9 +1,10 @@
 'use client'
-//Once this page starts to get built, make this can be server component again
-export default function Index() {
-  if (typeof window !== 'undefined') {
-    window.location.replace('https://swingset-example.vercel.app/swingset')
-  }
+import { useRouter } from 'next/navigation'
+/*Once this page starts to get built, make this can be server component again */
 
-  return <h1>Hello world</h1>
+export default function Index() {
+  const router = useRouter()
+  router.push('/swingset')
+
+  return <h1>redirecting...</h1>
 }
