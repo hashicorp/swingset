@@ -15,8 +15,7 @@ export function AppWrapper({ children }: { children: ReactNode }) {
         <div
           className={cx(
             'ss-flex ss-flex-col ss-flex-grow ss-m-auto ss-max-w-5xl ss-mb-24 ss-transition-all',
-            !isOpen && 'ss-w-2/3',
-            isOpen && 'ss-w-1/2'
+            isOpen ? 'ss-w-1/2' : 'ss-w-2/3'
           )}
         >
           {children}
