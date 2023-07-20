@@ -6,5 +6,5 @@ export default function Index() {
   const router = useRouter()
   router.push('/swingset')
 
-  return <h1>redirecting...</h1>
+  return <h1>Hello world</h1>
 }
