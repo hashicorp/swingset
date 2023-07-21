@@ -3,8 +3,9 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function Index() {
+  const router = useRouter()
+
   useEffect(() => {
-    const router = useRouter()
     router.push('/swingset')
   }, [])
 
