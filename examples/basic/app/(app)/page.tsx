@@ -8,5 +8,5 @@ export default function Index() {
     router.push('/swingset')
   }, [])
 
-  return <h1>Hello world</h1>
+  return <h1>Hello World</h1>
 }
