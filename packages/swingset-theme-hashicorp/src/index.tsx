@@ -2,6 +2,7 @@
 import '../style.css'
 import React from 'react'
 import { AppWrapper } from './components/app-wrapper'
+import { NavBar } from './components/nav-bar'
 import { meta } from 'swingset/meta'
 import Page from './page'
 
@@ -12,7 +13,8 @@ export default function SwingsetLayout({
 }) {
   return (
     <html lang="en" className="ss-h-full">
-      <body className="ss-h-full flex flex-col ss-items-center">
+      <body className="ss-overflow-hidden">
+        <NavBar />
         <AppWrapper>{children}</AppWrapper>
         <script
           dangerouslySetInnerHTML={{

@@ -10,8 +10,8 @@ function Category({
   items: NavigationNode[]
 }) {
   return (
-    <li className="ss-list-none">
-      <section className="ss-mb-4">
+    <li className="ss-list-none ss-w-full">
+      <section className="ss-mb-4 ss-px-6">
         <CategoryHeading>{title}</CategoryHeading>
         <ComponentList items={items} />
       </section>
@@ -21,7 +21,7 @@ function Category({
 //Swap this out for already existing heading && Enquire about semantics, https://helios.hashicorp.design/components/application-state uses <div>
 function CategoryHeading({ children }: { children: string }) {
   return (
-    <div className="ss-capitalize ss-text-xs ss-font-semibold ss-leading-6 ss-text-primary ss-border-b ss-border-faint ss-pb-2">
+    <div className="ss-capitalize ss-font-semibold ss-leading-6 ss-text-primary ss-border-b ss-border-faint ss-pb-2">
       {children}
     </div>
   )

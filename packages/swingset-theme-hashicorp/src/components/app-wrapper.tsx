@@ -9,18 +9,18 @@ export function AppWrapper({ children }: { children: ReactNode }) {
   const toggle = () => setIsOpen((curr) => !curr)
 
   return (
-    <>
+    <div className="ss-h-[100vh] ss-w-full">
       <SideNavigation categories={categories} isOpen={isOpen} toggle={toggle} />
-      <main
-        className={cx(
-          'ss-py-10 ss-flex ss-flex-col ss-flex-grow ss-h-full ss-transition-all ss-px-4 sm:ss-m-0',
-          isOpen && 'lg:ss-mx-64 xl:ss-mx-72 2xl:ss-mx-[460px]'
-        )}
-      >
-        <div className="ss-flex ss-flex-col ss-flex-grow md:ss-px-8">
+      <main className="ss-h-full ss-w-full ss-overflow-auto ss-m-auto">
+        <div
+          className={cx(
+            'ss-flex ss-flex-col ss-flex-grow ss-m-auto ss-max-w-5xl ss-mb-24 ss-transition-all',
+            isOpen ? 'ss-w-1/2' : 'ss-w-2/3'
+          )}
+        >
           {children}
         </div>
       </main>
-    </>
+    </div>
   )
 }

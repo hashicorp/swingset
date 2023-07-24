@@ -24,24 +24,15 @@ function SideNavigation({ categories, isOpen, toggle }: SideNavBarProps) {
       <aside
         aria-hidden={!isOpen}
         className={cx(
-          'ss-hidden lg:ss-fixed lg:ss-inset-y-0 lg:ss-z-50 lg:ss-flex lg:ss-flex-col lg:ss-w-72 ss-transition-transform',
-          !isOpen && 'ss--translate-x-full ss-invisible'
+          'ss-hidden lg:ss-z-50 lg:ss-flex lg:ss-flex-col ss-w-1/5 ss-max-w-md ss-transition-transform ss-m-0 ss-h-full ss-fixed',
+          !isOpen && 'ss--translate-x-[85%]'
         )}
       >
-        <div className="ss-flex ss-grow ss-flex-col ss-gap-y-5 ss-overflow-y-auto ss-border-r ss-border-faint ss-bg-surface-faint ss-px-6 ss-py-10">
-          <div className="ss-flex ss-shrink-0 ss-items-center">
-            <Link
-              href="/swingset"
-              className="ss-tracking-widest ss-text-sm ss-uppercase ss-font-bold ss-no-underline ss-text-faint ss-transition-colors hover:ss-text-action"
-            >
-              Swingset
-            </Link>
-          </div>
-
-          <nav>{renderedCategories}</nav>
-        </div>
+        <ToggleButton isOpen={isOpen} toggle={toggle} />
+        <nav className="ss-flex ss-grow ss-flex-col ss-gap-y-5 ss-overflow-y-auto ss-border-r ss-border-r-faint ss-py-10">
+          {isOpen && renderedCategories}
+        </nav>
       </aside>
-      <ToggleButton isOpen={isOpen} toggle={toggle} />
     </>
   )
 }
