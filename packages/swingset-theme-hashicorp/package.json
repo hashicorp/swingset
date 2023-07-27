@@ -41,6 +41,8 @@
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.6.9",
     "@hashicorp/flight-icons": "^2.14.0",
+    "@hashicorp/mktg-global-styles": "^4.5.0",
+    "@next/font": "^13.4.12",
     "class-variance-authority": "^0.6.0",
     "prism-react-renderer": "^2.0.6"
   }

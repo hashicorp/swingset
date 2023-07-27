@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        gilmer: ['(var(--font-gilmer)'],
+      },
       textColor: {
         dark: colors.slate[700],
         primary: colors.slate[600],
