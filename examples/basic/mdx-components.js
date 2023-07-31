@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import themeComponents from 'swingset-theme-hashicorp/MDXComponents'
 
 export function useMDXComponents(components) {

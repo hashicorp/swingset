@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { NavigationNode, ComponentNode } from 'swingset/types'
 import { LinkItem } from './link-item'
 import { cx } from 'class-variance-authority'

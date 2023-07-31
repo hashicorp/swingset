@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { detect, PM } from 'detect-package-manager'
 import { error, Logs } from './logs'
 

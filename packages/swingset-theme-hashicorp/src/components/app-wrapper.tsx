@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 'use client'
 import { SideNavigation } from './side-nav'
 import { categories } from 'swingset/meta'

@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import yargs from 'yargs'
 import { bootstrap } from './commands/bootstrap'
 import { defaultCMD } from './commands/default'

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { ComponentEntity, EvaluatedEntity } from 'swingset/types'
 import { Heading, Body } from './components/text'
 import { OpenInEditor } from './components/open-in-editor'

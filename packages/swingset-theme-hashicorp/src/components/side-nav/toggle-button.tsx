@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { IconBottom24 } from '@hashicorp/flight-icons/svg-react/bottom-24'
 import { cx } from 'class-variance-authority'
 

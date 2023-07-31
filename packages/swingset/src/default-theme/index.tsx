@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import React from 'react'
 import Link from 'next/link'
 // note: this uses swingset/meta as the import statement, instead of a relative path, so the application build step can pick this up

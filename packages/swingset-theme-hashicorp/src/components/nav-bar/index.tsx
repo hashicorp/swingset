@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { Logo } from './logo'
 import Link from 'next/link'
 import { IconGithub24 } from '@hashicorp/flight-icons/svg-react'

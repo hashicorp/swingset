@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { type ComponentProps } from 'react'
 import NextLink from 'next/link'
 import { cx } from 'class-variance-authority'

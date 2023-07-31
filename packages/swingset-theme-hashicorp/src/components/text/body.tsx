@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { cva, VariantProps, cx } from 'class-variance-authority'
 import { type HTMLAttributes } from 'react'
 

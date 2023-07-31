@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { CompileOptions } from '@mdx-js/mdx'
 
 const DEFAULT_CONFIG = {

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { Language, MDXPreClass, MDXPreElement } from '@/types'
 
 export const parseCode = (toParse: MDXPreElement | string): string => {

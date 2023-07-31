@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import type { SandpackFile } from '@codesandbox/sandpack-react'
 import { parseCode } from '../code-block/helpers'
 import { MDXPreElement } from '@/types'

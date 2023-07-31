@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { describe, it } from 'vitest'
 import { parseComponentPath } from '../src/parse-component-path'
 

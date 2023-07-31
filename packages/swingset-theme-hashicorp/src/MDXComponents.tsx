@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { PropsTable } from './components/props-table'
 import { Heading, Body } from './components/text'
 import { LiveComponent } from './components/live-component'
