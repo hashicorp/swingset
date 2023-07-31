@@ -1,8 +1,14 @@
 import { cva, VariantProps, cx } from 'class-variance-authority'
 import { type HTMLAttributes } from 'react'
+import localFont from '@next/font/local'
+
+const gilmer = localFont({
+  src: '../../gilmer-700-normal.woff2',
+  variable: '--font-gilmer',
+})
 
 const styles = cva(
-  'ss-m-0 ss-p-0 ss-font-bold ss-leading-normal ss-text-dark',
+  `ss-m-0 ss-p-0 ss-font-bold ss-leading-normal ss-text-dark ${gilmer.variable} ss-font-gilmer`,
   {
     variants: {
       as: {

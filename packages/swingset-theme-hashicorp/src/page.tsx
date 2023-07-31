@@ -3,11 +3,6 @@ import { Heading, Body } from './components/text'
 import { OpenInEditor } from './components/open-in-editor'
 import localFont from '@next/font/local'
 
-const gilmer = localFont({
-  src: './gilmer-700-norml.woff2',
-  variable: '--font-gilmer',
-})
-
 export default async function Page({
   data,
   content,

@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        gilmer: ['(var(--font-gilmer)'],
+        gilmer: ['var(--font-gilmer)'],
       },
       textColor: {
         dark: colors.slate[700],
