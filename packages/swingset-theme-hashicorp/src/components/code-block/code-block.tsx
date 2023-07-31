@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 'use client' //Library calls hooks internally
 import { Highlight, themes } from 'prism-react-renderer'
 import { parseCode, parseLanguage } from './helpers'

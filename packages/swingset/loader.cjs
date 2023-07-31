@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/**
  * @typedef {import('webpack').LoaderContext<unknown>} LoaderContext
  *
  * ref: https://github.com/mdx-js/mdx/blob/main/packages/loader/index.cjs

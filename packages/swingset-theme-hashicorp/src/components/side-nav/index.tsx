@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import { NavigationTree } from 'swingset/types'
 import Category from './category'
 import { Link } from '../link'

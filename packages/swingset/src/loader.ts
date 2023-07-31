@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 import path from 'node:path'
 import { compile, CompileOptions } from '@mdx-js/mdx'
 import { VFile } from 'vfile'

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
 export type Language = 'ts' | 'js' | 'jsx' | 'tsx'
 
 export type MDXPreClass = `language-${Language}`
