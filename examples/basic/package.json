@@ -7,7 +7,7 @@
     "build": "next build"
   },
   "dependencies": {
-    "next": "^13.4.4",
+    "next": "^14.2.35",
     "react": "*",
     "react-dom": "*",
     "rehype-mdx-code-props": "^1.0.0",
