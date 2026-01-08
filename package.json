@@ -52,5 +52,8 @@
     "release": "changeset publish",
     "release:canary": "changeset publish --tag canary",
     "test": "npx turbo run test --concurrency 1 --continue"
+  },
+  "dependencies": {
+    "unist-util-remove": "^4.0.0"
   }
 }
