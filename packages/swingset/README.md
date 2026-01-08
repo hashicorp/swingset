@@ -1,3 +1,10 @@
+# ⚠️ Archived Repository
+
+This repository is archived and no longer maintained.
+
+The project has been **deprecated** and will not receive any further updates, bug fixes, or support. Please refer to alternative solutions or successor projects if available.
+
+
 # swingset
 
 Welcome to Swingset. Swingset is a drop-in component documentation system built for Next.js's App Router and React Server Components.
