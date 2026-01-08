@@ -104,7 +104,7 @@ export async function loader(
   if (isContentImport) {
     const remarkPluginsSanitized = [
       ...(remarkPlugins || []),
-      //...[removeImportsExportsPlugin],
+      ...[removeImportsExportsPlugin],
     ]
     const { result, frontmatter } = await compileMDX(source, {
       jsx: true,
