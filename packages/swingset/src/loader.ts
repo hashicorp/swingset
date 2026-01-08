@@ -11,6 +11,15 @@ import { NEXT_MDX_COMPONENTS_ALIAS } from './constants.js'
 import { type SwingsetConfig } from './config.js'
 import { type Entity } from './types.js'
 import { getRelatedComponentPropsMetadata } from './get-props.js'
+import { remove } from 'unist-util-remove'
+import type { Plugin } from 'unified'
+
+/**
+ * remark plugin which removes all import and export statements
+ */
+export function removeImportsExportsPlugin(): Plugin<any[]> {
+  return (tree) => remove(tree, 'mdxjsEsm')
+}
 
 type LoaderOptions = {
   isMetaImport: boolean
@@ -93,10 +102,14 @@ export async function loader(
   }
 
   if (isContentImport) {
+    const remarkPluginsSanitized = [
+      ...(remarkPlugins || []),
+      ...[removeImportsExportsPlugin],
+    ]
     const { result, frontmatter } = await compileMDX(source, {
       jsx: true,
       format: 'detect',
-      remarkPlugins,
+      remarkPlugins: remarkPluginsSanitized,
       rehypePlugins,
     })
 
